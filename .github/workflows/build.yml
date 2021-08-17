@@ -2,11 +2,12 @@ name: "Build and populate cache"
 on:
   pull_request:
   push:
-  schedule:
-    # rebuild everyday at 2:51
-    # TIP: Choose a random time here so not all repositories are build at once:
-    # https://www.random.org/clock-times/?num=1&earliest=01%3A00&latest=08%3A00&interval=5&format=html&rnd=new
-    - cron:  '51 2 * * *'
+  # TODO: do we need a schedule?
+  # schedule:
+  #   # rebuild everyday at 2:51
+  #   # TIP: Choose a random time here so not all repositories are build at once:
+  #   # https://www.random.org/clock-times/?num=1&earliest=01%3A00&latest=08%3A00&interval=5&format=html&rnd=new
+  #   - cron:  '10 4 * * *'
 jobs:
   tests:
     strategy:
@@ -17,7 +18,7 @@ jobs:
         # The repo name as used in
         # https://github.com/nix-community/NUR/blob/master/repos.json
         nurRepo:
-          - <YOUR_REPO_NAME>
+          - holochain-nixpkgs
         # Set this to cache your build results in cachix for faster builds
         # in CI and for everyone who uses your cache.
         #
@@ -29,10 +30,8 @@ jobs:
         # Github found at
         # https://github.com/<your_githubname>/nur-packages/settings/secrets
         cachixName:
-          - <YOUR_CACHIX_NAME>
+          - holochain-ci
         nixPath:
-          - nixpkgs=channel:nixos-unstable
-          - nixpkgs=channel:nixpkgs-unstable
           - nixpkgs=channel:nixos-21.05
     runs-on: ubuntu-latest
     steps:
@@ -64,7 +63,8 @@ jobs:
     - name: Build nix packages
       # TODO switch to default nixpkgs channel once nix-build-uncached 1.0.0 is in stable
       run: nix run -I 'nixpkgs=channel:nixos-unstable' nixpkgs.nix-build-uncached -c nix-build-uncached ci.nix -A cacheOutputs
-    - name: Trigger NUR update
-      # Don't replace <YOUR_REPO_NAME> here!
-      if: ${{ matrix.nurRepo != '<YOUR_REPO_NAME>' }}
-      run: curl -XPOST "https://nur-update.herokuapp.com/update?repo=${{ matrix.nurRepo }}"
+    # TODO: enable this once we're registered as a NUR
+    # - name: Trigger NUR update
+    #   # Don't replace <YOUR_REPO_NAME> here!
+    #   if: ${{ matrix.nurRepo != '<YOUR_REPO_NAME>' }}
+    #   run: curl -XPOST "https://nur-update.herokuapp.com/update?repo=${{ matrix.nurRepo }}"
