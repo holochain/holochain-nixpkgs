@@ -6,12 +6,12 @@
 # commands such as:
 #     nix-build -A mypackage
 
-{ system ? builtins.currentSystem
+{ sources ? import ./nix/sources.nix
+, system ? builtins.currentSystem
 , crossSystem ? null
 , overlays ? builtins.attrValues (import ./overlays)
-, pkgs ? import <nixpkgs> {
-    inherit system crossSystem;
-    inherit overlays;
+, pkgs ? import sources.nixpkgs {
+    inherit system crossSystem overlays;
   }
 
 , holochainBranch ? "main"
