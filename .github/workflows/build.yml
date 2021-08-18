@@ -57,7 +57,7 @@ jobs:
           --allowed-uris https://static.rust-lang.org \
           --allowed-uris https://github.com/oxalica/rust-overlay/archive \
           --allowed-uris https://github.com/NixOS/nixpkgs/archive \
-          --option restrict-eval true \
+          --option restrict-eval false \
           --option allow-import-from-derivation true \
           --drv-path --show-trace \
           -I nixpkgs=$(nix-instantiate --find-file nixpkgs) \
