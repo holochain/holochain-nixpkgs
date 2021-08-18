@@ -6,7 +6,22 @@
 # commands such as:
 #     nix-build -A mypackage
 
-{ pkgs ? import <nixpkgs> { } }:
+{ system ? builtins.currentSystem
+, crossSystem ? null
+, overlays ? builtins.attrValues (import ./overlays)
+, pkgs ? import <nixpkgs> {
+    inherit system crossSystem;
+    inherit overlays;
+  }
+
+, holochainBranch ? "main"
+}:
+
+let
+  # TODO: expose the rust version this as a knob somehow
+  rustPlatform = pkgs.rust.packages.stable.rustPlatform;
+  packages = pkgs.callPackage ./pkgs { inherit rustPlatform; };
+in
 
 {
   # The `lib`, `modules`, and `overlay` names are special
@@ -14,7 +29,10 @@
   modules = import ./modules; # NixOS modules
   overlays = import ./overlays; # nixpkgs overlays
 
-  example-package = pkgs.callPackage ./pkgs/example-package { };
-  # some-qt5-package = pkgs.libsForQt5.callPackage ./pkgs/some-qt5-package { };
-  # ...
+
+  # expose the imported nixpkgs
+  inherit pkgs;
+
+  # expose packages
+  inherit packages;
 }
