@@ -2,6 +2,9 @@ self: super:
 
 {
   rust = super.rust // (let
+    extensions = [
+      "rust-src"
+    ];
     targets = [
       "aarch64-unknown-linux-musl"
       "wasm32-unknown-unknown"
@@ -13,10 +16,10 @@ self: super:
       channel = "nightly";
       date = "2019-11-16";
       sha256 = "17l8mll020zc0c629cypl5hhga4hns1nrafr7a62bhsp4hg9vswd";
-    }).rust.override { inherit targets; };
+    }).rust.override { inherit extensions targets; };
 
     rustStable = (self.rust-bin.stable."1.54.0".default.override {
-      inherit targets;
+      inherit extensions targets;
     });
 
     # rustStable = (self.rustChannelOf {
