@@ -14,13 +14,11 @@
     inherit system crossSystem overlays;
   }
 
-, holochainBranch ? "main"
+, rustPlatform ? pkgs.rust.packages.stable.rustPlatform
 }:
 
 let
-  # TODO: expose the rust version this as a knob somehow
-  rustPlatform = pkgs.rust.packages.stable.rustPlatform;
-  packages = pkgs.callPackage ./pkgs { inherit rustPlatform; };
+  packages = pkgs.callPackage ./packages { inherit rustPlatform; };
 in
 
 {

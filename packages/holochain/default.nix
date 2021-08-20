@@ -93,7 +93,6 @@ let
       inherit rev sha256 cargoSha256 bins;
     }
     // {
-      # TODO: create a package for lair-keystore
       lair-keystore = mkHolochainBinary {
         crate = "lair_keystore";
         repo = "lair";
