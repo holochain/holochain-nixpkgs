@@ -6,7 +6,20 @@
 # commands such as:
 #     nix-build -A mypackage
 
-{ pkgs ? import <nixpkgs> { } }:
+{ sources ? import ./nix/sources.nix
+, system ? builtins.currentSystem
+, crossSystem ? null
+, overlays ? builtins.attrValues (import ./overlays)
+, pkgs ? import sources.nixpkgs {
+    inherit system crossSystem overlays;
+  }
+
+, rustPlatform ? pkgs.rust.packages.stable.rustPlatform
+}:
+
+let
+  packages = pkgs.callPackage ./packages { inherit rustPlatform; };
+in
 
 {
   # The `lib`, `modules`, and `overlay` names are special
@@ -14,7 +27,10 @@
   modules = import ./modules; # NixOS modules
   overlays = import ./overlays; # nixpkgs overlays
 
-  example-package = pkgs.callPackage ./pkgs/example-package { };
-  # some-qt5-package = pkgs.libsForQt5.callPackage ./pkgs/some-qt5-package { };
-  # ...
+
+  # expose the imported nixpkgs
+  inherit pkgs;
+
+  # expose packages
+  inherit packages;
 }
