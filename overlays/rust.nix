@@ -12,20 +12,16 @@ self: super:
       "x86_64-unknown-linux-musl"
     ];
 
-    rustNightly = (self.rustChannelOf {
-      channel = "nightly";
-      date = "2019-11-16";
-      sha256 = "17l8mll020zc0c629cypl5hhga4hns1nrafr7a62bhsp4hg9vswd";
-    }).rust.override { inherit extensions targets; };
-
-    rustStable = (self.rust-bin.stable."1.54.0".default.override {
+    mkRust = { track, version }: self.rust-bin."${track}"."${version}".default.override {
       inherit extensions targets;
-    });
+    };
 
-    # rustStable = (self.rustChannelOf {
-    #   channel = "stable";
-    # }).rust.override {  };
+    rustNightly = mkRust { track = "nightly"; version = "2021-08-01"; };
+    rustStable = mkRust { track = "stable"; version = "1.54.0"; };
+
   in {
+    inherit mkRust;
+
     packages = super.rust.packages // {
       nightly = {
         rustPlatform = self.makeRustPlatform {

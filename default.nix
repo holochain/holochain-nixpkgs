@@ -14,7 +14,8 @@
     inherit system crossSystem overlays;
   }
 
-, rustPlatform ? pkgs.rust.packages.stable.rustPlatform
+, rustPlatformSelector ? "stable"
+, rustPlatform ? pkgs.rust.packages."${rustPlatformSelector}".rustPlatform
 }:
 
 let
