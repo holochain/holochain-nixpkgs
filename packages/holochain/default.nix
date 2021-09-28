@@ -1,6 +1,6 @@
 { stdenv
 , rustPlatform
-, fetchFromGitHub
+, fetchgit
 , perl
 , xcbuild
 , darwin
@@ -15,37 +15,144 @@
 , opensslStatic ? openssl.override (_: {
     static = true;
   })
+, runCommand
+, cargo
+, jq
 }:
 
+# TODO: investigate the use-case around 'bins_filter' with end-users before further optimizations
+
 let
-
-  mkHolochainBinary = {
-      rev
-      , owner ? "holochain"
-      , repo ? "holochain"
+  binaryPackages = {
+      url
+      , rev
       , sha256
-      , cargoSha256
-      , crate
-      , cargoBuildFlags ? [
-        "--no-default-features"
-        "--manifest-path=crates/${crate}/Cargo.toml"
-      ]
+      , bins_filter ? null
+    }:
 
-      , ... } @ overrides: rustPlatform.buildRustPackage (lib.attrsets.recursiveUpdate {
+    let
+        src = fetchgit {
+          inherit url rev sha256;
+
+          deepClone = false;
+          leaveDotGit = false;
+        };
+
+        # evaluate all packages and their binaries
+        cargoMetadataOutput = runCommand "packages_binaries" {} ''
+          ${cargo}/bin/cargo metadata --format-version 1 --no-deps --manifest-path ${src}/Cargo.toml | \
+            ${jq}/bin/jq '.packages | map(
+            {name: .name, target: .targets[]}
+            | select(.target.kind | contains(["bin"]))
+            | {name: .name, binaries: [.target.name]}
+            )
+            | reduce .[] as $package ({}; . + { ($package.name): (.[($package.name)] + $package.binaries) })
+            ' > $out
+        '';
+
+        # contains a set of (package_name: [binary_names...])
+        # example: { holochain_cli = [ "hc" ]; }
+        packageBinaries = lib.trivial.importJSON cargoMetadataOutput;
+
+        # we want the output names to be valid shell variable names so we can refer to them in the postInstall script
+        # we also want a mapping between the compatible name and the original binary name, so we can actually copy them
+        # thus, this value stores map from the original binary names to the shell compatible names.
+        binariesCompat = builtins.listToAttrs
+          (lib.lists.flatten
+            (builtins.attrValues
+              (builtins.mapAttrs
+                (binaries:
+                  builtins.map
+                  (binary:
+                    (lib.attrsets.nameValuePair
+                      binary
+                      (builtins.replaceStrings ["-"]["_"] binary)
+                    )
+                  )
+                ) packageBinaries
+              )
+            )
+          )
+          ;
+    in {
+      inherit
+        packageBinaries
+        binariesCompat
+        ;
+
+      binariesCompatFiltered =
+        if bins_filter == null
+        then binariesCompat
+        else
+          (lib.attrsets.filterAttrs
+            (binary: _:
+              (builtins.elem binary bins_filter)
+            )
+            binariesCompat
+          )
+        ;
+    };
+
+  # this derivation builds all binaries in a rust repository, creating one output per binary
+  mkRustMultiDrv = {
+      rev
+      , url
+      , sha256
+      , cargoLock
+      , cargoBuildFlags ? [ ]
+      , bins_filter ? null
+      , binaryPackagesResult ? binaryPackages { inherit url rev sha256 bins_filter; }
+      } : let
+        filteredBinariesCompat = binaryPackagesResult.binariesCompatFiltered;
+        pname = builtins.toString (builtins.replaceStrings ["https" "http" "git+" "://" "/"] ["" "" "" "" "_"] url);
+        src = fetchgit {
+          inherit url rev sha256;
+
+          deepClone = false;
+          leaveDotGit = false;
+        };
+
+        in rustPlatform.buildRustPackage {
     passthru = {
-      inherit crate;
+      inherit binaryPackagesResult;
     };
 
-    name = "holochain";
-    cargoDepsName = "holochain";
+    inherit
+      src
+      pname
+      ;
 
-    src = lib.makeOverridable fetchFromGitHub {
-      inherit owner repo;
-      inherit rev sha256;
+    cargoDepsName = pname + "-" + rev;
+    name = pname + "-" + rev;
+
+    cargoLock = cargoLock // {
+      lockFile = "${src}/Cargo.lock";
     };
 
-    inherit cargoSha256;
-    inherit cargoBuildFlags;
+    cargoBuildFlags = builtins.concatStringsSep " " [
+      (builtins.concatStringsSep " " cargoBuildFlags)
+      # only build the binaries that were requested and found
+      (builtins.concatStringsSep " " (builtins.map (bin: "--bin ${bin}") (builtins.attrNames filteredBinariesCompat)))
+    ];
+
+    outputs = [
+        "out"
+        "bin"
+      ]
+      # this evaluates to all the shell compatible binary names
+      ++ builtins.attrValues filteredBinariesCompat
+      ;
+
+    postInstall = ''
+      for d in $outputs; do
+        mkdir -p ''${!d}/bin
+      done
+    '' + builtins.concatStringsSep "\n" (lib.attrsets.mapAttrsToList
+        (orig: compat:
+          ''mv ''${tmpDir}/${orig} ''\${${compat}}/bin/''
+        ) filteredBinariesCompat
+      )
+    ;
 
     nativeBuildInputs = [ perl pkgconfig ] ++ lib.optionals stdenv.isDarwin [
       xcbuild
@@ -67,87 +174,67 @@ let
     OPENSSL_INCLUDE_DIR = "${opensslStatic.dev}/include";
 
     doCheck = false;
+
     meta.platforms = [
         "aarch64-linux"
         "x86_64-linux"
         "x86_64-darwin"
     ];
-  } # remove attributes that cause failure when they're passed to `buildRustPackage`
-    (builtins.removeAttrs overrides [
-    "rev"
-    "sha256"
-    "cargoSha256"
-    "crate"
-    "bins"
-  ]));
+  };
 
   mkHolochainAllBinaries = {
-    rev
+    url
+    , rev
     , sha256
-    , cargoSha256
-    , bins
-    , ...
-  } @ overrides:
-    lib.attrsets.mapAttrs (_: crate:
-      mkHolochainBinary ({
-        inherit rev sha256 cargoSha256 crate;
-      } // overrides)
-    ) bins
+    , cargoLock
+    , bins_filter
+  }:
+    let
+        binaryPackagesResult = binaryPackages { inherit url rev sha256 bins_filter; };
+    in
+
+    lib.attrsets.mapAttrs (_: compat:
+      builtins.getAttr compat (mkRustMultiDrv {
+        inherit url rev sha256 cargoLock binaryPackagesResult;
+      })
+    ) binaryPackagesResult.binariesCompatFiltered
   ;
 
-  mkHolochainAllBinariesWithDeps = { rev, sha256, cargoSha256, bins, lairKeystoreHashes } @ args:
-    mkHolochainAllBinaries {
-      inherit rev sha256 cargoSha256 bins;
-    }
-    // {
-      lair-keystore = mkHolochainBinary {
-        crate = "lair_keystore";
-        repo = "lair";
-        rev = let
-          holochainSrc = (mkHolochainBinary {
-            crate = "lair_keystore_api";
-            inherit rev sha256 cargoSha256;
-          }).src;
-          holochainKeystoreTOML = lib.trivial.importTOML
-            "${holochainSrc}/crates/holochain_keystore/Cargo.toml";
-          lairKeystoreApiVersionRaw =
-            if builtins.hasAttr "lair_keystore_api" holochainKeystoreTOML.dependencies
-              then holochainKeystoreTOML.dependencies.lair_keystore_api
-            else if builtins.hasAttr "legacy_lair_client" holochainKeystoreTOML.dependencies
-              then holochainKeystoreTOML.dependencies.legacy_lair_client.version
-            else if builtins.hasAttr "lair_keystore_client_0_0" holochainKeystoreTOML.dependencies
-              then holochainKeystoreTOML.dependencies.lair_keystore_client_0_0.version
-            else builtins.abort "could not identify lair version in ${holochainSrc}/crates/holochain_keystore/Cargo.toml"
-            ;
-          lairKeystoreApiVersion = builtins.replaceStrings
-            [ "<" ">" "=" ]
-            [ ""  "" "" ]
-            lairKeystoreApiVersionRaw
-            ;
-        in "v${lairKeystoreApiVersion}";
-        inherit (lairKeystoreHashes) sha256 cargoSha256;
-      };
-    }
+  mkHolochainAllBinariesWithDeps = { url, rev, sha256, cargoLock, bins_filter ? null, lair }:
+    (mkHolochainAllBinaries {
+      inherit url rev sha256 cargoLock bins_filter;
+    })
+    // (lib.optionalAttrs (lair != null) {
+      lair-keystore = (mkRustMultiDrv {
+        inherit (lair) url rev sha256 cargoLock bins_filter;
+      }).lair_keystore;
+    })
     ;
 
-  versions = import ./versions.nix;
+  holochainVersions = lib.attrsets.mapAttrs'
+    (name': value':
+      {
+        name = lib.strings.replaceStrings [ ".nix" ] [ "" ] name';
+        value = import ((builtins.toString ./.) + "/versions/${name'}");
+      }
+    )
+
+    (lib.attrsets.filterAttrs
+        (name: value:
+          (lib.strings.hasSuffix ".nix" name) && (value == "regular")
+        )
+        (builtins.readDir ./versions)
+    );
 in
 
 {
   inherit
-    mkHolochainBinary
     mkHolochainAllBinaries
     mkHolochainAllBinariesWithDeps
+    holochainVersions
     ;
 
-  holochainVersions = versions;
-
-  holochainAllBinariesWithDeps = builtins.mapAttrs (_name: value:
-    mkHolochainAllBinariesWithDeps value
-  ) {
-    inherit (versions)
-      develop
-      main
-      ;
-  };
+  holochainAllBinariesWithDeps = builtins.mapAttrs (_: versionValue:
+    mkHolochainAllBinariesWithDeps versionValue
+  ) holochainVersions;
 }
