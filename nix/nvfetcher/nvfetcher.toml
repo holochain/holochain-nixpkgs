@@ -1,0 +1,56 @@
+[nvfetcher]
+fetch.github = "berberman/nvfetcher"
+src.git = "https://github.com/berberman/nvfetcher"
+src.branch = "master"
+
+[crate2nix]
+fetch.github = "kolloch/crate2nix"
+src.git = "https://github.com/kolloch/crate2nix"
+
+[nixpkgs]
+src.git = "https://github.com/nixos/nixpkgs"
+src.branch = "release-21.05"
+fetch.github = "nixos/nixpkgs"
+
+[nixpkgs-master]
+src.git = "https://github.com/nixos/nixpkgs"
+src.branch = "master"
+fetch.github = "nixos/nixpkgs"
+
+[nixpkgs-steveej]
+src.git = "https://github.com/steveej-forks/nixpkgs"
+src.branch = "fix-import-cargo-lock"
+fetch.github = "steveej-forks/nixpkgs"
+
+[nixpkgs-unstable]
+src.git = "https://github.com/nixos/nixpkgs"
+src.branch = "nixpkgs-unstable"
+fetch.git = "https://github.com/nixos/nixpkgs"
+
+[rust-overlay]
+src.git = "https://github.com/oxalica/rust-overlay"
+fetch.git = "https://github.com/oxalica/rust-overlay"
+
+[holochain_branch_main]
+src.branch = "main"
+src.git = "https://github.com/holochain/holochain"
+fetch.git = "https://github.com/holochain/holochain"
+cargo_lock = "Cargo.lock"
+
+[lair_holochain_branch_main]
+src.manual = "0.0.8"
+src.git = "https://github.com/holochain/lair"
+fetch.git = "https://github.com/holochain/lair"
+cargo_lock = "Cargo.lock"
+
+[holochain_branch_develop]
+src.branch = "develop"
+src.git = "https://github.com/holochain/holochain"
+fetch.git = "https://github.com/holochain/holochain"
+cargo_lock = "Cargo.lock"
+
+[lair_holochain_branch_develop]
+src.manual = "0.0.8"
+src.git = "https://github.com/holochain/lair"
+fetch.git = "https://github.com/holochain/lair"
+cargo_lock = "Cargo.lock"

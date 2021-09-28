@@ -1,1 +1,1 @@
-import (import ../nix/sources.nix).rust-overlay
+import (import ../default.nix {}).sources.rust-overlay.src
