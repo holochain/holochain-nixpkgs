@@ -12,6 +12,9 @@
 , rust
 , libiconv
 , sqlcipher
+, opensslStatic ? openssl.override (_: {
+    static = true;
+  })
 }:
 
 let
@@ -48,7 +51,7 @@ let
       xcbuild
     ];
 
-    buildInputs = [ openssl sqlcipher ] ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
+    buildInputs = [ openssl opensslStatic sqlcipher ] ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
       AppKit
       CoreFoundation
       CoreServices
@@ -58,6 +61,10 @@ let
 
     RUST_SODIUM_LIB_DIR = "${libsodium}/lib";
     RUST_SODIUM_SHARED = "1";
+
+    OPENSSL_NO_VENDOR = "1";
+    OPENSSL_LIB_DIR = "${opensslStatic.out}/lib";
+    OPENSSL_INCLUDE_DIR = "${opensslStatic.dev}/include";
 
     doCheck = false;
     meta.platforms = [
