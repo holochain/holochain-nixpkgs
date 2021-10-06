@@ -8,10 +8,21 @@ on:
   #   # TIP: Choose a random time here so not all repositories are build at once:
   #   # https://www.random.org/clock-times/?num=1&earliest=01%3A00&latest=08%3A00&interval=5&format=html&rnd=new
   #   - cron:  '10 4 * * *'
+concurrency:
+  group: ${{ github.head_ref }}
+  cancel-in-progress: false
 jobs:
   tests:
     strategy:
+      fail-fast: false
       matrix:
+        platform:
+          - ubuntu-latest
+          - macos-latest
+        nixAttribute:
+          - main
+          - develop
+
         # Set this to notify the global nur package registry that changes are
         # available.
         #
@@ -33,40 +44,40 @@ jobs:
           - holochain-ci
         nixPath:
           - nixpkgs=channel:nixos-21.05
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.platform }}
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2.3.4
-    - name: Install nix
-      uses: cachix/install-nix-action@v14
-      with:
-        nix_path: "${{ matrix.nixPath }}"
-    - name: Show nixpkgs version
-      run: nix-instantiate --eval -E '(import <nixpkgs> {}).lib.version'
-    - name: Setup cachix
-      uses: cachix/cachix-action@v10
-      # Don't replace <YOUR_CACHIX_NAME> here!
-      if: ${{ matrix.cachixName != '<YOUR_CACHIX_NAME>' }}
-      with:
-        name: ${{ matrix.cachixName }}
-        signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
-        authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-    - name: Check evaluation
-      run: |
-        nix-env -f . -qa \* --meta --xml \
-          --allowed-uris https://static.rust-lang.org \
-          --allowed-uris https://github.com/oxalica/rust-overlay/archive \
-          --allowed-uris https://github.com/NixOS/nixpkgs/archive \
-          --option restrict-eval false \
-          --option allow-import-from-derivation true \
-          --drv-path --show-trace \
-          -I nixpkgs=$(nix-instantiate --find-file nixpkgs) \
-          -I $PWD
-    - name: Build all holochain binaries
-      run: |
-        nix build -f . \
-          packages.holochainAllBinariesWithDeps.main \
-          packages.holochainAllBinariesWithDeps.develop
+      - name: Checkout repository
+        uses: actions/checkout@v2.3.4
+      - name: Install nix
+        uses: cachix/install-nix-action@v14
+        with:
+          nix_path: "${{ matrix.nixPath }}"
+      - name: Show nixpkgs version
+        run: nix-instantiate --eval -E '(import <nixpkgs> {}).lib.version'
+      - name: Setup cachix
+        uses: cachix/cachix-action@v10
+        # Don't replace <YOUR_CACHIX_NAME> here!
+        if: ${{ matrix.cachixName != '<YOUR_CACHIX_NAME>' }}
+        with:
+          name: ${{ matrix.cachixName }}
+          signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+      - name: Check evaluation
+        run: |
+          nix-env -f . -qa \* --meta --xml \
+            --allowed-uris https://static.rust-lang.org \
+            --allowed-uris https://github.com/oxalica/rust-overlay/archive \
+            --allowed-uris https://github.com/NixOS/nixpkgs/archive \
+            --option restrict-eval false \
+            --option allow-import-from-derivation true \
+            --drv-path --show-trace \
+            -I nixpkgs=$(nix-instantiate --find-file nixpkgs) \
+            -I $PWD
+      - name: Build all holochain binaries
+        env:
+          nix_attribute: ${{ matrix.nixAttribute }}
+        run: nix build -f . "packages.holochainAllBinariesWithDeps.${nix_attribute}"
+
     # TODO: this doesn't do anything. investigate and turn back on
     #
     # - name: Build nix packages
