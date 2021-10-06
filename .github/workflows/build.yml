@@ -33,6 +33,9 @@ jobs:
           - holochain-ci
         nixPath:
           - nixpkgs=channel:nixos-21.05
+        nixAttribute:
+          - packages.holochainAllBinariesWithDeps.main
+          - packages.holochainAllBinariesWithDeps.develop
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -63,10 +66,10 @@ jobs:
             -I nixpkgs=$(nix-instantiate --find-file nixpkgs) \
             -I $PWD
       - name: Build all holochain binaries
-        run: |
-          nix build -f . \
-            packages.holochainAllBinariesWithDeps.main \
-            packages.holochainAllBinariesWithDeps.develop
+        env:
+          nix_attribute: ${{ matrix.nixAttribute }}
+        run: nix build -f . "packages.holochainAllBinariesWithDeps.${nix_attribute}"
+
     # TODO: this doesn't do anything. investigate and turn back on
     #
     # - name: Build nix packages
