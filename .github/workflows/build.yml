@@ -36,7 +36,10 @@ jobs:
         nixAttribute:
           - packages.holochainAllBinariesWithDeps.main
           - packages.holochainAllBinariesWithDeps.develop
-    runs-on: ubuntu-latest
+        platform:
+          - ubuntu-latest
+          - macos-latest
+    runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2.3.4
