@@ -12,6 +12,13 @@ jobs:
   tests:
     strategy:
       matrix:
+        platform:
+          - ubuntu-latest
+          - macos-latest
+        nixAttribute:
+          - main
+          - develop
+
         # Set this to notify the global nur package registry that changes are
         # available.
         #
@@ -33,12 +40,6 @@ jobs:
           - holochain-ci
         nixPath:
           - nixpkgs=channel:nixos-21.05
-        nixAttribute:
-          - packages.holochainAllBinariesWithDeps.main
-          - packages.holochainAllBinariesWithDeps.develop
-        platform:
-          - ubuntu-latest
-          - macos-latest
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout repository
