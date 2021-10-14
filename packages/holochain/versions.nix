@@ -27,9 +27,9 @@
   };
 
   main = {
-    rev = "holochain-0.0.109";
-    sha256 = "1rwss1y8cd52ccd0875pfpbw6v518vcry3hjc1lja69x2g2x12qb";
-    cargoSha256 = "08a72d7nqpakml657z9vla739cbg8y046av4pwisdgj1ykyzyi60";
+    rev = "holochain-0.0.110";
+    sha256 = "1fykfqslr7lhbp11wbl7cz5pmygw9wmhlkvvnfn9ig9ddr7nq6sw";
+    cargoSha256 = "11s50qq7719grgijnw2z2wi27xa918ycjnsmcd5a8c2kvf4al3yw";
     bins = {
       holochain = "holochain";
       hc = "hc";
