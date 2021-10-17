@@ -115,6 +115,8 @@ let
               then holochainKeystoreTOML.dependencies.lair_keystore_api
             else if builtins.hasAttr "legacy_lair_client" holochainKeystoreTOML.dependencies
               then holochainKeystoreTOML.dependencies.legacy_lair_client.version
+            else if builtins.hasAttr "lair_keystore_client_0_0" holochainKeystoreTOML.dependencies
+              then holochainKeystoreTOML.dependencies.lair_keystore_client_0_0.version
             else builtins.abort "could not identify lair version in ${holochainSrc}/crates/holochain_keystore/Cargo.toml"
             ;
           lairKeystoreApiVersion = builtins.replaceStrings
