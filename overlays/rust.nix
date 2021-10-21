@@ -17,7 +17,7 @@ self: super:
     };
 
     rustNightly = mkRust { track = "nightly"; version = "2021-08-01"; };
-    rustStable = mkRust { track = "stable"; version = "1.54.0"; };
+    rustStable = mkRust { track = "stable"; version = "1.55.0"; };
 
   in {
     inherit mkRust;
