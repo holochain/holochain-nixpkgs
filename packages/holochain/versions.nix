@@ -27,9 +27,10 @@
   };
 
   main = {
-    rev = "holochain-0.0.110";
-    sha256 = "1fykfqslr7lhbp11wbl7cz5pmygw9wmhlkvvnfn9ig9ddr7nq6sw";
-    cargoSha256 = "11s50qq7719grgijnw2z2wi27xa918ycjnsmcd5a8c2kvf4al3yw";
+    # 0.0.112
+    rev = "de6194f5e25fab74712dc0fbbe893af3fda5f5a3";
+    sha256 = "03cpn96fn5lhr6shd1w6bd0v4g7pmjppbcwa1g22df299liy681n";
+    cargoSha256 = "0miqj8bslfznb858idv47k9rklraizrf56n1n5w9mdzlwnzgvv1f";
     bins = {
       holochain = "holochain";
       hc = "hc";
@@ -37,8 +38,8 @@
     };
 
     lairKeystoreHashes = {
-      sha256 = "12n1h94b1r410lbdg4waj5jsx3rafscnw5qnhz3ky98lkdc1mnl3";
-      cargoSha256 = "0axr1b2hc0hhik0vrs6sm412cfndk358grfnax9wv4vdpm8bq33m";
+      sha256 = "1zq8mpxcy8p7kbj4xl4qhp2hb0fjxakixhzcb4y1rnygc90q9v01";
+      cargoSha256 = "1ln0vx1blzjr4p9rqfhcl4b34blk6jiyziz2w5gh09wv2xbhyaa5";
     };
   };
 }
