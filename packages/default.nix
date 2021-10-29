@@ -6,5 +6,17 @@ let
 in
   holochain //
   {
-    update-holochain-versions = crate2nixGenerated.workspaceMembers.update-holochain-versions.build;
+    inherit (pkgs)
+      nvfetcher
+      ;
+
+    update-holochain-versions = pkgs.buildEnv {
+      name = "update-holochain-versions";
+      paths = [
+        crate2nixGenerated
+          .workspaceMembers.update-holochain-versions
+          .build
+        pkgs.nvfetcher
+      ];
+    };
   }
