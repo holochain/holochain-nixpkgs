@@ -1,4 +1,3 @@
-name: "Build and populate cache"
 on:
   pull_request:
   # push:
@@ -12,7 +11,7 @@ concurrency:
   group: ${{ github.head_ref }}
   cancel-in-progress: false
 jobs:
-  tests:
+  holochain-binaries:
     strategy:
       fail-fast: false
       matrix:
@@ -62,10 +61,45 @@ jobs:
           name: ${{ matrix.cachixName }}
           signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-      - name: Build all holochain binaries
+      - name: Build derivations
         env:
           nix_attribute: ${{ matrix.nixAttribute }}
         run: nix build -f . "packages.holochainAllBinariesWithDeps.${nix_attribute}" --extra-experimental-features nix-command
+  packages:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - ubuntu-latest
+          - macos-latest
+        nixAttribute:
+          - update-holochain-versions
+        cachixName:
+          - holochain-ci
+        nixPath:
+          - nixpkgs=channel:nixos-21.05
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2.3.5
+      - name: Install nix
+        uses: cachix/install-nix-action@v14
+        with:
+          nix_path: "${{ matrix.nixPath }}"
+      - name: Show nixpkgs version
+        run: nix-instantiate --eval -E '(import <nixpkgs> {}).lib.version'
+      - name: Setup cachix
+        uses: cachix/cachix-action@v10
+        # Don't replace <YOUR_CACHIX_NAME> here!
+        if: ${{ matrix.cachixName != '<YOUR_CACHIX_NAME>' }}
+        with:
+          name: ${{ matrix.cachixName }}
+          signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+      - name: Build derivations
+        env:
+          nix_attribute: ${{ matrix.nixAttribute }}
+        run: nix build -f . "packages.${nix_attribute}" --extra-experimental-features nix-command
 
     # TODO: this doesn't do anything. investigate and turn back on
     #
