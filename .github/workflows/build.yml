@@ -76,7 +76,7 @@ jobs:
       - name: Build all holochain binaries
         env:
           nix_attribute: ${{ matrix.nixAttribute }}
-        run: nix build -f . "packages.holochainAllBinariesWithDeps.${nix_attribute}"
+        run: nix build -f . "packages.holochainAllBinariesWithDeps.${nix_attribute}" --extra-experimental-features nix-command
 
     # TODO: this doesn't do anything. investigate and turn back on
     #
