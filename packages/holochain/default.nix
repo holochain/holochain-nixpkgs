@@ -108,17 +108,26 @@ let
             crate = "lair_keystore_api";
             inherit rev sha256 cargoSha256;
           }).src;
-          holochainKeystoreTOML = lib.trivial.importTOML
+          kitsuneTypesTOML = lib.trivial.importTOML
             "${holochainSrc}/crates/kitsune_p2p/types/Cargo.toml";
           lairKeystoreApiVersionRaw =
-            if builtins.hasAttr "lair_keystore_api" holochainKeystoreTOML.dependencies
-              then holochainKeystoreTOML.dependencies.lair_keystore_api
-            else if builtins.hasAttr "legacy_lair_client" holochainKeystoreTOML.dependencies
-              then holochainKeystoreTOML.dependencies.legacy_lair_client.version
-            else if builtins.hasAttr "lair_keystore_client_0_0" holochainKeystoreTOML.dependencies
-              then holochainKeystoreTOML.dependencies.lair_keystore_client_0_0.version
-            else builtins.abort "could not identify lair version in ${holochainSrc}/crates/holochain_keystore/Cargo.toml"
-            ;
+            if builtins.hasAttr "lair_keystore_api" kitsuneTypesTOML.dependencies
+              then kitsuneTypesTOML.dependencies.lair_keystore_api
+            else if builtins.hasAttr "legacy_lair_client" kitsuneTypesTOML.dependencies
+              then kitsuneTypesTOML.dependencies.legacy_lair_client.version
+            else if builtins.hasAttr "lair_keystore_client_0_0" kitsuneTypesTOML.dependencies
+              then kitsuneTypesTOML.dependencies.lair_keystore_client_0_0.version
+            else let
+              holochainKeystoreTOML = lib.trivial.importTOML
+                "${holochainSrc}/crates/holochain_keystore/Cargo.toml";
+            in
+              if builtins.hasAttr "lair_keystore_api" holochainKeystoreTOML.dependencies
+                then holochainKeystoreTOML.dependencies.lair_keystore_api
+              else if builtins.hasAttr "legacy_lair_client" holochainKeystoreTOML.dependencies
+                then holochainKeystoreTOML.dependencies.legacy_lair_client.version
+              else if builtins.hasAttr "lair_keystore_client_0_0" holochainKeystoreTOML.dependencies
+                then holochainKeystoreTOML.dependencies.lair_keystore_client_0_0.version
+              else builtins.abort "could not identify lair version in ${holochainSrc}/crates/kitsune_p2p/types/Cargo.toml or ${holochainSrc}/crates/holochain_keystore/Cargo.toml";
           lairKeystoreApiVersion = builtins.replaceStrings
             [ "<" ">" "=" ]
             [ ""  "" "" ]
