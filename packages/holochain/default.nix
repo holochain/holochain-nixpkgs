@@ -109,7 +109,7 @@ let
             inherit rev sha256 cargoSha256;
           }).src;
           holochainKeystoreTOML = lib.trivial.importTOML
-            "${holochainSrc}/crates/holochain_keystore/Cargo.toml";
+            "${holochainSrc}/crates/kitsune_p2p/types/Cargo.toml";
           lairKeystoreApiVersionRaw =
             if builtins.hasAttr "lair_keystore_api" holochainKeystoreTOML.dependencies
               then holochainKeystoreTOML.dependencies.lair_keystore_api
