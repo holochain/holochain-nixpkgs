@@ -236,7 +236,8 @@ static HANDLEBARS: Lazy<handlebars::Handlebars> = Lazy::new(|| {
             };
         };
     };
-}"#,
+}
+"#,
         )
         .unwrap();
 
@@ -248,7 +249,8 @@ static HANDLEBARS: Lazy<handlebars::Handlebars> = Lazy::new(|| {
     {{#each holochain_version as |value key|}}
         {{@key}} = {{>holochain_version_template}};
     {{/each}}
-}"#,
+}
+"#,
         )
         .unwrap();
 
@@ -274,6 +276,7 @@ fn main() -> Fallible<()> {
     let (repo, rev) =
         read_lair_revision(&nvfetcher_holochain, &opt.lair_version_req).map(|(repo, rev)| {
             (
+                // TODO: test this case and make the fallback configurable
                 repo.map(|url| url.to_string())
                     .unwrap_or_else(|| "https://github.com/holochain/lair".to_string()),
                 rev,
