@@ -176,7 +176,7 @@ impl<'a> NvfetcherWrapper<'a> {
                 // }
 
                 // ensure the crate source is set
-                let (git_src_keys, git_src_value) = self.src.git_rev.toml_src_value();
+                let (git_src_keys, git_src_value) = self.src.git_src.toml_src_value();
 
                 init_table(
                     &mut nvfetcher_toml_editable,
@@ -200,7 +200,7 @@ impl<'a> NvfetcherWrapper<'a> {
                     tmp[git_src_keys.last().unwrap()] = value(git_src_value);
                 }
 
-                if !self.src.git_rev.is_manual() {
+                if !self.src.git_src.is_rev() {
                     nvfetcher_toml_editable[crate_toml_key]["src"]["git"] =
                         value(self.src.git_repo);
                 }

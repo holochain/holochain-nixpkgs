@@ -59,7 +59,7 @@ More on this in the section below.
 
 ```toml
 [develop_lair_0_1]
-git-rev = "branch:develop"
+git-src = "branch:develop"
 lair-version-req = "~0.1"
 ```
 

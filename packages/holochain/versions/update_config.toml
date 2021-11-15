@@ -1,13 +1,17 @@
 [main]
-git-rev = "branch:main"
+git-src = "branch:main"
 
 [develop]
-git-rev = "branch:develop"
+git-src = "branch:develop"
 
 [develop_lair_0_1]
-git-rev = "branch:develop"
+git-src = "branch:develop"
 lair-version-req = "~0.1"
 
+[develop_lair_0_0]
+git-src = "branch:develop"
+lair-version-req = "~0.0"
+
 [v0_0_110]
-git-rev = "commit:holochain-0.0.110"
+git-src = "revision:holochain-0.0.110"
 lair-version-req = "~0.0"

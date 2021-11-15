@@ -29,10 +29,10 @@ struct Opt {
     #[structopt(long, default_value = "https://github.com/holochain/holochain")]
     git_repo: String,
 
-    /// Git revisin specifier for fetching the holochain sources.
-    /// Either: branch:<branch_name> or manual:<id>
+    /// Git source specifier for fetching the holochain sources.
+    /// Either: branch:<branch_name> or revision:<rev>
     #[structopt(long)]
-    git_rev: GitRev,
+    git_src: GitSrc,
 
     /// Specifier for the lair git repository
     #[structopt(long, default_value = "https://github.com/holochain/lair")]
@@ -67,7 +67,7 @@ pub fn parse_hashmap(src: &str) -> HashMap<String, String> {
 struct BinCrateSource<'a> {
     name: &'a str,
     git_repo: &'a str,
-    git_rev: GitRev,
+    git_src: GitSrc,
     bins: Vec<String>,
 }
 
@@ -76,7 +76,7 @@ impl<'a> BinCrateSource<'a> {
         format!(
             "{}_{}",
             self.name,
-            (&self.git_rev)
+            (&self.git_src)
                 .to_string()
                 .replace(":", "_")
                 .replace(".", "_")
@@ -85,21 +85,21 @@ impl<'a> BinCrateSource<'a> {
 }
 
 #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
-enum GitRev {
+enum GitSrc {
     Branch(String),
-    Manual(String),
+    Revision(String),
 }
 
-impl std::fmt::Display for &GitRev {
+impl std::fmt::Display for &GitSrc {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_str(&match self {
-            GitRev::Branch(branch) => format!("branch:{}", branch),
-            GitRev::Manual(id) => format!("manual:{}", id),
+            GitSrc::Branch(branch) => format!("branch:{}", branch),
+            GitSrc::Revision(rev) => format!("revision:{}", rev),
         })
     }
 }
 
-impl FromStr for GitRev {
+impl FromStr for GitSrc {
     type Err = anyhow::Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
@@ -111,23 +111,23 @@ impl FromStr for GitRev {
             .map(|s| s.replace('"', ""))
             .collect::<Vec<_>>();
         match (split.get(0), split.get(1)) {
-            (Some(key), Some(branch)) if key == "branch" => Ok(GitRev::Branch(branch.clone())),
-            (Some(key), Some(id)) if key == "manual" => Ok(GitRev::Manual(id.clone())),
+            (Some(key), Some(branch)) if key == "branch" => Ok(GitSrc::Branch(branch.clone())),
+            (Some(key), Some(rev)) if key == "revision" => Ok(GitSrc::Revision(rev.clone())),
             (_, _) => bail!("invalid git-rev provided: {}", s),
         }
     }
 }
 
-impl<'a> GitRev {
+impl<'a> GitSrc {
     pub(crate) fn toml_src_value(&'a self) -> ([&'a str; 2], &'a str) {
         match &self {
-            GitRev::Branch(branch) => (["src", "branch"], branch),
-            GitRev::Manual(id) => (["src", "manual"], id),
+            GitSrc::Branch(branch) => (["src", "branch"], branch),
+            GitSrc::Revision(id) => (["src", "manual"], id),
         }
     }
 
-    pub(crate) fn is_manual(&'a self) -> bool {
-        matches!(self, GitRev::Manual(_))
+    pub(crate) fn is_rev(&'a self) -> bool {
+        matches!(self, GitSrc::Revision(_))
     }
 }
 
@@ -177,11 +177,11 @@ fn git_rev_helper(
         .next()
         .ok_or_else(|| handlebars::RenderError::new("invalid GitRev"))?;
 
-    let git_rev = GitRev::from_str(&format!("{}:{}", obj.0, obj.1,)).unwrap();
+    let git_rev = GitSrc::from_str(&format!("{}:{}", obj.0, obj.1,)).unwrap();
 
     let (k, v) = match git_rev {
-        GitRev::Branch(branch) => ("src.branch", branch),
-        GitRev::Commit(commit) => ("src.manual", commit),
+        GitSrc::Branch(branch) => ("src.branch", branch),
+        GitSrc::Commit(commit) => ("src.manual", commit),
     };
 
     out.write(&format!(r#"{} = "{}""#, k, v))?;
@@ -264,7 +264,7 @@ fn main() -> Fallible<()> {
         BinCrateSource {
             name: "holochain",
             git_repo: &opt.git_repo,
-            git_rev: opt.git_rev.clone(),
+            git_src: opt.git_src.clone(),
             bins: opt.bins.clone(),
         },
         opt.nvfetcher_dir.clone(),
@@ -287,7 +287,7 @@ fn main() -> Fallible<()> {
         BinCrateSource {
             name: "lair",
             git_repo: &repo,
-            git_rev: GitRev::Manual(rev),
+            git_src: GitSrc::Revision(rev),
             bins: Default::default(),
         },
         opt.nvfetcher_dir.clone(),
