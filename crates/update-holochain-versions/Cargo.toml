@@ -20,6 +20,5 @@ regex = "1.5"
 once_cell = "1.8"
 cargo-lock = "7.0"
 toml_edit = "0.6"
-# toml_edit = { git = "https://github.com/steveeJ-forks/toml_edit", branch = "pr/dotted-bare-table-keys" }
 url = "2.2"
 semver = "1.0"
