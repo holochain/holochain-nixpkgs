@@ -131,9 +131,9 @@ rec {
       };
       "anyhow" = rec {
         crateName = "anyhow";
-        version = "1.0.44";
+        version = "1.0.45";
         edition = "2018";
-        sha256 = "1ha2lam408ni6vb5zc64lirwz3f60a5qzmzx54r5q79fhs7llq31";
+        sha256 = "1izmq8kmjgx8sjlrv78r32z57r8r2zd2lkhxb6iw0lx8whxf847f";
         authors = [
           "David Tolnay <dtolnay@gmail.com>"
         ];
@@ -553,10 +553,10 @@ rec {
       };
       "handlebars" = rec {
         crateName = "handlebars";
-        version = "4.1.3";
+        version = "4.1.4";
         edition = "2018";
         crateBin = [];
-        sha256 = "0cy8y0w8j7wwxlqc4xhab144f2ynq7kiqh3j4ny183fj48irxc36";
+        sha256 = "122zgxsw9v1kjyfa0q86xg0z2rn8n70awk0117b4g7x2yhj411z1";
         authors = [
           "Ning Sun <sunng@pm.me>"
         ];
@@ -768,9 +768,9 @@ rec {
       };
       "kstring" = rec {
         crateName = "kstring";
-        version = "1.0.5";
+        version = "1.0.6";
         edition = "2018";
-        sha256 = "08b2cwmr5a0214l4qf7sdvdgkrq0qjyxapyvr1w91k1q56cpx3bf";
+        sha256 = "09j5xb3rnjd3kmc2v667wzsc4mz4c1hl1vkzszbj30fyxb60qccb";
         authors = [
           "Ed Page <eopage@gmail.com>"
         ];
@@ -800,9 +800,9 @@ rec {
       };
       "libc" = rec {
         crateName = "libc";
-        version = "0.2.105";
+        version = "0.2.107";
         edition = "2015";
-        sha256 = "04rhxxjvpd106b2yw2pxa4lcnm6wbk5nnx03b61ma3b26qhmg7c6";
+        sha256 = "06fjyglysl1aph07hc8cl1akw25lizcvwppqbralynys0hsf5rgv";
         authors = [
           "The Rust Project Developers"
         ];
@@ -1546,9 +1546,9 @@ rec {
       };
       "serde_json" = rec {
         crateName = "serde_json";
-        version = "1.0.68";
+        version = "1.0.70";
         edition = "2018";
-        sha256 = "1n2jg9cf14lrxasj63rlrwxlw5v79m851gycw6zy20jnjx9hhs8g";
+        sha256 = "1wsl1d09d3cblp36b6gm2kgiskcbarscb86hb0da1lbcmjaw8xz2";
         authors = [
           "Erick Tryzelaar <erick.tryzelaar@gmail.com>"
           "David Tolnay <dtolnay@gmail.com>"
@@ -1620,13 +1620,32 @@ rec {
       };
       "smol_str" = rec {
         crateName = "smol_str";
-        version = "0.1.18";
+        version = "0.1.21";
         edition = "2018";
-        sha256 = "1c53aiylg3h1b4wfn2xbv8md8cqmf2pwg5qw5hkr8mchj2gff0xj";
+        sha256 = "1gb14a85k6mzpn6s78flwvfl5vy1czsrzlwcgidy7k00wf1mrlb1";
         authors = [
           "Aleksey Kladov <aleksey.kladov@gmail.com>"
         ];
-
+        dependencies = [
+          {
+            name = "serde";
+            packageId = "serde";
+            optional = true;
+            usesDefaultFeatures = false;
+          }
+        ];
+        devDependencies = [
+          {
+            name = "serde";
+            packageId = "serde";
+            features = [ "derive" ];
+          }
+        ];
+        features = {
+          "default" = [ "std" ];
+          "std" = [ "serde/std" ];
+        };
+        resolvedDefaultFeatures = [ "default" "serde" "std" ];
       };
       "strsim" = rec {
         crateName = "strsim";
@@ -1816,9 +1835,9 @@ rec {
       };
       "tinyvec" = rec {
         crateName = "tinyvec";
-        version = "1.5.0";
+        version = "1.5.1";
         edition = "2018";
-        sha256 = "1xwiycwfl80737i952adpn1qawdi20kxr97bsymx14ch9lyjlfzq";
+        sha256 = "1lnqnva56673r0d40586rkzyl2qqcz19wm29q8h5a95n89d1s71c";
         authors = [
           "Lokathor <zefria@gmail.com>"
         ];
@@ -1831,6 +1850,7 @@ rec {
         ];
         features = {
           "alloc" = [ "tinyvec_macros" ];
+          "real_blackbox" = [ "criterion/real_blackbox" ];
           "rustc_1_55" = [ "rustc_1_40" ];
         };
         resolvedDefaultFeatures = [ "alloc" "default" "tinyvec_macros" ];
@@ -2043,6 +2063,10 @@ rec {
           {
             name = "rnix";
             packageId = "rnix";
+          }
+          {
+            name = "semver";
+            packageId = "semver";
           }
           {
             name = "serde";
@@ -2755,15 +2779,14 @@ rec {
       dependencies;
 
   /* Returns whether the given feature should enable the given dependency. */
-  doesFeatureEnableDependency = { name, rename ? null, ... }: feature:
+  doesFeatureEnableDependency = dependency: feature:
     let
+      name = dependency.rename or dependency.name;
       prefix = "${name}/";
       len = builtins.stringLength prefix;
       startsWithPrefix = builtins.substring 0 len feature == prefix;
     in
-    (rename == null && feature == name)
-    || (rename != null && rename == feature)
-    || startsWithPrefix;
+    feature == name || startsWithPrefix;
 
   /* Returns the expanded features for the given inputFeatures by applying the
     rules in featureMap.
@@ -2798,7 +2821,9 @@ rec {
             let
               enabled = builtins.any (doesFeatureEnableDependency dependency) features;
             in
-            if (dependency.optional or false) && enabled then [ dependency.name ] else [ ]
+            if (dependency.optional or false) && enabled
+            then [ (dependency.rename or dependency.name) ]
+            else [ ]
         )
         dependencies;
     in
