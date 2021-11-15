@@ -291,7 +291,7 @@ fn main() -> Fallible<()> {
             bins: Default::default(),
         },
         opt.nvfetcher_dir.clone(),
-        Some(format!("lair_{}", &nvfetcher_holochain.crate_toml_key)),
+        None,
     )?;
 
     let lair_crate_srcinfo = nvfetcher_lair.get_crate_srcinfo()?;
