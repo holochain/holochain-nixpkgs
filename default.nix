@@ -28,6 +28,10 @@
 , rustPlatform ? pkgsMaster.rust.packages."${rustPlatformSelector}".rustPlatform
 }:
 
+let
+  packages = pkgs.callPackage ./packages { inherit rustPlatform; };
+in
+
 {
   # The `lib`, `modules`, and `overlay` names are special
   lib = import ./lib { inherit pkgs; }; # functions
@@ -43,7 +47,7 @@
   inherit pkgsUnstable;
 
   # expose packages
-  packages = pkgs.callPackage ./packages { inherit rustPlatform; };
+  inherit packages;
 
   # expose this derivation as the only one so it is used by `nix-shell`
   shellDerivation = pkgs.mkShell {
@@ -55,31 +59,49 @@
         nvfetcher
         crate2nix
 
-        (pkgs.writeScriptBin "nvfetcher-build" ''
+        (writeScriptBin "nvfetcher-build" ''
           pushd ${toString ./.}/nix/nvfetcher
           ${nvfetcher}/bin/nvfetcher build $@
         '')
 
-        (pkgs.writeScriptBin "nvfetcher-clean" ''
+        (writeScriptBin "nvfetcher-clean" ''
           pushd ${toString ./.}/nix/nvfetcher
           ${nvfetcher}/bin/nvfetcher clean $@
         '')
 
-        (pkgs.writeScriptBin "hnixpkgs-update-all" (
+        (writeScriptBin "hnixpkgs-update-all" (
         let
-          # FIXME: DRY the script
+          toplevel = (builtins.toString ./.);
+
+          updateAll = builtins.concatStringsSep "\n" (lib.attrsets.mapAttrsToList
+              (key: value:
+                  ''
+                  ${packages.update-holochain-versions}/bin/update-holochain-versions \
+                      --nvfetcher-dir=${toplevel}/nix/nvfetcher \
+                      --output-file=${toplevel}/packages/holochain/versions/${key}.nix \
+                      --git-rev=${value.git_rev} \
+                      --lair-version-req='${value.lair_version_req or "*"}' \
+                      ;
+                  ''
+              )
+              packages.holochain.holochainVersionUpdateConfig
+            );
+
+          diffTargets = "${toplevel}/packages/holochain/versions nix/nvfetcher/_sources/generated.nix";
+          commitPaths = "${toplevel}/packages/holochain/versions nix/nvfetcher";
         in ''
           set -e
-          for branch in develop main; do
-              cargo run -p update-holochain-versions -- --git-rev=branch:''${branch} --output-file=packages/holochain/versions/''${branch}.nix --nvfetcher-dir=nix/nvfetcher/
-          done
+          pushd ${toplevel}
 
-          if git diff --exit-code -- packages/holochain/versions nix/nvfetcher/_sources/generated.nix; then
+          ${updateAll}
+
+          ${git}/bin/git add ${commitPaths}
+
+          if ${git}/bin/git diff --staged --exit-code -- ${diffTargets}; then
               echo No updates found.
           else
               echo Updates found, commiting..
-              git add nix/nvfetcher
-              git commit packages/holochain/versions nix/nvfetcher -m "update all sources and holochain versions"
+              ${git}/bin/git commit ${commitPaths} -m "update all sources and holochain versions"
           fi
         ''))
 
@@ -89,7 +111,7 @@
           diffTargets = "${outputPath} Cargo.lock";
           buildTargets = "-A packages.update-holochain-versions";
         in
-          pkgs.writeScriptBin "hnixpkgs-regen-crate-expressions" ''
+          writeScriptBin "hnixpkgs-regen-crate-expressions" ''
           set -e
           pushd ${toplevel}
 

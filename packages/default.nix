@@ -4,8 +4,9 @@ let
   holochain = callPackage ./holochain { inherit rustPlatform; };
   crate2nixGenerated = import ../nix/crate2nix/Cargo.nix { inherit pkgs; };
 in
-  holochain //
   {
+    inherit holochain;
+
     inherit (pkgs)
       nvfetcher
       ;

@@ -234,7 +234,10 @@ in
     holochainVersions
     ;
 
+  holochainVersionUpdateConfig = lib.trivial.importTOML ./versions/update_config.toml;
+
   holochainAllBinariesWithDeps = builtins.mapAttrs (_: versionValue:
     mkHolochainAllBinariesWithDeps versionValue
   ) holochainVersions;
+
 }

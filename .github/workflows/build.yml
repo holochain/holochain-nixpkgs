@@ -65,7 +65,7 @@ jobs:
       - name: Build derivations
         env:
           nix_attribute: ${{ matrix.nixAttribute }}
-        run: nix build -f . "packages.holochainAllBinariesWithDeps.${nix_attribute}" --extra-experimental-features nix-command
+        run: nix build -f . "packages.holochain.holochainAllBinariesWithDeps.${nix_attribute}" --extra-experimental-features nix-command
   packages:
     strategy:
       fail-fast: false
