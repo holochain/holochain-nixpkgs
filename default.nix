@@ -98,6 +98,8 @@ in
           set -e
           pushd ${toplevel}
 
+          nvfetcher-clean
+
           ${updateAll}
 
           ${git}/bin/git add ${commitPaths}
