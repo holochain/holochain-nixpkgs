@@ -85,15 +85,15 @@ in
                   ${packages.update-holochain-versions}/bin/update-holochain-versions \
                       --nvfetcher-dir=${toplevel}/nix/nvfetcher \
                       --output-file=${toplevel}/packages/holochain/versions/${key}.nix \
-                      ${extraArgs}
+                      ${extraArgs} \
                       ;
                   ''
               )
               packages.holochain.holochainVersionUpdateConfig
             );
 
-          diffTargets = "${toplevel}/packages/holochain/versions nix/nvfetcher/_sources/generated.nix";
-          commitPaths = "${toplevel}/packages/holochain/versions nix/nvfetcher";
+          diffTargets = "${toplevel}/packages/holochain/versions ${toplevel}/nix/nvfetcher/_sources/generated.nix";
+          commitPaths = "${toplevel}/packages/holochain/versions ${toplevel}/nix/nvfetcher";
         in ''
           set -e
           pushd ${toplevel}
