@@ -1,7 +1,10 @@
+# This file was generated.
+# TODO: add comment at the top how to generate the file or how it was generated
+
 {
     url = "https://github.com/holochain/holochain";
-    rev = "b996d2024bb3d2a9c3cc0d7a759d8fa567c7528a";
-    sha256 = "1456ivxid8rqfwq58i9fp5khq79scsdlgmvjzhzb3f6zlbvm9ywa";
+    rev = "77ea93f5155d1fb9ec34e4f60c4f0adc08df5e6e";
+    sha256 = "05pzgxlph5wj4qr8lvyyf01gnvra0xg4f2mrfrirkip9qf3kjpi6";
     cargoLock = {
         # lockFile = "";
         outputHashes = {
@@ -9,7 +12,7 @@
         };
     };
 
-    bins_filter = [
+    binsFilter = [
         "holochain"
         "hc"
         "kitsune-p2p-proxy"
@@ -17,10 +20,10 @@
 
     lair = {
         url = "https://github.com/holochain/lair";
-        rev = "a3b308b0db8ebca46451ef89cfa826227fabb345";
-        sha256 = "1bl3aq6jvf14nqbraq3q8jl5b1m1wmbdgxjqr7im3jgr69c3x57j";
+        rev = "v0.0.9";
+        sha256 = "06vd1147323yhznf8qyhachcn6fs206h0c0bsx4npdc63p3a4m42";
 
-        bins_filter = [
+        binsFilter = [
             "lair-keystore"
         ];
 

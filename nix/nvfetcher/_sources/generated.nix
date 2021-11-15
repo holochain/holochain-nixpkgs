@@ -3,28 +3,28 @@
 {
   crate2nix = {
     pname = "crate2nix";
-    version = "73440a8430815d49381cba5df1b13517ca4909cc";
+    version = "d0c00673bafbaa648e84fb7595a0e4cd84c3b18a";
     src = fetchFromGitHub ({
       owner = "kolloch";
       repo = "crate2nix";
-      rev = "73440a8430815d49381cba5df1b13517ca4909cc";
+      rev = "d0c00673bafbaa648e84fb7595a0e4cd84c3b18a";
       fetchSubmodules = false;
-      sha256 = "1rj5df4q6fw3cyfpsxs3f05mz9cfzq1y7j7x0vc6vsmf339g0ibv";
+      sha256 = "0qnv6f3svdmdvyqb4zy5cvfj60ihy74m06s82s98s5fwldz7232q";
     });
   };
   holochain_branch_develop = {
     pname = "holochain_branch_develop";
-    version = "b996d2024bb3d2a9c3cc0d7a759d8fa567c7528a";
+    version = "77ea93f5155d1fb9ec34e4f60c4f0adc08df5e6e";
     src = fetchgit {
       url = "https://github.com/holochain/holochain";
-      rev = "b996d2024bb3d2a9c3cc0d7a759d8fa567c7528a";
+      rev = "77ea93f5155d1fb9ec34e4f60c4f0adc08df5e6e";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "1456ivxid8rqfwq58i9fp5khq79scsdlgmvjzhzb3f6zlbvm9ywa";
+      sha256 = "05pzgxlph5wj4qr8lvyyf01gnvra0xg4f2mrfrirkip9qf3kjpi6";
     };
     cargoLock = {
-      lockFile = ./holochain_branch_develop-b996d2024bb3d2a9c3cc0d7a759d8fa567c7528a/Cargo.lock;
+      lockFile = ./holochain_branch_develop-77ea93f5155d1fb9ec34e4f60c4f0adc08df5e6e/Cargo.lock;
       outputHashes = {
         "cargo-test-macro-0.1.0" = "1yy1y1d523xdzwg1gc77pigbcwsbawmy4b7vw8v21m7q957sk0c4";
       };
@@ -32,17 +32,53 @@
   };
   holochain_branch_main = {
     pname = "holochain_branch_main";
-    version = "14ee16ecf0bd20c215b0f238e853f6762b113c51";
+    version = "efd47955adbf381bf9a886b0e0f9146dfd6be46c";
     src = fetchgit {
       url = "https://github.com/holochain/holochain";
-      rev = "14ee16ecf0bd20c215b0f238e853f6762b113c51";
+      rev = "efd47955adbf381bf9a886b0e0f9146dfd6be46c";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "0rck0j1w8p8xap4s41ary2ikxz2rjnwg5ycr00yd59lbmwly53rq";
+      sha256 = "0krgdv6a01c484a7hy9q5mnzx8vi3jwccb3qwmysnw1mwdykd9a0";
     };
     cargoLock = {
-      lockFile = ./holochain_branch_main-14ee16ecf0bd20c215b0f238e853f6762b113c51/Cargo.lock;
+      lockFile = ./holochain_branch_main-efd47955adbf381bf9a886b0e0f9146dfd6be46c/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "1yy1y1d523xdzwg1gc77pigbcwsbawmy4b7vw8v21m7q957sk0c4";
+      };
+    };
+  };
+  holochain_commit_holochain-0_0_110 = {
+    pname = "holochain_commit_holochain-0_0_110";
+    version = "holochain-0.0.110";
+    src = fetchgit {
+      url = "https://github.com/holochain/holochain";
+      rev = "holochain-0.0.110";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "1fykfqslr7lhbp11wbl7cz5pmygw9wmhlkvvnfn9ig9ddr7nq6sw";
+    };
+    cargoLock = {
+      lockFile = ./holochain_commit_holochain-0_0_110-holochain-0.0.110/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "1yy1y1d523xdzwg1gc77pigbcwsbawmy4b7vw8v21m7q957sk0c4";
+      };
+    };
+  };
+  holochain_manual_holochain-0_0_110 = {
+    pname = "holochain_manual_holochain-0_0_110";
+    version = "holochain-0.0.110";
+    src = fetchgit {
+      url = "https://github.com/holochain/holochain";
+      rev = "holochain-0.0.110";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "1fykfqslr7lhbp11wbl7cz5pmygw9wmhlkvvnfn9ig9ddr7nq6sw";
+    };
+    cargoLock = {
+      lockFile = ./holochain_manual_holochain-0_0_110-holochain-0.0.110/Cargo.lock;
       outputHashes = {
         "cargo-test-macro-0.1.0" = "1yy1y1d523xdzwg1gc77pigbcwsbawmy4b7vw8v21m7q957sk0c4";
       };
@@ -50,17 +86,17 @@
   };
   lair_holochain_branch_develop = {
     pname = "lair_holochain_branch_develop";
-    version = "a3b308b0db8ebca46451ef89cfa826227fabb345";
+    version = "v0.0.9";
     src = fetchgit {
       url = "https://github.com/holochain/lair";
-      rev = "a3b308b0db8ebca46451ef89cfa826227fabb345";
+      rev = "v0.0.9";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "1bl3aq6jvf14nqbraq3q8jl5b1m1wmbdgxjqr7im3jgr69c3x57j";
+      sha256 = "06vd1147323yhznf8qyhachcn6fs206h0c0bsx4npdc63p3a4m42";
     };
     cargoLock = {
-      lockFile = ./lair_holochain_branch_develop-a3b308b0db8ebca46451ef89cfa826227fabb345/Cargo.lock;
+      lockFile = ./lair_holochain_branch_develop-v0.0.9/Cargo.lock;
       outputHashes = {
         
       };
@@ -68,17 +104,53 @@
   };
   lair_holochain_branch_main = {
     pname = "lair_holochain_branch_main";
-    version = "a3b308b0db8ebca46451ef89cfa826227fabb345";
+    version = "v0.0.9";
     src = fetchgit {
       url = "https://github.com/holochain/lair";
-      rev = "a3b308b0db8ebca46451ef89cfa826227fabb345";
+      rev = "v0.0.9";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "1bl3aq6jvf14nqbraq3q8jl5b1m1wmbdgxjqr7im3jgr69c3x57j";
+      sha256 = "06vd1147323yhznf8qyhachcn6fs206h0c0bsx4npdc63p3a4m42";
     };
     cargoLock = {
-      lockFile = ./lair_holochain_branch_main-a3b308b0db8ebca46451ef89cfa826227fabb345/Cargo.lock;
+      lockFile = ./lair_holochain_branch_main-v0.0.9/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
+  };
+  lair_holochain_commit_holochain-0_0_110 = {
+    pname = "lair_holochain_commit_holochain-0_0_110";
+    version = "v0.0.7";
+    src = fetchgit {
+      url = "https://github.com/holochain/lair";
+      rev = "v0.0.7";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "12n1h94b1r410lbdg4waj5jsx3rafscnw5qnhz3ky98lkdc1mnl3";
+    };
+    cargoLock = {
+      lockFile = ./lair_holochain_commit_holochain-0_0_110-v0.0.7/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
+  };
+  lair_holochain_manual_holochain-0_0_110 = {
+    pname = "lair_holochain_manual_holochain-0_0_110";
+    version = "v0.0.7";
+    src = fetchgit {
+      url = "https://github.com/holochain/lair";
+      rev = "v0.0.7";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "12n1h94b1r410lbdg4waj5jsx3rafscnw5qnhz3ky98lkdc1mnl3";
+    };
+    cargoLock = {
+      lockFile = ./lair_holochain_manual_holochain-0_0_110-v0.0.7/Cargo.lock;
       outputHashes = {
         
       };
@@ -86,24 +158,24 @@
   };
   nixpkgs = {
     pname = "nixpkgs";
-    version = "dcc34fe9e16a578ca513506b2555405a0d03df04";
+    version = "46251a79f752ae1d46ef733e8e9760b6d3429da4";
     src = fetchFromGitHub ({
       owner = "nixos";
       repo = "nixpkgs";
-      rev = "dcc34fe9e16a578ca513506b2555405a0d03df04";
+      rev = "46251a79f752ae1d46ef733e8e9760b6d3429da4";
       fetchSubmodules = false;
-      sha256 = "1x6q1kscigmn7vjh7xc2df3jlqkid6xjs3kp5ih1c4z745fw6yqb";
+      sha256 = "1xsp0xyrf8arjkf4wi09n96kbg0r8igsmzx8bhc1nj4nr078p0pg";
     });
   };
   nixpkgs-master = {
     pname = "nixpkgs-master";
-    version = "678d0bfff1384068f8226ecce6b162718f52262a";
+    version = "4ea0167baf7126e424edb7ed2be27c0f6008dafb";
     src = fetchFromGitHub ({
       owner = "nixos";
       repo = "nixpkgs";
-      rev = "678d0bfff1384068f8226ecce6b162718f52262a";
+      rev = "4ea0167baf7126e424edb7ed2be27c0f6008dafb";
       fetchSubmodules = false;
-      sha256 = "1qv3qfvpvj9dka1vw74a393p8ydxrsr470ncvl8m2k6m5b4pi4kb";
+      sha256 = "15bfcr7dxkpprlmalfl2afyhm0zgmw0y4qy5vlw7kj7i7vfqjb93";
     });
   };
   nixpkgs-steveej = {
@@ -119,14 +191,14 @@
   };
   nixpkgs-unstable = {
     pname = "nixpkgs-unstable";
-    version = "22a500a3f87bbce73bd8d777ef920b43a636f018";
+    version = "5cb226a06c49f7a2d02863d0b5786a310599df6b";
     src = fetchgit {
       url = "https://github.com/nixos/nixpkgs";
-      rev = "22a500a3f87bbce73bd8d777ef920b43a636f018";
+      rev = "5cb226a06c49f7a2d02863d0b5786a310599df6b";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "1rqp9nf45m03mfh4x972whw2gsaz5x44l3dy6p639ib565g24rmh";
+      sha256 = "0dzz207swwm5m0dyibhxg5psccrcqfh1lzkmzzfns27wc4ria6z3";
     };
   };
   nvfetcher = {
@@ -142,14 +214,14 @@
   };
   rust-overlay = {
     pname = "rust-overlay";
-    version = "1347817f5d8e2cc42e8645015079916d68a884d9";
+    version = "527585fa50639dbaa087edf24934a0dc629e6c53";
     src = fetchgit {
       url = "https://github.com/oxalica/rust-overlay";
-      rev = "1347817f5d8e2cc42e8645015079916d68a884d9";
+      rev = "527585fa50639dbaa087edf24934a0dc629e6c53";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "1fwjlcakrhr3n5y5qbly18dlx0ylv9gmm1vkkfx4w5sz6shqdczj";
+      sha256 = "0dqs9w1zp93f3bpwi1h6y3f39v9rg9z1fpfjrjpyzzjba43fkkzl";
     };
   };
 }

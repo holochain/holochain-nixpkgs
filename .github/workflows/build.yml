@@ -21,6 +21,7 @@ jobs:
         nixAttribute:
           - main
           - develop
+          - v0_0_110
 
         # Set this to notify the global nur package registry that changes are
         # available.

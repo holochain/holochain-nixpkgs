@@ -38,8 +38,7 @@ fetch.git = "https://github.com/holochain/holochain"
 cargo_lock = "Cargo.lock"
 
 [lair_holochain_branch_main]
-src.manual = "0.0.8"
-src.git = "https://github.com/holochain/lair"
+src.manual = "v0.0.9"
 fetch.git = "https://github.com/holochain/lair"
 cargo_lock = "Cargo.lock"
 
@@ -50,7 +49,26 @@ fetch.git = "https://github.com/holochain/holochain"
 cargo_lock = "Cargo.lock"
 
 [lair_holochain_branch_develop]
-src.manual = "0.0.8"
-src.git = "https://github.com/holochain/lair"
+src.manual = "v0.0.9"
+fetch.git = "https://github.com/holochain/lair"
+cargo_lock = "Cargo.lock"
+
+[holochain_commit_holochain-0_0_110]
+src.manual = "holochain-0.0.110"
+fetch.git = "https://github.com/holochain/holochain"
+cargo_lock = "Cargo.lock"
+
+[lair_holochain_commit_holochain-0_0_110]
+src.manual = "v0.0.7"
+fetch.git = "https://github.com/holochain/lair"
+cargo_lock = "Cargo.lock"
+
+[holochain_manual_holochain-0_0_110]
+src.manual = "holochain-0.0.110"
+fetch.git = "https://github.com/holochain/holochain"
+cargo_lock = "Cargo.lock"
+
+[lair_holochain_manual_holochain-0_0_110]
+src.manual = "v0.0.7"
 fetch.git = "https://github.com/holochain/lair"
 cargo_lock = "Cargo.lock"

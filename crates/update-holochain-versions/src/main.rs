@@ -30,7 +30,7 @@ struct Opt {
     git_repo: String,
 
     /// Git revisin specifier for fetching the holochain sources.
-    /// Either: branch:<branch_name> or commit:<commit_id>
+    /// Either: branch:<branch_name> or manual:<id>
     #[structopt(long)]
     git_rev: GitRev,
 
@@ -83,14 +83,14 @@ impl<'a> BinCrateSource<'a> {
 #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 enum GitRev {
     Branch(String),
-    Commit(String),
+    Manual(String),
 }
 
 impl std::fmt::Display for &GitRev {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_str(&match self {
             GitRev::Branch(branch) => format!("branch:{}", branch),
-            GitRev::Commit(commit) => format!("commit:{}", commit),
+            GitRev::Manual(id) => format!("manual:{}", id),
         })
     }
 }
@@ -108,7 +108,7 @@ impl FromStr for GitRev {
             .collect::<Vec<_>>();
         match (split.get(0), split.get(1)) {
             (Some(key), Some(branch)) if key == "branch" => Ok(GitRev::Branch(branch.clone())),
-            (Some(key), Some(commit)) if key == "commit" => Ok(GitRev::Commit(commit.clone())),
+            (Some(key), Some(id)) if key == "manual" => Ok(GitRev::Manual(id.clone())),
             (_, _) => bail!("invalid git-rev provided: {}", s),
         }
     }
@@ -118,8 +118,12 @@ impl<'a> GitRev {
     pub(crate) fn toml_src_value(&'a self) -> ([&'a str; 2], &'a str) {
         match &self {
             GitRev::Branch(branch) => (["src", "branch"], branch),
-            GitRev::Commit(commit) => (["src", "manual"], commit),
+            GitRev::Manual(id) => (["src", "manual"], id),
         }
+    }
+
+    pub(crate) fn is_manual(&'a self) -> bool {
+        matches!(self, GitRev::Manual(_))
     }
 }
 
@@ -188,7 +192,10 @@ static HANDLEBARS: Lazy<handlebars::Handlebars> = Lazy::new(|| {
     handlebars
         .register_template_string(
             HOLOCHAIN_VERSION_TEMPLATE,
-            r#"{
+            r#"# This file was generated.
+# TODO: add comment at the top how to generate the file or how it was generated
+
+{
     url = "{{this.url}}";
     rev = "{{this.rev}}";
     sha256 = "{{this.sha256}}";
@@ -201,7 +208,7 @@ static HANDLEBARS: Lazy<handlebars::Handlebars> = Lazy::new(|| {
         };
     };
 
-    bins_filter = [
+    binsFilter = [
         {{#each this.bins}}
         "{{@this}}"
         {{/each}}
@@ -212,7 +219,7 @@ static HANDLEBARS: Lazy<handlebars::Handlebars> = Lazy::new(|| {
         rev = "{{this.lair.rev}}";
         sha256 = "{{this.lair.sha256}}";
 
-        bins_filter = [
+        binsFilter = [
             "lair-keystore"
         ];
 
@@ -272,7 +279,7 @@ fn main() -> Fallible<()> {
         BinCrateSource {
             name: "lair",
             git_repo: &repo,
-            git_rev: GitRev::Commit(rev),
+            git_rev: GitRev::Manual(rev),
             bins: Default::default(),
         },
         opt.nvfetcher_dir.clone(),
@@ -383,7 +390,6 @@ in nixpkgs.callPackage generated {}
             )
         })?;
 
-    let lair_rev = lair_keystore_client_dep.version.to_string();
     let lair_source = match &lair_keystore_client_dep.source {
         Some(source) if source.is_git() => {
             eprintln!("lair is a git source! {:#?}", source.url());
@@ -399,6 +405,8 @@ in nixpkgs.callPackage generated {}
         }
         _ => None,
     };
+
+    let lair_rev = format!("v{}", lair_keystore_client_dep.version);
 
     Ok((lair_source, lair_rev))
 }

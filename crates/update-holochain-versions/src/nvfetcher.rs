@@ -200,7 +200,10 @@ impl<'a> NvfetcherWrapper<'a> {
                     tmp[git_src_keys.last().unwrap()] = value(git_src_value);
                 }
 
-                nvfetcher_toml_editable[crate_toml_key]["src"]["git"] = value(self.src.git_repo);
+                if !self.src.git_rev.is_manual() {
+                    nvfetcher_toml_editable[crate_toml_key]["src"]["git"] =
+                        value(self.src.git_repo);
+                }
                 nvfetcher_toml_editable[crate_toml_key]["fetch"]["git"] = value(self.src.git_repo);
 
                 // write back to file

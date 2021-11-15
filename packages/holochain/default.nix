@@ -20,14 +20,14 @@
 , jq
 }:
 
-# TODO: investigate the use-case around 'bins_filter' with end-users before further optimizations
+# TODO: investigate the use-case around 'binsFilter' with end-users before further optimizations
 
 let
   binaryPackages = {
       url
       , rev
       , sha256
-      , bins_filter ? null
+      , binsFilter ? null
     }:
 
     let
@@ -81,12 +81,12 @@ let
         ;
 
       binariesCompatFiltered =
-        if bins_filter == null
+        if binsFilter == null
         then binariesCompat
         else
           (lib.attrsets.filterAttrs
             (binary: _:
-              (builtins.elem binary bins_filter)
+              (builtins.elem binary binsFilter)
             )
             binariesCompat
           )
@@ -100,8 +100,8 @@ let
       , sha256
       , cargoLock
       , cargoBuildFlags ? [ ]
-      , bins_filter ? null
-      , binaryPackagesResult ? binaryPackages { inherit url rev sha256 bins_filter; }
+      , binsFilter ? null
+      , binaryPackagesResult ? binaryPackages { inherit url rev sha256 binsFilter; }
       } : let
         filteredBinariesCompat = binaryPackagesResult.binariesCompatFiltered;
         pname = builtins.toString (builtins.replaceStrings ["https" "http" "git+" "://" "/"] ["" "" "" "" "_"] url);
@@ -187,10 +187,10 @@ let
     , rev
     , sha256
     , cargoLock
-    , bins_filter
+    , binsFilter
   }:
     let
-        binaryPackagesResult = binaryPackages { inherit url rev sha256 bins_filter; };
+        binaryPackagesResult = binaryPackages { inherit url rev sha256 binsFilter; };
     in
 
     lib.attrsets.mapAttrs (_: compat:
@@ -200,13 +200,13 @@ let
     ) binaryPackagesResult.binariesCompatFiltered
   ;
 
-  mkHolochainAllBinariesWithDeps = { url, rev, sha256, cargoLock, bins_filter ? null, lair }:
+  mkHolochainAllBinariesWithDeps = { url, rev, sha256, cargoLock, binsFilter ? null, lair }:
     (mkHolochainAllBinaries {
-      inherit url rev sha256 cargoLock bins_filter;
+      inherit url rev sha256 cargoLock binsFilter;
     })
     // (lib.optionalAttrs (lair != null) {
       lair-keystore = (mkRustMultiDrv {
-        inherit (lair) url rev sha256 cargoLock bins_filter;
+        inherit (lair) url rev sha256 cargoLock binsFilter;
       }).lair_keystore;
     })
     ;
