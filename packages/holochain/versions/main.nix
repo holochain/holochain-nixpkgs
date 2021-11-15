@@ -1,12 +1,12 @@
-# This file was generated.
-# TODO: add comment at the top how to generate the file or how it was generated
+# This file was generated with the following command:
+# /nix/store/9ra5qwma0wkrkkxhfc10f9bc08ysl8hd-update-holochain-versions/bin/update-holochain-versions --nvfetcher-dir=nix/nvfetcher --output-file=packages/holochain/versions/main.nix --git-src=branch:main 
+# For usage instructions please visit https://github.com/holochain/holochain-nixpkgs/#readme
 
 {
     url = "https://github.com/holochain/holochain";
     rev = "efd47955adbf381bf9a886b0e0f9146dfd6be46c";
     sha256 = "0krgdv6a01c484a7hy9q5mnzx8vi3jwccb3qwmysnw1mwdykd9a0";
     cargoLock = {
-        # lockFile = "";
         outputHashes = {
             "cargo-test-macro-0.1.0" = "1yy1y1d523xdzwg1gc77pigbcwsbawmy4b7vw8v21m7q957sk0c4";
         };
@@ -28,7 +28,6 @@
         ];
 
         cargoLock = {
-            # lockFile = "";
             outputHashes = {
             };
         };
