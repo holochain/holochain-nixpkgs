@@ -38,6 +38,10 @@ struct Opt {
     #[structopt(long, default_value = "https://github.com/holochain/lair")]
     lair_git_repo: String,
 
+    /// Specifier for the lair version requirement
+    #[structopt(long, default_value = "*")]
+    lair_version_req: semver::VersionReq,
+
     #[structopt(
         long,
         default_value = "holochain,hc,kitsune-p2p-proxy",
@@ -267,13 +271,14 @@ fn main() -> Fallible<()> {
 
     let holochain_crate_srcinfo = nvfetcher_holochain.get_crate_srcinfo()?;
 
-    let (repo, rev) = read_lair_revision(&nvfetcher_holochain).map(|(repo, rev)| {
-        (
-            repo.map(|url| url.to_string())
-                .unwrap_or_else(|| "https://github.com/holochain/lair".to_string()),
-            rev,
-        )
-    })?;
+    let (repo, rev) =
+        read_lair_revision(&nvfetcher_holochain, &opt.lair_version_req).map(|(repo, rev)| {
+            (
+                repo.map(|url| url.to_string())
+                    .unwrap_or_else(|| "https://github.com/holochain/lair".to_string()),
+                rev,
+            )
+        })?;
 
     let nvfetcher_lair = NvfetcherWrapper::new(
         BinCrateSource {
@@ -333,7 +338,10 @@ fn main() -> Fallible<()> {
 
 // this reads the lair version from the holochain source directory's Cargo.lock
 // TODO: simply read the lair version from the local Cargo.lock that nvfetcher stores?
-fn read_lair_revision(nvfetcher_holochain: &NvfetcherWrapper) -> Fallible<(Option<Url>, String)> {
+fn read_lair_revision(
+    nvfetcher_holochain: &NvfetcherWrapper,
+    version_req: &semver::VersionReq,
+) -> Fallible<(Option<Url>, String)> {
     let tmpdir = tempdir()?;
 
     let import_fn = r#"
@@ -379,18 +387,19 @@ in nixpkgs.callPackage generated {}
     let lockfile = Lockfile::load(&holochain_cargo_lock_path)?;
     eprintln!("number of dependencies: {}", lockfile.packages.len());
 
-    let lair_keystore_client_dep = lockfile
+    let lair_keystore_api_dep = lockfile
         .packages
         .iter()
-        .find(|p| p.name.as_str() == "lair_keystore_client")
+        .find(|p| p.name.as_str() == "lair_keystore_api" && version_req.matches(&p.version))
         .ok_or_else(|| {
             anyhow::anyhow!(
-                "couldn't find lair_keystore_client in {}",
-                holochain_cargo_lock_path.display()
+                "couldn't find lair_keystore_api matching '{}' in {:?}",
+                &version_req,
+                holochain_cargo_lock_path.display(),
             )
         })?;
 
-    let lair_source = match &lair_keystore_client_dep.source {
+    let lair_source = match &lair_keystore_api_dep.source {
         Some(source) if source.is_git() => {
             eprintln!("lair is a git source! {:#?}", source.url());
             let mut url = source.url().clone();
@@ -406,7 +415,7 @@ in nixpkgs.callPackage generated {}
         _ => None,
     };
 
-    let lair_rev = format!("v{}", lair_keystore_client_dep.version);
+    let lair_rev = format!("v{}", lair_keystore_api_dep.version);
 
     Ok((lair_source, lair_rev))
 }
