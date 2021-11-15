@@ -75,12 +75,17 @@ in
 
           updateAll = builtins.concatStringsSep "\n" (lib.attrsets.mapAttrsToList
               (key: value:
+              let
+                extraArgs = builtins.concatStringsSep " " (lib.attrsets.mapAttrsToList
+                  (key': value': ''--${key'}="${value'}"'')
+                  value
+                );
+              in
                   ''
                   ${packages.update-holochain-versions}/bin/update-holochain-versions \
                       --nvfetcher-dir=${toplevel}/nix/nvfetcher \
                       --output-file=${toplevel}/packages/holochain/versions/${key}.nix \
-                      --git-rev=${value.git_rev} \
-                      --lair-version-req='${value.lair_version_req or "*"}' \
+                      ${extraArgs}
                       ;
                   ''
               )
