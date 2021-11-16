@@ -171,6 +171,7 @@ static HANDLEBARS: Lazy<handlebars::Handlebars> = Lazy::new(|| {
             HOLOCHAIN_VERSION_TEMPLATE,
             r#"# This file was generated with the following command:
 #{{#each this.args}} {{{@this}}}{{/each}}
+# For usage instructions please visit https://github.com/holochain/holochain-nixpkgs/#readme
 
 {
     url = "{{this.url}}";
