@@ -66,6 +66,24 @@
       };
     };
   };
+  holochain_revision_holochain-0_0_115 = {
+    pname = "holochain_revision_holochain-0_0_115";
+    version = "holochain-0.0.115";
+    src = fetchgit {
+      url = "https://github.com/holochain/holochain";
+      rev = "holochain-0.0.115";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "163fvii27wqpni7f5f0m0nxivjjdgsycb2pnd1jcadx9i9d70ziv";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_115-holochain-0.0.115/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "1yy1y1d523xdzwg1gc77pigbcwsbawmy4b7vw8v21m7q957sk0c4";
+      };
+    };
+  };
   lair_revision_v0_0_7 = {
     pname = "lair_revision_v0_0_7";
     version = "v0.0.7";
@@ -133,13 +151,13 @@
   };
   nixpkgs-master = {
     pname = "nixpkgs-master";
-    version = "259090f25d2de1461ad1f6230501cf5fcfa7741d";
+    version = "c6b332cb1a452d6acc3d24d5bebc3f24da5bc3aa";
     src = fetchFromGitHub ({
       owner = "nixos";
       repo = "nixpkgs";
-      rev = "259090f25d2de1461ad1f6230501cf5fcfa7741d";
+      rev = "c6b332cb1a452d6acc3d24d5bebc3f24da5bc3aa";
       fetchSubmodules = false;
-      sha256 = "08h2mdaj2iw9lkairiw8zsr69kbnxjjzh770bksip7gn0bz7pgsd";
+      sha256 = "0zssjzsxwzjibmgnsd3fwj3ibdn1v7nn5alg44brpgmw3hfvmk35";
     });
   };
   nixpkgs-steveej = {

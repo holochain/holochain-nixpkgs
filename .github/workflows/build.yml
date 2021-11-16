@@ -24,6 +24,7 @@ jobs:
           - develop
           - develop_lair_0_1
           - v0_0_110
+          - v0_0_115
 
         # Set this to notify the global nur package registry that changes are
         # available.
