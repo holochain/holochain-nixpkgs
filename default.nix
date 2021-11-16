@@ -38,7 +38,6 @@ in
   modules = import ./modules; # NixOS modules
   overlays = import ./overlays; # nixpkgs overlays
 
-
   # expose the sources
   inherit sources;
 
@@ -52,7 +51,13 @@ in
   # expose this derivation as the only one so it is used by `nix-shell`
   shellDerivation = pkgs.mkShell {
     name = "env";
+
+    NIX_PATH = "nixpkgs=${sources.nixpkgs.src}";
+
     packages = (with pkgs; [
+        # for nix-shell --pure
+        git cacert nix
+
         nix-build-uncached
         rustPlatform.rust.rustc
 
@@ -96,11 +101,15 @@ in
           commitPaths = "${toplevel}/packages/holochain/versions ${toplevel}/nix/nvfetcher";
         in ''
           set -e
+
           pushd ${toplevel}
 
+          trap "git checkout ${toplevel}/nix/nvfetcher" ERR INT
           nvfetcher-clean
 
           ${updateAll}
+
+          trap "" ERR INT
 
           ${git}/bin/git add ${commitPaths}
 
