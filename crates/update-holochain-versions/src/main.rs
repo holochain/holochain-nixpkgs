@@ -141,6 +141,8 @@ struct HolochainVersion<'a> {
     bins: Vec<String>,
 
     lair: LairVersion<'a>,
+
+    args: Vec<String>,
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -196,8 +198,8 @@ static HANDLEBARS: Lazy<handlebars::Handlebars> = Lazy::new(|| {
     handlebars
         .register_template_string(
             HOLOCHAIN_VERSION_TEMPLATE,
-            r#"# This file was generated.
-# TODO: add comment at the top how to generate the file or how it was generated
+            r#"# This file was generated with the following command:
+#{{#each this.args}} {{{@this}}}{{/each}}
 
 {
     url = "{{this.url}}";
@@ -319,6 +321,21 @@ fn main() -> Fallible<()> {
                 output_hashes: lair_crate_srcinfo.cargo_lock.output_hashes.clone(),
             },
         },
+
+        args: std::env::args()
+            .into_iter()
+            .map(|arg| {
+                arg.replace(
+                    &format!(
+                        "{}/",
+                        std::env::current_dir()
+                            .unwrap_or_default()
+                            .to_string_lossy()
+                    ),
+                    "",
+                )
+            })
+            .collect(),
     };
 
     HANDLEBARS
