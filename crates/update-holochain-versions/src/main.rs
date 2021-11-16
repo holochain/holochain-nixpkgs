@@ -161,35 +161,6 @@ struct CargoLock<'a> {
     output_hashes: HashMap<String, String>,
 }
 
-#[cfg(features = "disabled")]
-fn git_rev_helper(
-    h: &handlebars::Helper,
-    _: &handlebars::Handlebars,
-    _: &handlebars::Context,
-    rc: &mut handlebars::RenderContext,
-    out: &mut dyn handlebars::Output,
-) -> handlebars::HelperResult {
-    let param = h.param(0).unwrap();
-
-    let obj = param
-        .value()
-        .as_object()
-        .unwrap()
-        .iter()
-        .next()
-        .ok_or_else(|| handlebars::RenderError::new("invalid GitRev"))?;
-
-    let git_rev = GitSrc::from_str(&format!("{}:{}", obj.0, obj.1,)).unwrap();
-
-    let (k, v) = match git_rev {
-        GitSrc::Branch(branch) => ("src.branch", branch),
-        GitSrc::Commit(commit) => ("src.manual", commit),
-    };
-
-    out.write(&format!(r#"{} = "{}""#, k, v))?;
-    Ok(())
-}
-
 static HOLOCHAIN_VERSION_TEMPLATE: &str = "holochain_version_template";
 static HOLOCHAIN_VERSIONS_TEMPLATE: &str = "holochain_versions_template";
 
@@ -206,7 +177,6 @@ static HANDLEBARS: Lazy<handlebars::Handlebars> = Lazy::new(|| {
     rev = "{{this.rev}}";
     sha256 = "{{this.sha256}}";
     cargoLock = {
-        # lockFile = "{{this.cargoLock.lock_file}}";
         outputHashes = {
             {{#each this.cargoLock.outputHashes}}
             "{{@key}}" = "{{@this}}";
@@ -230,7 +200,6 @@ static HANDLEBARS: Lazy<handlebars::Handlebars> = Lazy::new(|| {
         ];
 
         cargoLock = {
-            # lockFile = "{{this.lair.cargoLock.lock_file}}";
             outputHashes = {
                 {{#each this.lair.cargoLock.outputHashes}}
                 "{{@key}}" = "{{@this}}";
