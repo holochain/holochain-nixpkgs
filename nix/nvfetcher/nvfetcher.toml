@@ -17,11 +17,6 @@ src.git = "https://github.com/nixos/nixpkgs"
 src.branch = "master"
 fetch.github = "nixos/nixpkgs"
 
-[nixpkgs-steveej]
-src.git = "https://github.com/steveej-forks/nixpkgs"
-src.branch = "fix-import-cargo-lock"
-fetch.github = "steveej-forks/nixpkgs"
-
 [nixpkgs-unstable]
 src.git = "https://github.com/nixos/nixpkgs"
 src.branch = "nixpkgs-unstable"
