@@ -14,17 +14,17 @@
   };
   holochain_branch_develop = {
     pname = "holochain_branch_develop";
-    version = "b0540812180ad4769f2cc792bcd8df2b5fce6579";
+    version = "29d5c1fcd0290a62bde30a23e227be6c7cdeb276";
     src = fetchgit {
       url = "https://github.com/holochain/holochain";
-      rev = "b0540812180ad4769f2cc792bcd8df2b5fce6579";
+      rev = "29d5c1fcd0290a62bde30a23e227be6c7cdeb276";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "1pddghb333116k6x93dxc35vkqz8c7p0a129rmcqiy1s76wf8bdr";
+      sha256 = "07vmg5sr0np6jds4xmjyj5nns83l56qhy75f6c8z09b7hh55bn2l";
     };
     cargoLock = {
-      lockFile = ./holochain_branch_develop-b0540812180ad4769f2cc792bcd8df2b5fce6579/Cargo.lock;
+      lockFile = ./holochain_branch_develop-29d5c1fcd0290a62bde30a23e227be6c7cdeb276/Cargo.lock;
       outputHashes = {
         "cargo-test-macro-0.1.0" = "1yy1y1d523xdzwg1gc77pigbcwsbawmy4b7vw8v21m7q957sk0c4";
       };
@@ -32,17 +32,17 @@
   };
   holochain_branch_main = {
     pname = "holochain_branch_main";
-    version = "efd47955adbf381bf9a886b0e0f9146dfd6be46c";
+    version = "c40fc5beb86be3af14bdf28f8554363e1c52cb2f";
     src = fetchgit {
       url = "https://github.com/holochain/holochain";
-      rev = "efd47955adbf381bf9a886b0e0f9146dfd6be46c";
+      rev = "c40fc5beb86be3af14bdf28f8554363e1c52cb2f";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "0krgdv6a01c484a7hy9q5mnzx8vi3jwccb3qwmysnw1mwdykd9a0";
+      sha256 = "07vmg5sr0np6jds4xmjyj5nns83l56qhy75f6c8z09b7hh55bn2l";
     };
     cargoLock = {
-      lockFile = ./holochain_branch_main-efd47955adbf381bf9a886b0e0f9146dfd6be46c/Cargo.lock;
+      lockFile = ./holochain_branch_main-c40fc5beb86be3af14bdf28f8554363e1c52cb2f/Cargo.lock;
       outputHashes = {
         "cargo-test-macro-0.1.0" = "1yy1y1d523xdzwg1gc77pigbcwsbawmy4b7vw8v21m7q957sk0c4";
       };
@@ -79,6 +79,24 @@
     };
     cargoLock = {
       lockFile = ./holochain_revision_holochain-0_0_115-holochain-0.0.115/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "1yy1y1d523xdzwg1gc77pigbcwsbawmy4b7vw8v21m7q957sk0c4";
+      };
+    };
+  };
+  holochain_revision_holochain-0_0_116 = {
+    pname = "holochain_revision_holochain-0_0_116";
+    version = "holochain-0.0.116";
+    src = fetchgit {
+      url = "https://github.com/holochain/holochain";
+      rev = "holochain-0.0.116";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "07vmg5sr0np6jds4xmjyj5nns83l56qhy75f6c8z09b7hh55bn2l";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_116-holochain-0.0.116/Cargo.lock;
       outputHashes = {
         "cargo-test-macro-0.1.0" = "1yy1y1d523xdzwg1gc77pigbcwsbawmy4b7vw8v21m7q957sk0c4";
       };
@@ -151,13 +169,13 @@
   };
   nixpkgs-master = {
     pname = "nixpkgs-master";
-    version = "12fc0f19fefa9dff68bc3e0938b815ab8d89df90";
+    version = "e3ed6248b89b8507780208bc8088bb0d58ef1972";
     src = fetchFromGitHub ({
       owner = "nixos";
       repo = "nixpkgs";
-      rev = "12fc0f19fefa9dff68bc3e0938b815ab8d89df90";
+      rev = "e3ed6248b89b8507780208bc8088bb0d58ef1972";
       fetchSubmodules = false;
-      sha256 = "1v2a2g7v4xr696h8pyzhqllccfn0692pvbj5a3r15m8b5dlk5swy";
+      sha256 = "163r8pa01whiraz5drigxd9xhxf2rnr1ayr6pqx2crj12s5amq1v";
     });
   };
   nixpkgs-unstable = {
