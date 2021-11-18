@@ -6,84 +6,81 @@
 
 **The holochain [Nix User Repository](https://github.com/nix-community/NUR)**
 
-This repository is used to maintain the nix expressions that package holochain and other binaries that are required and useful for using it.
+This repository contains nix expressions that package holochain and other related binaries (e.g. lair-keystore).
 
 ## Usage
 
-Read this section if you're interested in using the tools and packages provided by this repository.
-All given commands assume that you have a working installation of Nix.
+Using holonix, you
+1. Create a `default.nix` file describing what holochain version you need
+2. Run `nix-shell` from the same folder as the `default.nix` file, which puts you into a shell environment where you can run `holochain` at the requested version
 
-### Using a packaged Holochain Version (with Holonix)
+You can create a `default.nix` file in each repository you're working on that uses holochain. This could be useful if you're working on various projects that use different versions of holochain, or if you're collaborating on a project and want to update the holochain version it uses.
 
-For a list of available version configurations please browse the `*.nix` files [packages/holochain/versions/]().
+### Installing Nix
 
-If you would like to receive these programmatically, the following example command can get you started.
-Note that it was executed during the time of development against the _staging_ branch.
-You probably want to run this against the _develop_ branch, or even against a pinned revision.
+See <https://developer.holochain.org/install/> for instructions on Installing the Nix Package Manager
 
-```shell
-$ nix eval -I holochain-nixpkgs=https://github.com/holochain/holochain-nixpkgs/archive/staging.tar.gz '(builtins.attrNames (import <holochain-nixpkgs> {}).packages.holochain.holochainVersions)'
-[ "develop" "develop_lair_0_0" "develop_lair_0_1" "main" "v0_0_110" ]
+### Using a packaged Holochain Version
 
-```
-
-All available versions are also uploaded to Cachix by our CI.
-Instructions on how to setup downloading the Holochain binaries from this cache instead of rebuilding them on your machine can be found here: https://app.cachix.org/cache/holochain-ci#pull.
-
-
-#### Holonix
-
-In your `default.nix`, pass any of the above strings as the value to the `holochainVersionId` argument. Here's an impure example that uses holonix' staging branch and instructs it to use the _v0\_0\_110_ holochain version.
+Some versions of holochain are pre-packaged. Here is an example `default.nix` that uses the pre-packaged version `main`:
 
 ```nix
 let
-  holonixPath = builtins.fetchTarball "https://github.com/holochain/holonix/archive/staging.tar.gz";
+  holonixPath = builtins.fetchTarball "https://github.com/holochain/holonix/archive/f3ecb117bdd876b8dcb33ad04984c5da5b2d358c.tar.gz";
   holonix = import (holonixPath) {
-    holochainVersionId = "v0_0_110";
+    holochainVersionId = "main";
   };
   nixpkgs = holonix.pkgs;
 in nixpkgs.mkShell {
-  inputsFrom = [ holonix.main ];
+  inputsFrom = [ holonix.shell ];
   packages = [
     # additional packages go here
   ];
 }
 ```
 
-### Using a custom Holochain Version (with Holonix)
-
-The Holochain version configuration snippets are used within this repository as well as by [Holonix][holonix] and its users.
-While we maintain common versions in this repository, you may be intersted in using a different Holochain revision or branch, or a specific Lair version.
-
-The following command generates a version configuration for the _holochain-0.0.115_ revision, which is a [tag in the holochain repository](https://github.com/holochain/holochain/releases/tag/holochain-0.0.115), and it chooses the Lair version that matches the _~0.1_ semantic version requirement.
-
+There are many available pre-packaged versions. To see the complete list, run the following command:
 ```shell
-nix run -f https://github.com/holochain/holochain-nixpkgs/archive/staging.tar.gz packages.update-holochain-versions -c update-holochain-versions --git-src=revision:holochain-0.0.115 --output-file=/dev/stdout --lair-version-req='~0.1'
+$ nix eval -I holochain-nixpkgs=https://github.com/holochain/holochain-nixpkgs/archive/staging.tar.gz '(builtins.attrNames (import <holochain-nixpkgs> {}).packages.holochain.holochainVersions)'
 ```
 
-#### Holonix
-
-In your `default.nix`, set the `holochainVersionId` to _custom_ and set the `holochainVersion` argument to the generated version config. Here's an impure example that uses holonix' staging branch and maintains the version config in a separate file called _holochain\_version.nix_.
-
-```shell
-nix run -f https://github.com/holochain/holochain-nixpkgs/archive/staging.tar.gz packages.update-holochain-versions -c update-holochain-versions --git-src=revision:holochain-0.0.115 --output-file=holochain_version.nix --lair-version-req='~0.1'
+At the time of writing, this returns
+```nix
+[ "develop" "develop_lair_0_0" "develop_lair_0_1" "main" "v0_0_110" ]
 ```
+
+#### Reducing compile times with Cachix
+
+If you just use that `default.nix` above, you may have to compile holochain locally, which takes a long time. To skip this entirely, you can configure Nix to use a pre-compiled version instead. See <https://app.cachix.org/cache/holochain-ci#pull> for more information.
+
+### Using a custom Holochain Version
+
+If the pre-packaged versions do not satisfy your use-case, you can specify a custom revision of holochain to use. Here is an example `default.nix`:
 
 ```nix
 let
-  holonixPath = builtins.fetchTarball "https://github.com/holochain/holonix/archive/staging.tar.gz";
+  holonixPath = builtins.fetchTarball "https://github.com/holochain/holonix/archive/f3ecb117bdd876b8dcb33ad04984c5da5b2d358c.tar.gz";
   holonix = import (holonixPath) {
     holochainVersionId = "custom";
     holochainVersion = import ./holochain_version.nix;
   };
   nixpkgs = holonix.pkgs;
 in nixpkgs.mkShell {
-  inputsFrom = [ holonix.main ];
+  inputsFrom = [ holonix.shell ];
   packages = [
     # additional packages go here
   ];
 }
 ```
+
+This requires that you create a `holochain_version.nix` file as well. You can automatically generate one with the following command:
+
+```shell
+nix run -f https://github.com/holochain/holochain-nixpkgs/archive/staging.tar.gz packages.update-holochain-versions -c update-holochain-versions \
+--git-src=revision:holochain-0.0.115  --lair-version-req='~0.1' --output-file=holochain_version.nix
+```
+
+`holochain-0.1.115` can be replaced with any commit hash or tag from the [Holochain repo](https://github.com/holochain/holochain), and `~0.1` can be replaced with any [SemVer specification](https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html) for [lair_keystore](https://crates.io/crates/lair_keystore)
 
 ## Development
 
