@@ -20,9 +20,9 @@ You can create a `default.nix` file in each repository you're working on that us
 
 See <https://developer.holochain.org/install/> for instructions on Installing the Nix Package Manager
 
-### Using a packaged Holochain Version
+### Using a pre-built Holochain Version
 
-Some versions of holochain are pre-packaged. Here is an example `default.nix` that uses the pre-packaged version `main`:
+Some versions of holochain are pre-built. Here is an example `default.nix` that uses the pre-built version `main`:
 
 ```nix
 let
@@ -39,7 +39,7 @@ in nixpkgs.mkShell {
 }
 ```
 
-There are many available pre-packaged versions. To see the complete list, run the following command:
+There are many available pre-built versions. To see the complete list, run the following command:
 ```shell
 $ nix eval -I holochain-nixpkgs=https://github.com/holochain/holochain-nixpkgs/archive/staging.tar.gz '(builtins.attrNames (import <holochain-nixpkgs> {}).packages.holochain.holochainVersions)'
 ```
@@ -55,7 +55,7 @@ If you just use that `default.nix` above, you may have to compile holochain loca
 
 ### Using a custom Holochain Version
 
-If the pre-packaged versions do not satisfy your use-case, you can specify a custom revision of holochain to use. Here is an example `default.nix`:
+If the pre-built versions do not satisfy your use-case, you can specify a custom revision of holochain to use. Here is an example `default.nix`:
 
 ```nix
 let
