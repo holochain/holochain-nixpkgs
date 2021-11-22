@@ -50,94 +50,19 @@ in
 
     NIX_PATH = "nixpkgs=${sources.nixpkgs.src}";
 
-    packages = (with pkgs; [
+    packages = [
         # for nix-shell --pure
-        git cacert nix
+        pkgs.git pkgs.cacert pkgs.nix
 
-        nix-build-uncached
-        rustPlatform.rust.rustc
+        pkgs.nix-build-uncached
+        pkgs.rustPlatform.rust.rustc
+        pkgs.nvfetcher
+        pkgs.crate2nix
 
-        nvfetcher
-        crate2nix
-
-        (writeScriptBin "nvfetcher-build" ''
-          pushd ${toString ./.}/nix/nvfetcher
-          ${nvfetcher}/bin/nvfetcher build $@
-        '')
-
-        (writeScriptBin "nvfetcher-clean" ''
-          pushd ${toString ./.}/nix/nvfetcher
-          ${nvfetcher}/bin/nvfetcher clean $@
-        '')
-
-        (writeScriptBin "hnixpkgs-update-all" (
-        let
-          toplevel = (builtins.toString ./.);
-
-          updateAll = builtins.concatStringsSep "\n" (lib.attrsets.mapAttrsToList
-              (key: value:
-              let
-                extraArgs = builtins.concatStringsSep " " (lib.attrsets.mapAttrsToList
-                  (key': value': ''--${key'}="${value'}"'')
-                  value
-                );
-              in
-                  ''
-                  ${packages.update-holochain-versions}/bin/update-holochain-versions \
-                      --nvfetcher-dir=${toplevel}/nix/nvfetcher \
-                      --output-file=${toplevel}/packages/holochain/versions/${key}.nix \
-                      ${extraArgs} \
-                      ;
-                  ''
-              )
-              packages.holochain.holochainVersionUpdateConfig
-            );
-
-          diffTargets = "${toplevel}/packages/holochain/versions ${toplevel}/nix/nvfetcher/_sources/generated.nix";
-          commitPaths = "${toplevel}/packages/holochain/versions ${toplevel}/nix/nvfetcher";
-        in ''
-          set -e
-
-          pushd ${toplevel}
-
-          trap "git checkout ${toplevel}/nix/nvfetcher" ERR INT
-          nvfetcher-clean
-
-          ${updateAll}
-
-          trap "" ERR INT
-
-          ${git}/bin/git add ${commitPaths}
-
-          if ${git}/bin/git diff --staged --exit-code -- ${diffTargets}; then
-              echo No updates found.
-          else
-              echo Updates found, commiting..
-              ${git}/bin/git commit ${commitPaths} -m "update all sources and holochain versions"
-          fi
-        ''))
-
-        (let
-          toplevel = (builtins.toString ./.);
-          outputPath = "nix/crate2nix/Cargo.nix";
-          diffTargets = "${outputPath} Cargo.lock";
-          buildTargets = "-A packages.update-holochain-versions";
-        in
-          writeScriptBin "hnixpkgs-regen-crate-expressions" ''
-          set -e
-          pushd ${toplevel}
-
-          ${cargo}/bin/cargo generate-lockfile
-          ${crate2nix}/bin/crate2nix generate --default-features --output=${outputPath}
-
-          if git diff --exit-code -- ${diffTargets}; then
-              echo No updates found.
-          else
-              nix-build default.nix --no-out-link ${buildTargets}
-              echo Updates found, commiting..
-              git commit ${diffTargets} -m "update generated crate expressions"
-          fi
-        '')
-    ]);
+        packages.scripts.nvfetcher-build
+        packages.scripts.nvfetcher-clean
+        packages.scripts.hnixpkgs-update-all
+        packages.scripts.nixpkgs-regen-crate-expressions
+    ];
   };
 }
