@@ -158,36 +158,25 @@
   };
   nixpkgs = {
     pname = "nixpkgs";
-    version = "2e4a1ac9c7b79012111ab99b27055523e5a7c0f0";
+    version = "02ee434b10ef3e55b92ed2fbf0f1f9d0d20d2f6d";
     src = fetchFromGitHub ({
       owner = "nixos";
       repo = "nixpkgs";
-      rev = "2e4a1ac9c7b79012111ab99b27055523e5a7c0f0";
+      rev = "02ee434b10ef3e55b92ed2fbf0f1f9d0d20d2f6d";
       fetchSubmodules = false;
-      sha256 = "17x6j906q7k5iwjcqw60xxp2v0ahxsf6h1pliv9mv7in2phw5fxq";
-    });
-  };
-  nixpkgs-master = {
-    pname = "nixpkgs-master";
-    version = "e3ed6248b89b8507780208bc8088bb0d58ef1972";
-    src = fetchFromGitHub ({
-      owner = "nixos";
-      repo = "nixpkgs";
-      rev = "e3ed6248b89b8507780208bc8088bb0d58ef1972";
-      fetchSubmodules = false;
-      sha256 = "163r8pa01whiraz5drigxd9xhxf2rnr1ayr6pqx2crj12s5amq1v";
+      sha256 = "163xpxkav524pq7wbc6sbsl9fkzc4wshpjq0h7vq7csnsb8w6p77";
     });
   };
   nixpkgs-unstable = {
     pname = "nixpkgs-unstable";
-    version = "5cb226a06c49f7a2d02863d0b5786a310599df6b";
+    version = "25e036ff5d2c9cd9382bbb1bbe0d929950c1449f";
     src = fetchgit {
       url = "https://github.com/nixos/nixpkgs";
-      rev = "5cb226a06c49f7a2d02863d0b5786a310599df6b";
+      rev = "25e036ff5d2c9cd9382bbb1bbe0d929950c1449f";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "0dzz207swwm5m0dyibhxg5psccrcqfh1lzkmzzfns27wc4ria6z3";
+      sha256 = "06rj0n7wxsq3d5y70mlr82i44q285caxagxa57cmwwm4y1ih3yb7";
     };
   };
   nvfetcher = {
@@ -203,14 +192,14 @@
   };
   rust-overlay = {
     pname = "rust-overlay";
-    version = "8a2e5fa870df3d34667d28fb3383d19516d182e4";
+    version = "472b5cd7968d3cc7f09b70d7418a607a8c615612";
     src = fetchgit {
       url = "https://github.com/oxalica/rust-overlay";
-      rev = "8a2e5fa870df3d34667d28fb3383d19516d182e4";
+      rev = "472b5cd7968d3cc7f09b70d7418a607a8c615612";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "0k87yxy6886bhv3fcn89wi7nq8lxhxgiqcg1mgkvmj1mw5jlmr0v";
+      sha256 = "01lhsvijn130cvi298cfl932fj2y098d2jj0gnh8mb1dkfhn179n";
     };
   };
 }

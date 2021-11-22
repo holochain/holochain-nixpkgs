@@ -14,18 +14,14 @@
 , pkgs ? import sources.nixpkgs.src {
     inherit system crossSystem overlays;
   }
+
 , pkgsUnstable ? import sources.nixpkgs-unstable.src {
     inherit system crossSystem overlays;
   }
 
-, pkgsMasterPath ? sources.nixpkgs-master.src
-, pkgsMaster ? import pkgsMasterPath {
-    inherit system crossSystem overlays;
-  }
-
 , rustPlatformSelector ? "stable"
-  # TODO: use `pkgs` when https://github.com/NixOS/nixpkgs/commit/b2aa19efe7ffacd5ba9642354ee51f2eb6a10d07 reaches stable
-, rustPlatform ? pkgsMaster.rust.packages."${rustPlatformSelector}".rustPlatform
+  # TODO: switch to a `pkgs` when https://github.com/NixOS/nixpkgs/commit/b2aa19efe7ffacd5ba9642354ee51f2eb6a10d07 reaches stable
+, rustPlatform ? pkgsUnstable.rust.packages."${rustPlatformSelector}".rustPlatform
 }:
 
 let
