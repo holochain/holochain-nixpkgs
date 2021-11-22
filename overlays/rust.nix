@@ -16,7 +16,7 @@ self: super:
       inherit extensions targets;
     };
 
-    rustNightly = mkRust { track = "nightly"; version = "2021-08-01"; };
+    rustNightly = mkRust { track = "nightly"; version = "latest"; };
     rustStable = mkRust { track = "stable"; version = "1.55.0"; };
 
   in {
@@ -42,4 +42,6 @@ self: super:
       };
     };
   });
+
+  inherit (self.rust.packages.stable.rust) rustc cargo;
 }

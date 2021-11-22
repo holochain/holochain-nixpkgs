@@ -1,4 +1,4 @@
-name: "Build and populate cache"
+name: "Build"
 on:
   pull_request:
   # push:
@@ -12,7 +12,7 @@ concurrency:
   group: ${{ github.head_ref }}
   cancel-in-progress: false
 jobs:
-  tests:
+  holochain-binaries:
     strategy:
       fail-fast: false
       matrix:
@@ -22,6 +22,10 @@ jobs:
         nixAttribute:
           - main
           - develop
+          - develop_lair_0_1
+          - v0_0_110
+          - v0_0_115
+          - v0_0_116
 
         # Set this to notify the global nur package registry that changes are
         # available.
@@ -62,21 +66,45 @@ jobs:
           name: ${{ matrix.cachixName }}
           signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-      - name: Check evaluation
-        run: |
-          nix-env -f . -qa \* --meta --xml \
-            --allowed-uris https://static.rust-lang.org \
-            --allowed-uris https://github.com/oxalica/rust-overlay/archive \
-            --allowed-uris https://github.com/NixOS/nixpkgs/archive \
-            --option restrict-eval false \
-            --option allow-import-from-derivation true \
-            --drv-path --show-trace \
-            -I nixpkgs=$(nix-instantiate --find-file nixpkgs) \
-            -I $PWD
-      - name: Build all holochain binaries
+      - name: Build derivations
         env:
           nix_attribute: ${{ matrix.nixAttribute }}
-        run: nix build -f . "packages.holochainAllBinariesWithDeps.${nix_attribute}" --extra-experimental-features nix-command
+        run: nix build -f . "packages.holochain.holochainAllBinariesWithDeps.${nix_attribute}" --extra-experimental-features nix-command
+  packages:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - ubuntu-latest
+          - macos-latest
+        nixAttribute:
+          - update-holochain-versions
+        cachixName:
+          - holochain-ci
+        nixPath:
+          - nixpkgs=channel:nixos-21.05
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2.3.5
+      - name: Install nix
+        uses: cachix/install-nix-action@v14
+        with:
+          nix_path: "${{ matrix.nixPath }}"
+      - name: Show nixpkgs version
+        run: nix-instantiate --eval -E '(import <nixpkgs> {}).lib.version'
+      - name: Setup cachix
+        uses: cachix/cachix-action@v10
+        # Don't replace <YOUR_CACHIX_NAME> here!
+        if: ${{ matrix.cachixName != '<YOUR_CACHIX_NAME>' }}
+        with:
+          name: ${{ matrix.cachixName }}
+          signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+      - name: Build derivations
+        env:
+          nix_attribute: ${{ matrix.nixAttribute }}
+        run: nix build -f . "packages.${nix_attribute}" --extra-experimental-features nix-command
 
     # TODO: this doesn't do anything. investigate and turn back on
     #

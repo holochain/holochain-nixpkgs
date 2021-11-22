@@ -1,3 +1,5 @@
 result
 result-*
-
+**/target/**
+.cargo/**
+nix/nvfetcher/_sources/.shake.*
