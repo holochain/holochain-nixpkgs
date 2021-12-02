@@ -14,17 +14,17 @@
   };
   holochain_branch_develop = {
     pname = "holochain_branch_develop";
-    version = "9702c767e89ba73393a7166aa0cecc6f15a26aed";
+    version = "6d853bed86f59fa8a0a716d81c07e089b0d42f16";
     src = fetchgit {
       url = "https://github.com/holochain/holochain";
-      rev = "9702c767e89ba73393a7166aa0cecc6f15a26aed";
+      rev = "6d853bed86f59fa8a0a716d81c07e089b0d42f16";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "15s5ln2gamn963dz6kj1khhi4rw9bkyinrb34jjpphn5gi3div8b";
+      sha256 = "1y8jzsr11gwgf5pmvqf4qwgw9g8m2l05yx8w2h1i5m3rphib2c3x";
     };
     cargoLock = {
-      lockFile = ./holochain_branch_develop-9702c767e89ba73393a7166aa0cecc6f15a26aed/Cargo.lock;
+      lockFile = ./holochain_branch_develop-6d853bed86f59fa8a0a716d81c07e089b0d42f16/Cargo.lock;
       outputHashes = {
         "cargo-test-macro-0.1.0" = "1yy1y1d523xdzwg1gc77pigbcwsbawmy4b7vw8v21m7q957sk0c4";
       };
@@ -32,17 +32,17 @@
   };
   holochain_branch_main = {
     pname = "holochain_branch_main";
-    version = "b194f98a007a1dc9e34f7997cd6e6a33f65807f8";
+    version = "8a0cd9283fd881ddbc467b1d0d97ee2fcd49d992";
     src = fetchgit {
       url = "https://github.com/holochain/holochain";
-      rev = "b194f98a007a1dc9e34f7997cd6e6a33f65807f8";
+      rev = "8a0cd9283fd881ddbc467b1d0d97ee2fcd49d992";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "1xxqq7dzykbdmvgdjv04f3djnj2ih1svizf22nwq05n2p54lgm9v";
+      sha256 = "13sayr6d081lpfrs25srgdacpnw5530h5ymhmgys67fnfkswwz43";
     };
     cargoLock = {
-      lockFile = ./holochain_branch_main-b194f98a007a1dc9e34f7997cd6e6a33f65807f8/Cargo.lock;
+      lockFile = ./holochain_branch_main-8a0cd9283fd881ddbc467b1d0d97ee2fcd49d992/Cargo.lock;
       outputHashes = {
         "cargo-test-macro-0.1.0" = "1yy1y1d523xdzwg1gc77pigbcwsbawmy4b7vw8v21m7q957sk0c4";
       };
@@ -194,25 +194,25 @@
   };
   nixpkgs = {
     pname = "nixpkgs";
-    version = "91e6a9a6568f751bb10222a937507e7e151a035e";
+    version = "43cdc5b364511eabdcad9fde639777ffd9e5bab1";
     src = fetchFromGitHub ({
       owner = "nixos";
       repo = "nixpkgs";
-      rev = "91e6a9a6568f751bb10222a937507e7e151a035e";
+      rev = "43cdc5b364511eabdcad9fde639777ffd9e5bab1";
       fetchSubmodules = false;
-      sha256 = "0yb2h8l3ip2j0ii698k7hpnz99l9g866bxxqsx9kjfm2cyhfdcrj";
+      sha256 = "1wrd5rrpa2fcy6q9193vgihiqmqc686vmwqyn24cb0fk1a37m2g4";
     });
   };
   nixpkgs-unstable = {
     pname = "nixpkgs-unstable";
-    version = "98747f27ecfee70c8c97b195cbb94df80a074dda";
+    version = "391f93a83c3a486475d60eb4a569bb6afbf306ad";
     src = fetchgit {
       url = "https://github.com/nixos/nixpkgs";
-      rev = "98747f27ecfee70c8c97b195cbb94df80a074dda";
+      rev = "391f93a83c3a486475d60eb4a569bb6afbf306ad";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "04ss525ns5qqlggrdhvc6y4hqmshylda9yd0y99ddliyn15wmf27";
+      sha256 = "0s5f7j2akh3g0013880jfbigdaac1z76r9dv46yw6k254ba2r6nq";
     };
   };
   nvfetcher = {
@@ -228,14 +228,14 @@
   };
   rust-overlay = {
     pname = "rust-overlay";
-    version = "aaf6f89ca6a5d22ed822d93835ce438ee338936c";
+    version = "0901e383f2381bde37ddc8c7def9dd84c408aeef";
     src = fetchgit {
       url = "https://github.com/oxalica/rust-overlay";
-      rev = "aaf6f89ca6a5d22ed822d93835ce438ee338936c";
+      rev = "0901e383f2381bde37ddc8c7def9dd84c408aeef";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "1ss1lhs56s50k86kd3vh69sj14jyn2csp4q1z5zhna1jl4j9qms9";
+      sha256 = "15ig608hc644syb1xlah7ysjrlriz8rqfvn2c07xgjkf4p71r27w";
     };
   };
 }
