@@ -1,11 +1,11 @@
 # This file was generated with the following command:
-# /nix/store/xpn30vn6vr9fym5jwhwisadbmw3g4f0x-update-holochain-versions/bin/update-holochain-versions --nvfetcher-dir=nix/nvfetcher --output-file=packages/holochain/versions/v0_0_118.nix --git-src=revision:holochain-0.0.118 --lair-version-req=~0.0
+# /nix/store/xpn30vn6vr9fym5jwhwisadbmw3g4f0x-update-holochain-versions/bin/update-holochain-versions --nvfetcher-dir=nix/nvfetcher --output-file=packages/holochain/versions/v0_0_119.nix --git-src=revision:holochain-0.0.119 --lair-version-req=~0.0
 # For usage instructions please visit https://github.com/holochain/holochain-nixpkgs/#readme
 
 {
     url = "https://github.com/holochain/holochain";
-    rev = "holochain-0.0.118";
-    sha256 = "13sayr6d081lpfrs25srgdacpnw5530h5ymhmgys67fnfkswwz43";
+    rev = "holochain-0.0.119";
+    sha256 = "0d9bzbxli99ra4abi8dcb6mn5sl0cm1j70magxd7acbm51836bnx";
     cargoLock = {
         outputHashes = {
             "cargo-test-macro-0.1.0" = "1yy1y1d523xdzwg1gc77pigbcwsbawmy4b7vw8v21m7q957sk0c4";
