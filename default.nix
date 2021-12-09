@@ -20,8 +20,8 @@
   }
 
 , rustPlatformSelector ? "stable"
-  # TODO: switch to a `pkgs` when https://github.com/NixOS/nixpkgs/commit/b2aa19efe7ffacd5ba9642354ee51f2eb6a10d07 reaches stable
-, rustPlatform ? pkgsUnstable.rust.packages."${rustPlatformSelector}".rustPlatform
+, pkgsCrossIndex ? null
+, rustPlatform ? (if pkgsCrossIndex == null then pkgs else pkgs.pkgsCross."${pkgsCrossIndex}").rust.packages."${rustPlatformSelector}".rustPlatform
 }:
 
 let

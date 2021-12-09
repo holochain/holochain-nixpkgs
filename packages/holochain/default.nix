@@ -176,9 +176,14 @@ let
     doCheck = false;
 
     meta.platforms = [
-        "aarch64-linux"
         "x86_64-linux"
         "x86_64-darwin"
+
+        # untested
+        "aarch64-linux"
+        "aarch64-darwin"
+        "x86_64-w64-mingw32"
+        "x86_64-windows"
     ];
   };
 

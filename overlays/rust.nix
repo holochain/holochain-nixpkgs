@@ -8,8 +8,9 @@ self: super:
     targets = [
       "aarch64-unknown-linux-musl"
       "wasm32-unknown-unknown"
-      "x86_64-pc-windows-gnu"
       "x86_64-unknown-linux-musl"
+      "x86_64-pc-windows-msvc"
+      "x86_64-pc-windows-gnu"
     ];
 
     mkRust = { track, version }: self.rust-bin."${track}"."${version}".default.override {
