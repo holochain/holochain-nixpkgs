@@ -212,13 +212,13 @@
   };
   nixpkgs = {
     pname = "nixpkgs";
-    version = "70b96897b3f0db0880caab88d7550fb80574ebd4";
+    version = "5894b65492c86a777fc124c400821c31f7ebed04";
     src = fetchFromGitHub ({
       owner = "nixos";
       repo = "nixpkgs";
-      rev = "70b96897b3f0db0880caab88d7550fb80574ebd4";
+      rev = "5894b65492c86a777fc124c400821c31f7ebed04";
       fetchSubmodules = false;
-      sha256 = "1kn6mw0wrwgkdcdhxfzz0957pgkjiiayp3yasw53sr1lic4v5as2";
+      sha256 = "0qbchksq2vkfmik4094nrs0divb42hglk2a0n4c4d7vkcq414fcz";
     });
   };
   nixpkgs-unstable = {
@@ -246,14 +246,14 @@
   };
   rust-overlay = {
     pname = "rust-overlay";
-    version = "1a7982b263ceefd78773630437b97b51e7186aa4";
+    version = "057a3e295951ccbadd968b79016dbfc4557d9694";
     src = fetchgit {
       url = "https://github.com/oxalica/rust-overlay";
-      rev = "1a7982b263ceefd78773630437b97b51e7186aa4";
+      rev = "057a3e295951ccbadd968b79016dbfc4557d9694";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "0w2dg8il14jr9i1zaap3jnkzhh3pyy91jh0yrlfvn5ysg7v6rbap";
+      sha256 = "1k7341ga06sv8rz9r7a2zjvknhs8dnhyxl320slh91xxzdx3pa68";
     };
   };
 }
