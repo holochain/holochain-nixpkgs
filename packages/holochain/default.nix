@@ -9,7 +9,6 @@
 , pkgconfig
 , lib
 , callPackage
-, rust
 , libiconv
 , sqlcipher
 , opensslStatic ? openssl.override (_: {

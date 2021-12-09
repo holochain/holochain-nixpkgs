@@ -172,7 +172,7 @@ impl<'a> NvfetcherWrapper<'a> {
                 nvfetcher_toml_editable["nixpkgs"]["src"]["git"] =
                     value("https://github.com/nixos/nixpkgs");
                 nvfetcher_toml_editable["nixpkgs"]["fetch"]["github"] = value("nixos/nixpkgs");
-                nvfetcher_toml_editable["nixpkgs"]["src"]["branch"] = value("release-21.05");
+                nvfetcher_toml_editable["nixpkgs"]["src"]["branch"] = value("release-21.11");
                 // }
 
                 // ensure the crate source is set

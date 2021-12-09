@@ -9,7 +9,7 @@ src.git = "https://github.com/kolloch/crate2nix"
 
 [nixpkgs]
 src.git = "https://github.com/nixos/nixpkgs"
-src.branch = "release-21.05"
+src.branch = "release-21.11"
 fetch.github = "nixos/nixpkgs"
 
 [nixpkgs-unstable]
