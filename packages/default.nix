@@ -1,16 +1,16 @@
 { pkgs
 , lib
 , callPackage
-, rustPlatform
 , symlinkJoin
 , nvfetcher
 , nixUnstable
 , makeWrapper
+, mkRust
+, makeRustPlatform
 }:
 
 let
-  holochain = callPackage ./holochain { inherit rustPlatform; };
-
+  holochain = callPackage ./holochain { inherit mkRust makeRustPlatform; };
   crate2nixGenerated = import ../nix/crate2nix/Cargo.nix { inherit pkgs; };
   crate2nix = crate2nixGenerated.workspaceMembers.update-holochain-versions.build.override {
     # TODO: tests run nix which currently fails within a nix build.
