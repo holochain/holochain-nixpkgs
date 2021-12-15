@@ -3,13 +3,13 @@
 {
   crate2nix = {
     pname = "crate2nix";
-    version = "d0c00673bafbaa648e84fb7595a0e4cd84c3b18a";
+    version = "e846eb426e87c1c3f9b85aa11b737a49166ca207";
     src = fetchFromGitHub ({
       owner = "kolloch";
       repo = "crate2nix";
-      rev = "d0c00673bafbaa648e84fb7595a0e4cd84c3b18a";
+      rev = "e846eb426e87c1c3f9b85aa11b737a49166ca207";
       fetchSubmodules = false;
-      sha256 = "0qnv6f3svdmdvyqb4zy5cvfj60ihy74m06s82s98s5fwldz7232q";
+      sha256 = "05bah1a9x4rnj9pm4pmknp860hwni3cqywyrlw6z10wv4hzv0rm9";
     });
   };
   holochain_branch_develop = {
@@ -212,25 +212,25 @@
   };
   nixpkgs = {
     pname = "nixpkgs";
-    version = "81b4e2d21f1031720b238208b2848dc64a627750";
+    version = "c94176b78d29194bd9d63dd1b55c57526e0eb0c2";
     src = fetchFromGitHub ({
       owner = "nixos";
       repo = "nixpkgs";
-      rev = "81b4e2d21f1031720b238208b2848dc64a627750";
+      rev = "c94176b78d29194bd9d63dd1b55c57526e0eb0c2";
       fetchSubmodules = false;
-      sha256 = "18g0flskjssppnrvm8b6qsbnf96lwmww2na6kj1fpgffqf7hq103";
+      sha256 = "0pw6aisf427ppyi9hcgaj6vpbp8k5nn3ys8cws6qnxliahv2zad2";
     });
   };
   nixpkgs-unstable = {
     pname = "nixpkgs-unstable";
-    version = "f225322e3bea8638304adfcf415cd11de99f2208";
+    version = "f6e14b6ada8ea9e1bcec55d9cb716e9a86af0642";
     src = fetchgit {
       url = "https://github.com/nixos/nixpkgs";
-      rev = "f225322e3bea8638304adfcf415cd11de99f2208";
+      rev = "f6e14b6ada8ea9e1bcec55d9cb716e9a86af0642";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "1cbl7w81h2m4as15z094jkcrgg2mdi2wnkzg2dhd6080vgic11vy";
+      sha256 = "0a3sqkdmh1i7rimk2yrw8d9fvkmzam787w4s50c1izlwrzvqm6iz";
     };
   };
   nvfetcher = {
@@ -246,14 +246,14 @@
   };
   rust-overlay = {
     pname = "rust-overlay";
-    version = "057a3e295951ccbadd968b79016dbfc4557d9694";
+    version = "712446b06015f7f51e60a440949357c6f18ea25f";
     src = fetchgit {
       url = "https://github.com/oxalica/rust-overlay";
-      rev = "057a3e295951ccbadd968b79016dbfc4557d9694";
+      rev = "712446b06015f7f51e60a440949357c6f18ea25f";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "1k7341ga06sv8rz9r7a2zjvknhs8dnhyxl320slh91xxzdx3pa68";
+      sha256 = "1maimhs7v6ax2gksskzm5wnqdka30smdy3sj7gb7vg6679m8rpi1";
     };
   };
 }
