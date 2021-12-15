@@ -29,6 +29,7 @@ jobs:
           - v0_0_117
           - v0_0_118
           - v0_0_119
+          - v0_0_120
         # Set this to notify the global nur package registry that changes are
         # available.
         #
