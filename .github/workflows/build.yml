@@ -50,7 +50,7 @@ jobs:
         cachixName:
           - holochain-ci
         nixPath:
-          - nixpkgs=channel:nixos-21.05
+          - nixpkgs=channel:nixos-21.11
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout repository
@@ -85,7 +85,7 @@ jobs:
         cachixName:
           - holochain-ci
         nixPath:
-          - nixpkgs=channel:nixos-21.05
+          - nixpkgs=channel:nixos-21.11
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout repository
