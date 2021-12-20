@@ -12,11 +12,6 @@ src.git = "https://github.com/nixos/nixpkgs"
 src.branch = "release-21.11"
 fetch.github = "nixos/nixpkgs"
 
-[nixpkgs-unstable]
-src.git = "https://github.com/nixos/nixpkgs"
-src.branch = "nixpkgs-unstable"
-fetch.git = "https://github.com/nixos/nixpkgs"
-
 [rust-overlay]
 src.git = "https://github.com/oxalica/rust-overlay"
 fetch.git = "https://github.com/oxalica/rust-overlay"
