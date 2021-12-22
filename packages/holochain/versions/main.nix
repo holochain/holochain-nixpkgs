@@ -1,5 +1,5 @@
 # This file was generated with the following command:
-# /nix/store/9hsmb3rkmgr3syzc36jz1gdw611v68sx-update-holochain-versions/bin/update-holochain-versions --nvfetcher-dir=nix/nvfetcher --output-file=packages/holochain/versions/main.nix --git-src=branch:main
+# /nix/store/dvn8q4vc9vd0gzzdbhsipfp2iamd9vwj-update-holochain-versions/bin/update-holochain-versions --nvfetcher-dir=nix/nvfetcher --output-file=packages/holochain/versions/main.nix --git-src=branch:main
 # For usage instructions please visit https://github.com/holochain/holochain-nixpkgs/#readme
 
 {
