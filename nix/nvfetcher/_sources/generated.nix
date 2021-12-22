@@ -3,28 +3,28 @@
 {
   crate2nix = {
     pname = "crate2nix";
-    version = "e846eb426e87c1c3f9b85aa11b737a49166ca207";
+    version = "9651f0dfa5aec75833cf20690a56e751e010ea96";
     src = fetchFromGitHub ({
       owner = "kolloch";
       repo = "crate2nix";
-      rev = "e846eb426e87c1c3f9b85aa11b737a49166ca207";
+      rev = "9651f0dfa5aec75833cf20690a56e751e010ea96";
       fetchSubmodules = false;
-      sha256 = "05bah1a9x4rnj9pm4pmknp860hwni3cqywyrlw6z10wv4hzv0rm9";
+      sha256 = "07jsxpw4yb2822l6na6ljlcgr9hc8fshkhaz5rc6c66rmkbwdn56";
     });
   };
   holochain_branch_develop = {
     pname = "holochain_branch_develop";
-    version = "fe6f159c4c681d189e29d25576e253384b22bb38";
+    version = "fece197dafd5d0ed9b8ae1ac7acf828b379d552b";
     src = fetchgit {
       url = "https://github.com/holochain/holochain";
-      rev = "fe6f159c4c681d189e29d25576e253384b22bb38";
+      rev = "fece197dafd5d0ed9b8ae1ac7acf828b379d552b";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "1afpsx0pqzpfdm49czbz3z6c9sjlkz4cmqsxbw4pz3vk7jr8spjz";
+      sha256 = "1kb4l30dkd0lnk3gdhbxsdf4qq39rb3gd9yhfd8nlxifply3pyhm";
     };
     cargoLock = {
-      lockFile = ./holochain_branch_develop-fe6f159c4c681d189e29d25576e253384b22bb38/Cargo.lock;
+      lockFile = ./holochain_branch_develop-fece197dafd5d0ed9b8ae1ac7acf828b379d552b/Cargo.lock;
       outputHashes = {
         "cargo-test-macro-0.1.0" = "1yy1y1d523xdzwg1gc77pigbcwsbawmy4b7vw8v21m7q957sk0c4";
       };
@@ -230,48 +230,36 @@
   };
   nixpkgs = {
     pname = "nixpkgs";
-    version = "9367ef512d32a3c8b9e1d2b75ba5134de48d86ed";
+    version = "8d9c1c0ee9ceed6ce0756c7e2ccb7b5d696c8f60";
     src = fetchFromGitHub ({
       owner = "nixos";
       repo = "nixpkgs";
-      rev = "9367ef512d32a3c8b9e1d2b75ba5134de48d86ed";
+      rev = "8d9c1c0ee9ceed6ce0756c7e2ccb7b5d696c8f60";
       fetchSubmodules = false;
-      sha256 = "0v4kq5rwmsl9h7l0vi7nlnjdcw4pwwpfl5bnmcl76wcp2m5shj6x";
+      sha256 = "07mgn15lxyma0l01h6vjaz78gx26ngxh458dvm9l80pfxlasqz40";
     });
-  };
-  nixpkgs-unstable = {
-    pname = "nixpkgs-unstable";
-    version = "3c52ea8c9216a0d5b7a7b4d74a9d2e858b06df5c";
-    src = fetchgit {
-      url = "https://github.com/nixos/nixpkgs";
-      rev = "3c52ea8c9216a0d5b7a7b4d74a9d2e858b06df5c";
-      fetchSubmodules = false;
-      deepClone = false;
-      leaveDotGit = false;
-      sha256 = "1sqg1rkkhcq4hg7gl2yrciv1w2b805mnxqnhlll3qvbs4lcw2x36";
-    };
   };
   nvfetcher = {
     pname = "nvfetcher";
-    version = "807513f4bbd0e3b5863f4c3b91f8ac846ed6da9b";
+    version = "8bbf1921a36343f9a78c68e2bbc9798ab8f3b768";
     src = fetchFromGitHub ({
       owner = "berberman";
       repo = "nvfetcher";
-      rev = "807513f4bbd0e3b5863f4c3b91f8ac846ed6da9b";
+      rev = "8bbf1921a36343f9a78c68e2bbc9798ab8f3b768";
       fetchSubmodules = false;
-      sha256 = "0rsjhvbqsi1xrsn9mhm6r7bpks1yjickydgvand0cdan7mk57mmz";
+      sha256 = "065szcdiji6wd8g495x5jcp7bvhpkdqzjqsz2pjq4f8v18v3pk3g";
     });
   };
   rust-overlay = {
     pname = "rust-overlay";
-    version = "712446b06015f7f51e60a440949357c6f18ea25f";
+    version = "1efeb891b85c70ded412eb78a04bccb9badb14c6";
     src = fetchgit {
       url = "https://github.com/oxalica/rust-overlay";
-      rev = "712446b06015f7f51e60a440949357c6f18ea25f";
+      rev = "1efeb891b85c70ded412eb78a04bccb9badb14c6";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "1maimhs7v6ax2gksskzm5wnqdka30smdy3sj7gb7vg6679m8rpi1";
+      sha256 = "0wx7dg4p9gvjvmh9v208rd0wz6i7y6mqfkwqmzz232mb7rvg25sx";
     };
   };
 }
