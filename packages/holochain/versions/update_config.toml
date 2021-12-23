@@ -35,3 +35,7 @@ lair-version-req = "~0.0"
 [v0_0_120]
 git-src = "revision:holochain-0.0.120"
 lair-version-req = "~0.0"
+
+[v0_0_121]
+git-src = "revision:holochain-0.0.121"
+lair-version-req = "~0.0"
