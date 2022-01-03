@@ -143,7 +143,7 @@ struct HolochainVersion {
     lair: LairVersion,
 
     // these are only used to inform the template comment
-    #[serde(skip)]
+    #[serde(skip_serializing_if = "Vec::is_empty", default = "Default::default")]
     args: Vec<String>,
 }
 
