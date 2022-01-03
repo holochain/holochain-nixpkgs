@@ -50,7 +50,7 @@ in
       # for nix-shell --pure
       pkgs.git
       pkgs.cacert
-      pkgs.nix
+      pkgs.nixUnstable
 
       packages.scripts.nvfetcher-build
       packages.scripts.nvfetcher-clean
