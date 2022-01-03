@@ -1,4 +1,4 @@
-use anyhow::bail;
+use anyhow::{bail, Context};
 use once_cell::sync::Lazy;
 use std::{
     collections::HashMap,
@@ -47,7 +47,7 @@ struct Opt {
         default_value = "holochain,hc,kitsune-p2p-proxy",
         use_delimiter = true
     )]
-    bins: Vec<String>,
+    bins_filter: Vec<String>,
 }
 
 /// Parse a comma separated list of key:value pairs into a map
@@ -68,7 +68,7 @@ struct BinCrateSource<'a> {
     name: &'a str,
     git_repo: &'a str,
     git_src: GitSrc,
-    bins: Vec<String>,
+    bins_filter: Vec<String>,
 }
 
 impl<'a> BinCrateSource<'a> {
@@ -131,33 +131,35 @@ impl<'a> GitSrc {
     }
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, Debug, PartialEq)]
 #[serde(rename_all = "camelCase")]
-struct HolochainVersion<'a> {
-    url: &'a str,
-    rev: &'a str,
-    sha256: &'a str,
-    cargo_lock: CargoLock<'a>,
-    bins: Vec<String>,
+struct HolochainVersion {
+    url: String,
+    rev: String,
+    sha256: String,
+    cargo_lock: CargoLock,
+    bins_filter: Vec<String>,
 
-    lair: LairVersion<'a>,
+    lair: LairVersion,
 
+    // these are only used to inform the template comment
+    #[serde(skip)]
     args: Vec<String>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, Debug, PartialEq)]
 #[serde(rename_all = "camelCase")]
-struct LairVersion<'a> {
-    url: &'a str,
-    rev: &'a str,
-    sha256: &'a str,
-    cargo_lock: CargoLock<'a>,
+struct LairVersion {
+    url: String,
+    rev: String,
+    sha256: String,
+    cargo_lock: CargoLock,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, Debug, PartialEq)]
 #[serde(rename_all = "camelCase")]
-struct CargoLock<'a> {
-    _lock_file: &'a str,
+struct CargoLock {
+    lock_file: Option<String>,
     output_hashes: HashMap<String, String>,
 }
 
@@ -186,7 +188,7 @@ static HANDLEBARS: Lazy<handlebars::Handlebars> = Lazy::new(|| {
     };
 
     binsFilter = [
-        {{#each this.bins}}
+        {{#each this.binsFilter}}
         "{{@this}}"
         {{/each}}
     ];
@@ -237,16 +239,31 @@ fn main() -> Fallible<()> {
             name: "holochain",
             git_repo: &opt.git_repo,
             git_src: opt.git_src.clone(),
-            bins: opt.bins.clone(),
+            bins_filter: opt.bins_filter.clone(),
         },
         opt.nvfetcher_dir.clone(),
         None,
     )?;
 
-    let holochain_crate_srcinfo = nvfetcher_holochain.get_crate_srcinfo()?;
+    let holochain_version = get_holochain_version(true, nvfetcher_holochain, opt.lair_version_req)?;
 
-    let (repo, rev) =
-        read_lair_revision(&nvfetcher_holochain, &opt.lair_version_req).map(|(repo, rev)| {
+    let rendered_holochain_source = render_holochain_version(&holochain_version)?;
+    std::fs::write(opt.output_file, rendered_holochain_source)?;
+
+    Ok(())
+}
+
+fn get_holochain_version(
+    update: bool,
+    nvfetcher_holochain: NvfetcherWrapper,
+    lair_version_req: semver::VersionReq,
+) -> Fallible<HolochainVersion> {
+    let holochain_crate_srcinfo = nvfetcher_holochain
+        .get_crate_srcinfo(update)
+        .context("get holochain crate srcinfo")?;
+
+    let (lair_repo, lair_rev) =
+        read_lair_revision(&nvfetcher_holochain, &lair_version_req).map(|(repo, rev)| {
             (
                 // TODO: test this case and make the fallback configurable
                 repo.map(|url| url.to_string())
@@ -258,37 +275,38 @@ fn main() -> Fallible<()> {
     let nvfetcher_lair = NvfetcherWrapper::new(
         BinCrateSource {
             name: "lair",
-            git_repo: &repo,
-            git_src: GitSrc::Revision(rev),
-            bins: Default::default(),
+            git_repo: &lair_repo,
+            git_src: GitSrc::Revision(lair_rev),
+            bins_filter: Default::default(),
         },
-        opt.nvfetcher_dir.clone(),
+        Some(nvfetcher_holochain.nvfetcher_dir),
         None,
-    )?;
+    )
+    .context("create nvfetchwrapper for lair")?;
 
-    let lair_crate_srcinfo = nvfetcher_lair.get_crate_srcinfo()?;
+    let lair_crate_srcinfo = nvfetcher_lair
+        .get_crate_srcinfo(update)
+        .context("get lair crate srcinfo")?;
 
-    let mut rendered_holochain_source = vec![];
-
-    let holochain_version = HolochainVersion {
-        url: &holochain_crate_srcinfo.src.url,
-        rev: &holochain_crate_srcinfo.src.rev,
-        sha256: &holochain_crate_srcinfo.src.sha256,
-        bins: opt.bins,
+    Ok(HolochainVersion {
+        url: holochain_crate_srcinfo.src.url,
+        rev: holochain_crate_srcinfo.src.rev,
+        sha256: holochain_crate_srcinfo.src.sha256,
+        bins_filter: nvfetcher_holochain.src.bins_filter,
         cargo_lock: CargoLock {
             // TODO: get the store path for the lockfile
-            _lock_file: "",
-            output_hashes: holochain_crate_srcinfo.cargo_lock.output_hashes.clone(),
+            lock_file: None,
+            output_hashes: holochain_crate_srcinfo.cargo_lock.output_hashes,
         },
 
         lair: LairVersion {
-            url: &lair_crate_srcinfo.src.url,
-            rev: &lair_crate_srcinfo.src.rev,
-            sha256: &lair_crate_srcinfo.src.sha256,
+            url: lair_crate_srcinfo.src.url,
+            rev: lair_crate_srcinfo.src.rev,
+            sha256: lair_crate_srcinfo.src.sha256,
             cargo_lock: CargoLock {
                 // TODO: get the store path for the lockfile
-                _lock_file: "",
-                output_hashes: lair_crate_srcinfo.cargo_lock.output_hashes.clone(),
+                lock_file: None,
+                output_hashes: lair_crate_srcinfo.cargo_lock.output_hashes,
             },
         },
 
@@ -306,24 +324,27 @@ fn main() -> Fallible<()> {
                 )
             })
             .collect(),
-    };
+    })
+}
 
-    HANDLEBARS
-        .render_to_write(
-            HOLOCHAIN_VERSION_TEMPLATE,
-            &holochain_version,
-            &mut rendered_holochain_source,
-        )
-        .unwrap();
-
+fn render_holochain_version(holochain_version: &HolochainVersion) -> Fallible<String> {
     eprintln!(
-        "rendered source: {}",
-        String::from_utf8_lossy(&rendered_holochain_source)
+        "rendering holochain version information: {:#?}",
+        holochain_version
     );
 
-    std::fs::write(opt.output_file, rendered_holochain_source)?;
+    let mut rendered_holochain_source = vec![];
+    HANDLEBARS.render_to_write(
+        HOLOCHAIN_VERSION_TEMPLATE,
+        holochain_version,
+        &mut rendered_holochain_source,
+    )?;
 
-    Ok(())
+    let string = String::from_utf8_lossy(&rendered_holochain_source).to_string();
+
+    eprintln!("rendered source: {}", string);
+
+    Ok(string)
 }
 
 // this reads the lair version from the holochain source directory's Cargo.lock
@@ -408,4 +429,51 @@ in nixpkgs.callPackage generated {}
     let lair_rev = format!("v{}", lair_keystore_api_dep.version);
 
     Ok((lair_source, lair_rev))
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::{nvfetcher::nix_to_json_partial, *};
+    use pretty_assertions::assert_eq;
+
+    #[test]
+    fn nvfetcher_generate_and_render() {
+        let nvfetcher_dir = std::env::current_dir()
+            .unwrap()
+            .join("test/fixtures/nvfetcher_0/");
+
+        let nvfetcher_holochain = NvfetcherWrapper::new(
+            BinCrateSource {
+                name: "holochain",
+                git_repo: "https://github.com/holochain/holochain",
+                git_src: GitSrc::Revision("holochain-0.0.121".to_string()),
+                bins_filter: vec![
+                    "holochain".to_string(),
+                    "hc".to_string(),
+                    "kitsune-p2p-proxy".to_string(),
+                ],
+            },
+            Some(nvfetcher_dir),
+            None,
+        )
+        .unwrap();
+
+        let mut holochain_version = get_holochain_version(
+            false,
+            nvfetcher_holochain,
+            semver::VersionReq::from_str("*").unwrap(),
+        )
+        .unwrap();
+
+        holochain_version.args = Default::default();
+
+        let rendered_holochain_source = render_holochain_version(&holochain_version).unwrap();
+        let json_holochain_source =
+            nix_to_json_partial(rendered_holochain_source.as_bytes()).unwrap();
+
+        let deserialized_holochain_version =
+            serde_json::from_value::<HolochainVersion>(json_holochain_source).unwrap();
+
+        assert_eq!(holochain_version, deserialized_holochain_version);
+    }
 }
