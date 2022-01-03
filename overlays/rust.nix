@@ -10,6 +10,7 @@ self: super:
       "wasm32-unknown-unknown"
       "x86_64-pc-windows-gnu"
       "x86_64-unknown-linux-musl"
+      "x86_64-apple-darwin"
     ];
 
     mkRust = { track, version }: self.rust-bin."${track}"."${version}".default.override {
