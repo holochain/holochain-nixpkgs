@@ -13,8 +13,57 @@
 
 let
   nvfetcher-clean = writeScriptBin "nvfetcher-clean" ''
+    #!/bin/sh
     pushd ${toString toplevel}/nix/nvfetcher
     ${nvfetcher}/bin/nvfetcher clean $@
+  '';
+
+  updateSingle = { configKey, cliFlags }: ''
+    ${update-holochain-versions}/bin/update-holochain-versions \
+      --nvfetcher-dir=${toplevel}/nix/nvfetcher \
+      --output-file=${toplevel}/packages/holochain/versions/${configKey}.nix \
+      ${builtins.concatStringsSep " " (lib.attrsets.mapAttrsToList
+        (cliKey: cliValue: ''--${cliKey}="${cliValue}"'') cliFlags)
+      }
+  '';
+
+  updateSingle' = configKey: ''
+    ${update-holochain-versions}/bin/update-holochain-versions \
+      --nvfetcher-dir=${toplevel}/nix/nvfetcher \
+      --output-file=${toplevel}/packages/holochain/versions/${configKey}.nix \
+      ${builtins.concatStringsSep " " (lib.attrsets.mapAttrsToList
+        (cliKey: cliValue: ''--${cliKey}="${cliValue}"'') holochain.holochainVersionUpdateConfig."${configKey}")
+      }
+  '';
+
+  diffTargets = "${toplevel}/packages/holochain/versions ${toplevel}/nix/nvfetcher/_sources/generated.nix";
+  commitPaths = "${toplevel}/packages/holochain/versions ${toplevel}/nix/nvfetcher";
+
+  hnixpkgs-update = configKeys: ''
+    #!/bin/sh
+    set -e
+
+    pushd ${toplevel}
+
+    trap "git checkout ${toplevel}/nix/nvfetcher" ERR INT
+
+    ${builtins.concatStringsSep "\n"
+      (builtins.map
+        (configKey: (updateSingle' configKey))
+        configKeys
+      )
+    }
+
+    trap "" ERR INT
+
+    ${git}/bin/git add ${commitPaths}
+
+    if ${git}/bin/git diff --staged --exit-code -- ${diffTargets}; then
+        echo No updates found.
+    else
+        echo Updates found, commiting..
+        ${git}/bin/git commit ${commitPaths} -m "update sources for key(s) ${builtins.concatStringsSep "," configKeys}"
+    fi
   '';
 in
 
@@ -22,56 +71,51 @@ in
   inherit nvfetcher-clean;
 
   nvfetcher-build = writeScriptBin "nvfetcher-build" ''
+    #!/bin/sh
     pushd ${toString toplevel}/nix/nvfetcher
     ${nvfetcher}/bin/nvfetcher build $@
   '';
 
-  hnixpkgs-update-all = writeScriptBin "hnixpkgs-update-all" (
-    let
-      updateAll = builtins.concatStringsSep "\n" (lib.attrsets.mapAttrsToList
-        (key: value:
-          let
-            extraArgs = builtins.concatStringsSep " " (lib.attrsets.mapAttrsToList
-              (key': value': ''--${key'}="${value'}"'')
-              value
-            );
-          in
-          ''
-            ${update-holochain-versions}/bin/update-holochain-versions \
-                --nvfetcher-dir=${toplevel}/nix/nvfetcher \
-                --output-file=${toplevel}/packages/holochain/versions/${key}.nix \
-                ${extraArgs} \
-                ;
-          ''
-        )
-        holochain.holochainVersionUpdateConfig
-      );
+  _hnixpkgs-update = configKey: writeScriptBin "hnixpkgs-update"
+    (hnixpkgs-update
+      [ configKey ]
+    )
+  ;
 
-      diffTargets = "${toplevel}/packages/holochain/versions ${toplevel}/nix/nvfetcher/_sources/generated.nix";
-      commitPaths = "${toplevel}/packages/holochain/versions ${toplevel}/nix/nvfetcher";
+  hnixpkgs-update-single = writeScriptBin "hnixpkgs-update-single" (
+    let
+      errMsg = ''
+        ERROR: no argument provided.
+
+        Please pass one argument that matches one of the keys in this file:
+          ${builtins.toString toplevel}/packages/holochain/versions/update_config.toml.
+
+        Currently these are:
+        ${builtins.concatStringsSep "\n"
+          (builtins.map
+            (key: "- ${key}")
+            (builtins.attrNames holochain.holochainVersionUpdateConfig)
+          )
+        }
+      '';
+
     in
     ''
-      set -e
-
-      pushd ${toplevel}
-
-      trap "git checkout ${toplevel}/nix/nvfetcher" ERR INT
-      ${nvfetcher-clean}/bin/nvfetcher-clean
-
-      ${updateAll}
-
-      trap "" ERR INT
-
-      ${git}/bin/git add ${commitPaths}
-
-      if ${git}/bin/git diff --staged --exit-code -- ${diffTargets}; then
-          echo No updates found.
-      else
-          echo Updates found, commiting..
-          ${git}/bin/git commit ${commitPaths} -m "update all sources and holochain versions"
+      #!/bin/sh
+      if [ -z "$1" ]; then
+        printf '${errMsg}'
+        exit 1
       fi
+
+      nix run --impure --expr "(import ./default.nix {}).packages.scripts._hnixpkgs-update \"''${1:?}\""
     ''
   );
+
+  hnixpkgs-update-all = writeScriptBin "hnixpkgs-update-all"
+    (hnixpkgs-update
+      (builtins.attrNames holochain.holochainVersionUpdateConfig)
+    )
+  ;
 
   nixpkgs-regen-crate-expressions =
     let
@@ -81,6 +125,7 @@ in
       buildTargets = "-A packages.update-holochain-versions";
     in
     writeScriptBin "hnixpkgs-regen-crate-expressions" ''
+      #!/bin/sh
       set -e
       pushd ${toplevel}
 
@@ -88,11 +133,11 @@ in
       ${crate2nix}/bin/crate2nix generate --default-features --output=${outputPath}
 
       if git diff --exit-code -- ${diffTargets}; then
-          echo No updates found.
+        echo No updates found.
       else
-          nix-build default.nix --no-out-link ${buildTargets}
-          echo Updates found, commiting..
-          git commit ${diffTargets} -m "update generated crate expressions"
+        nix-build default.nix --no-out-link ${buildTargets}
+        echo Updates found, commiting..
+        git commit ${diffTargets} -m "update generated crate expressions"
       fi
     '';
 }
