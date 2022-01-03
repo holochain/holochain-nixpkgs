@@ -17,20 +17,20 @@ let
     ];
   };
 in
-  {
-   inherit
+{
+  inherit
+    holochain
+    update-holochain-versions
+    ;
+
+  inherit (pkgs)
+    nvfetcher
+    ;
+
+  scripts = callPackage ./scripts.nix {
+    inherit
       holochain
       update-holochain-versions
       ;
-
-    inherit (pkgs)
-      nvfetcher
-      ;
-
-    scripts = callPackage ./scripts.nix {
-      inherit
-        holochain
-        update-holochain-versions
-        ;
-    };
-  }
+  };
+}
