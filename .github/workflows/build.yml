@@ -52,9 +52,6 @@ jobs:
           - main
           - develop
           - develop_lair_0_1
-          - v0_0_110
-          - v0_0_115
-          - v0_0_116
           - v0_0_117
           - v0_0_118
           - v0_0_119
@@ -138,7 +135,6 @@ jobs:
         env:
           nix_attribute: ${{ matrix.nixAttribute }}
         run: nix build -f . "packages.${nix_attribute}" --extra-experimental-features nix-command
-
 #      TODO: this doesn't do anything. investigate and turn back on
 #
 #      - name: Build nix packages
