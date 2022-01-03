@@ -178,11 +178,11 @@ static HANDLEBARS: Lazy<handlebars::Handlebars> = Lazy::new(|| {
 {
     url = "{{this.url}}";
     rev = "{{this.rev}}";
-    sha256 = "{{this.sha256}}";
+    sha256 = "{{{this.sha256}}}";
     cargoLock = {
         outputHashes = {
             {{#each this.cargoLock.outputHashes}}
-            "{{@key}}" = "{{@this}}";
+            "{{@key}}" = "{{{@this}}}";
             {{/each}}
         };
     };
@@ -196,7 +196,7 @@ static HANDLEBARS: Lazy<handlebars::Handlebars> = Lazy::new(|| {
     lair = {
         url = "{{this.lair.url}}";
         rev = "{{this.lair.rev}}";
-        sha256 = "{{this.lair.sha256}}";
+        sha256 = "{{{this.lair.sha256}}}";
 
         binsFilter = [
             "lair-keystore"
@@ -205,7 +205,7 @@ static HANDLEBARS: Lazy<handlebars::Handlebars> = Lazy::new(|| {
         cargoLock = {
             outputHashes = {
                 {{#each this.lair.cargoLock.outputHashes}}
-                "{{@key}}" = "{{@this}}";
+                "{{@key}}" = "{{{@this}}}";
                 {{/each}}
             };
         };
