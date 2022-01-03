@@ -1,4 +1,4 @@
-type Fallible<T> = anyhow::Result<T>;
+use anyhow::Context;
 use std::{
     collections::HashMap,
     fs::OpenOptions,
@@ -6,11 +6,10 @@ use std::{
     path::PathBuf,
     process::Command,
 };
-
-use anyhow::Context;
 use tempfile::tempdir;
 use toml_edit::Document;
 
+type Fallible<T> = anyhow::Result<T>;
 use crate::BinCrateSource;
 
 pub(crate) struct NvfetcherWrapper<'a> {
@@ -132,6 +131,8 @@ impl<'a> NvfetcherWrapper<'a> {
     pub(crate) fn fetch_and_regen_srcinfo(&self) -> Fallible<()> {
         ctx!(std::fs::create_dir_all(&self.nvfetcher_dir))?;
 
+        let mut nvfetcher_build_filters = vec![self.crate_toml_key.as_str()];
+
         {
             let nvfetcher_toml_path = self.nvfetcher_dir.join("nvfetcher.toml");
 
@@ -160,18 +161,19 @@ impl<'a> NvfetcherWrapper<'a> {
             };
 
             // ensure nixpkgs is set
-            // if nvfetcher_toml_editable["nixpkgs"].is_none() {
-            init_table(
-                &mut nvfetcher_toml_editable,
-                "nixpkgs",
-                &["src", "fetch", "git"],
-            );
+            if nvfetcher_toml_editable["nixpkgs"].is_none() {
+                nvfetcher_build_filters.push("nixpkgs");
+                init_table(
+                    &mut nvfetcher_toml_editable,
+                    "nixpkgs",
+                    &["src", "fetch", "git"],
+                );
 
-            nvfetcher_toml_editable["nixpkgs"]["src"]["git"] =
-                value("https://github.com/nixos/nixpkgs");
-            nvfetcher_toml_editable["nixpkgs"]["fetch"]["github"] = value("nixos/nixpkgs");
-            nvfetcher_toml_editable["nixpkgs"]["src"]["branch"] = value("release-21.11");
-            // }
+                nvfetcher_toml_editable["nixpkgs"]["src"]["git"] =
+                    value("https://github.com/nixos/nixpkgs");
+                nvfetcher_toml_editable["nixpkgs"]["fetch"]["github"] = value("nixos/nixpkgs");
+                nvfetcher_toml_editable["nixpkgs"]["src"]["branch"] = value("release-21.11");
+            }
 
             // ensure the crate source is set
             let (git_src_keys, git_src_value) = self.src.git_src.toml_src_value();
@@ -221,7 +223,10 @@ impl<'a> NvfetcherWrapper<'a> {
         {
             let mut cmd = Command::new("nvfetcher");
             cmd.current_dir(&self.nvfetcher_dir)
-                .args(&["build"])
+                .args(&[
+                    "build", // TODO: insert a --filter
+                    &format!("--filter=({})", nvfetcher_build_filters.join("|")),
+                ])
                 .stdout(std::process::Stdio::inherit())
                 .stderr(std::process::Stdio::inherit());
             eprintln!(
