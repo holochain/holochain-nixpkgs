@@ -80,8 +80,8 @@ jobs:
           - nixpkgs=channel:nixos-21.11
     runs-on: ${{ matrix.platform }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2.4.0
+      - name: Checkout code
+        uses: nschloe/action-cached-lfs-checkout@v1
       - name: Install nix
         uses: cachix/install-nix-action@v16
         with:

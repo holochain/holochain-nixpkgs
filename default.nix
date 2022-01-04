@@ -49,6 +49,7 @@ in
     packages = [
       # for nix-shell --pure
       pkgs.git
+      pkgs.git-lfs
       pkgs.cacert
       pkgs.nixUnstable
 
