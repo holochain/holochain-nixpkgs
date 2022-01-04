@@ -1,14 +1,14 @@
 # This file was generated with the following command:
-# /nix/store/9hsmb3rkmgr3syzc36jz1gdw611v68sx-update-holochain-versions/bin/update-holochain-versions --nvfetcher-dir=nix/nvfetcher --output-file=packages/holochain/versions/main.nix --git-src=branch:main
+# update-holochain-versions --nvfetcher-dir=nix/nvfetcher --output-file=packages/holochain/versions/main.nix --git-src=branch:main
 # For usage instructions please visit https://github.com/holochain/holochain-nixpkgs/#readme
 
 {
     url = "https://github.com/holochain/holochain";
     rev = "77ebba75f48fe86e98f14a4fe3bfdd306bad5cfb";
-    sha256 = "0hrjwrmk98bsnavpr3zcrwj8czmfz3nlgrfmrz9pk9bgi55354cx";
+    sha256 = "sha256-nZEySolvpXnTz9XlR+34rn6GJM/sj3y3snqhNGvmMkM=";
     cargoLock = {
         outputHashes = {
-            "cargo-test-macro-0.1.0" = "1yy1y1d523xdzwg1gc77pigbcwsbawmy4b7vw8v21m7q957sk0c4";
+            "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
         };
     };
 
@@ -21,7 +21,7 @@
     lair = {
         url = "https://github.com/holochain/lair";
         rev = "v0.0.9";
-        sha256 = "06vd1147323yhznf8qyhachcn6fs206h0c0bsx4npdc63p3a4m42";
+        sha256 = "sha256-glSixh2GtWtJ1wswAA0Q2hnLIFPQY+Tsh36IcUgIbRs=";
 
         binsFilter = [
             "lair-keystore"
