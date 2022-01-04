@@ -66,6 +66,7 @@ in
       pkgs.crate2nix
       packages.scripts.nixpkgs-regen-crate-expressions
     ] ++ pkgs.lib.optionals (builtins.elem "release" flavors) [
+      packages.scripts.hnixpkgs-update-single
       packages.scripts.hnixpkgs-update-all
     ]
     ;
