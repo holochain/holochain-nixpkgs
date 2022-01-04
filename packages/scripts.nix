@@ -1,4 +1,4 @@
-{ pkgs
+ {pkgi
 , lib
 , writeScriptBin
 , git
@@ -115,7 +115,7 @@ in
         exit 1
       fi
 
-      ${pkgs.nixUnstable}/bin/nix run --extra-experimental-features=nix-command --impure --expr "(import ./default.nix {}).packages.scripts._hnixpkgs-update \"''${1:?}\""
+      ${pkgs.nixUnstable}/bin/nix run --extra-experimental-features nix-command --impure --expr "(import ./default.nix {}).packages.scripts._hnixpkgs-update \"''${1:?}\""
     ''
   );
 
