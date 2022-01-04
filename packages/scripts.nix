@@ -110,7 +110,7 @@ in
         exit 1
       fi
 
-      nix run --impure --expr "(import ./default.nix {}).packages.scripts._hnixpkgs-update \"''${1:?}\""
+      ${pkgs.nixUnstable}/bin/nix run --extra-experimental-features=nix-command --impure --expr "(import ./default.nix {}).packages.scripts._hnixpkgs-update \"''${1:?}\""
     ''
   );
 

@@ -45,6 +45,7 @@ in
     name = "env";
 
     NIX_PATH = "nixpkgs=${sources.nixpkgs.src}";
+    NIX_CONFIG = "extra-experimental-features = nix-command";
 
     packages = [
       # for nix-shell --pure
@@ -52,17 +53,18 @@ in
       pkgs.git-lfs
       pkgs.cacert
       pkgs.nixUnstable
+      # pkgs.nix-build-uncached
 
       packages.scripts.nvfetcher-build
       packages.scripts.nvfetcher-clean
-      # pkgs.nix-build-uncached
+      packages.update-holochain-versions
     ] ++ pkgs.lib.optionals (builtins.elem "dev" flavors) [
       rustPlatform.rust.rustc
       rustPlatform.rust.cargo
-      pkgs.nvfetcher
       pkgs.nixpkgs-fmt
-      packages.scripts.nixpkgs-regen-crate-expressions
+
       pkgs.crate2nix
+      packages.scripts.nixpkgs-regen-crate-expressions
     ] ++ pkgs.lib.optionals (builtins.elem "release" flavors) [
       packages.scripts.hnixpkgs-update-all
     ]
