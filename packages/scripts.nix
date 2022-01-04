@@ -1,4 +1,4 @@
- {pkgi
+ {pkgs
 , lib
 , writeScriptBin
 , git
