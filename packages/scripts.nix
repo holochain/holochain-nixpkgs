@@ -36,7 +36,8 @@ let
       }
   '';
 
-  diffTargets = "${toplevel}/packages/holochain/versions ${toplevel}/nix/nvfetcher/_sources/{generated.nix,.shake.*}";
+  diffTargetsState = "${toplevel}/packages/holochain/versions ${toplevel}/nix/nvfetcher/_sources/.shake.*";
+  diffTargetsVersions = "${toplevel}/packages/holochain/versions ${toplevel}/nix/nvfetcher/_sources/generated.nix";
   commitPaths = "${toplevel}/packages/holochain/versions ${toplevel}/nix/nvfetcher";
 
   hnixpkgs-update = configKeys: ''
@@ -56,12 +57,16 @@ let
 
     trap "" ERR INT
 
-    ${git}/bin/git add ${commitPaths}
+    ${git}/bin/git add ${diffTargetsState}
+    if ! ${git}/bin/git diff --staged --exit-code -- ${diffTargetsState}; then
+        echo Committing state files..
+        ${git}/bin/git commit ${diffTargetsState} \
+          -m "update nvfetcher state"
+    fi
 
-    if ${git}/bin/git diff --staged --exit-code -- ${diffTargets}; then
-        echo No updates found.
-    else
-        echo Updates found, commiting..
+    ${git}/bin/git add ${diffTargetsVersions}
+    if ! ${git}/bin/git diff --staged --exit-code -- ${diffTargetsVersions}; then
+        echo New versions found, commiting..
         ${git}/bin/git commit ${commitPaths} \
           -m "update nvfetcher sources" \
           -m "the following keys were updated" \
