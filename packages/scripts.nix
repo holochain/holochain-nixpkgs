@@ -62,7 +62,10 @@ let
         echo No updates found.
     else
         echo Updates found, commiting..
-        ${git}/bin/git commit ${commitPaths} -m "update sources for key(s) ${builtins.concatStringsSep "," configKeys}"
+        ${git}/bin/git commit ${commitPaths} \
+          -m "update nvfetcher sources" \
+          -m "the following keys were updated" \
+          -m "${builtins.concatStringsSep " " configKeys}"
     fi
   '';
 in
