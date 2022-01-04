@@ -36,7 +36,7 @@ let
       }
   '';
 
-  diffTargets = "${toplevel}/packages/holochain/versions ${toplevel}/nix/nvfetcher/_sources/generated.nix";
+  diffTargets = "${toplevel}/packages/holochain/versions ${toplevel}/nix/nvfetcher/_sources/{generated.nix,.shake.*}";
   commitPaths = "${toplevel}/packages/holochain/versions ${toplevel}/nix/nvfetcher";
 
   hnixpkgs-update = configKeys: ''
