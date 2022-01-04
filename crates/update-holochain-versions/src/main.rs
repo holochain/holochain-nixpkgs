@@ -2,7 +2,7 @@ use anyhow::{bail, Context};
 use once_cell::sync::Lazy;
 use std::{
     collections::HashMap,
-    path::PathBuf,
+    path::{Path, PathBuf},
     process::{Command, ExitStatus},
     str::FromStr,
 };
@@ -288,6 +288,31 @@ fn get_holochain_version(
         .get_crate_srcinfo(update)
         .context("get lair crate srcinfo")?;
 
+    let mut args = std::env::args()
+        .into_iter()
+        .map(|arg| {
+            arg.replace(
+                &format!(
+                    "{}/",
+                    std::env::current_dir()
+                        .unwrap_or_default()
+                        .to_string_lossy()
+                ),
+                "",
+            )
+        })
+        .collect::<Vec<_>>();
+
+    if let Some(file_name) = args
+        .get(0)
+        .map(Path::new)
+        .map(Path::file_name)
+        .flatten()
+        .map(|os| os.to_string_lossy().to_string())
+    {
+        args[0] = file_name;
+    }
+
     Ok(HolochainVersion {
         url: holochain_crate_srcinfo.src.url,
         rev: holochain_crate_srcinfo.src.rev,
@@ -310,20 +335,7 @@ fn get_holochain_version(
             },
         },
 
-        args: std::env::args()
-            .into_iter()
-            .map(|arg| {
-                arg.replace(
-                    &format!(
-                        "{}/",
-                        std::env::current_dir()
-                            .unwrap_or_default()
-                            .to_string_lossy()
-                    ),
-                    "",
-                )
-            })
-            .collect(),
+        args,
     })
 }
 
