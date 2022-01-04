@@ -2,4 +2,5 @@ result
 result-*
 **/target/**
 .cargo/**
-nix/nvfetcher/_sources/.shake.*
+nix/nvfetcher/_sources/.shake.lock
+# nix/nvfetcher/_sources/.shake.database
