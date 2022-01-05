@@ -1,0 +1,2 @@
+nix/nvfetcher/_sources/.shake.database filter=lfs diff=lfs merge=lfs -text
+nix/nvfetcher/_sources/.shake.lock filter=lfs diff=lfs merge=lfs -text

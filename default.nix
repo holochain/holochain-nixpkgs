@@ -6,7 +6,7 @@
 # commands such as:
 #     nix-build -A mypackage
 
-{ sources ? import ./nix/nvfetcher/sources.nix {}
+{ sources ? import ./nix/nvfetcher/sources.nix { }
 , system ? builtins.currentSystem
 , crossSystem ? null
 , overlays ? builtins.attrValues (import ./overlays)
@@ -17,6 +17,8 @@
 
 , rustPlatformSelector ? "stable"
 , rustPlatform ? pkgs.rust.packages."${rustPlatformSelector}".rustPlatform
+
+, flavors ? [ "dev" ]
 }:
 
 let
@@ -43,20 +45,30 @@ in
     name = "env";
 
     NIX_PATH = "nixpkgs=${sources.nixpkgs.src}";
+    NIX_CONFIG = "extra-experimental-features = nix-command";
 
     packages = [
-        # for nix-shell --pure
-        pkgs.git pkgs.cacert pkgs.nix
+      # for nix-shell --pure
+      pkgs.git
+      pkgs.git-lfs
+      pkgs.cacert
+      pkgs.nixUnstable
+      # pkgs.nix-build-uncached
 
-        pkgs.nix-build-uncached
-        pkgs.rustPlatform.rust.rustc
-        pkgs.nvfetcher
-        pkgs.crate2nix
+      packages.scripts.nvfetcher-build
+      packages.scripts.nvfetcher-clean
+      packages.update-holochain-versions
+    ] ++ pkgs.lib.optionals (builtins.elem "dev" flavors) [
+      rustPlatform.rust.rustc
+      rustPlatform.rust.cargo
+      pkgs.nixpkgs-fmt
 
-        packages.scripts.nvfetcher-build
-        packages.scripts.nvfetcher-clean
-        packages.scripts.hnixpkgs-update-all
-        packages.scripts.nixpkgs-regen-crate-expressions
-    ];
+      pkgs.crate2nix
+      packages.scripts.nixpkgs-regen-crate-expressions
+    ] ++ pkgs.lib.optionals (builtins.elem "release" flavors) [
+      packages.scripts.hnixpkgs-update-single
+      packages.scripts.hnixpkgs-update-all
+    ]
+    ;
   };
 }
