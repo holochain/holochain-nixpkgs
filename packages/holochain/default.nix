@@ -6,7 +6,7 @@
 , darwin
 , libsodium
 , openssl
-, pkgconfig
+, pkg-config
 , lib
 , callPackage
 , libiconv
@@ -153,7 +153,7 @@ let
       )
     ;
 
-    nativeBuildInputs = [ perl pkgconfig ] ++ lib.optionals stdenv.isDarwin [
+    nativeBuildInputs = [ perl pkg-config ] ++ lib.optionals stdenv.isDarwin [
       xcbuild
     ];
 
