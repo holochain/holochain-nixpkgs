@@ -93,6 +93,12 @@ jobs:
       #   run: git lfs checkout
       # - name: Checkout code
       #   uses: nschloe/action-cached-lfs-checkout@v1
+      - name: Cache multiple paths
+        uses: actions/cache@v2
+        with:
+          key: "${{ matrix.platform }}"
+          path: |
+            ~/.cache
       - name: Install nix
         uses: cachix/install-nix-action@v16
         with:
@@ -134,6 +140,12 @@ jobs:
           nix_path: "${{ matrix.nixPath }}"
       - name: Show nixpkgs version
         run: nix-instantiate --eval -E '(import <nixpkgs> {}).lib.version'
+      - name: Cache multiple paths
+        uses: actions/cache@v2
+        with:
+          key: "${{ matrix.platform }}"
+          path: |
+            ~/.cache
       - name: Setup cachix
         uses: cachix/cachix-action@v10
         # Don't replace <YOUR_CACHIX_NAME> here!
