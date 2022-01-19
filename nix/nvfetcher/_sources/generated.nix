@@ -266,14 +266,15 @@
   };
   nixpkgs = {
     pname = "nixpkgs";
-    version = "d1029cdb3cae4e57c005f1e18ed38ca3cf8da735";
-    src = fetchFromGitHub ({
-      owner = "nixos";
-      repo = "nixpkgs";
-      rev = "d1029cdb3cae4e57c005f1e18ed38ca3cf8da735";
+    version = "73dd4dd33474b441dfb4d3a079f6bbad8ef7a66a";
+    src = fetchgit {
+      url = "https://github.com/nixos/nixpkgs";
+      rev = "73dd4dd33474b441dfb4d3a079f6bbad8ef7a66a";
       fetchSubmodules = false;
-      sha256 = "sha256-Wxsqu2qvILyvKOtn9MKfceTL1XD2bcHh1jMx0y3EEj0=";
-    });
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "sha256-yotp7SGmLplxzSFivYFsqlV4shjniTLJYRh2ZuD+tKY=";
+    };
   };
   nvfetcher = {
     pname = "nvfetcher";
