@@ -22,7 +22,7 @@ jobs:
         cachixName:
           - holochain-ci
         nixPath:
-          - nixpkgs=channel:nixos-21.11
+          - nixpkgs=https://github.com/NixOS/nixpkgs/archive/bf80365582ea37b6fc0e3997215938de118b0379.tar.gz
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout repository
@@ -78,7 +78,7 @@ jobs:
         cachixName:
           - holochain-ci
         nixPath:
-          - nixpkgs=channel:nixos-21.11
+          - nixpkgs=https://github.com/NixOS/nixpkgs/archive/bf80365582ea37b6fc0e3997215938de118b0379.tar.gz
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout code
