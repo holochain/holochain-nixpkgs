@@ -33,6 +33,10 @@ jobs:
           key: "${{ matrix.platform }}"
           path: |
             ~/.cache
+      - name: Set NIX_PATH
+        run: |
+          source scripts/nix_path.sh
+          echo NIX_PATH=$NIX_PATH >> $GITHUB_ENV
       - name: Install nix
         uses: cachix/install-nix-action@v16
       - name: Setup cachix
