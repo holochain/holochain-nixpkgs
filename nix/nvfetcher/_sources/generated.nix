@@ -259,21 +259,19 @@
     };
     cargoLock = {
       lockFile = ./lair_revision_v0_1_0-v0.1.0/Cargo.lock;
-      outputHashes = {
-        
-      };
+      outputHashes = { };
     };
   };
   nixpkgs = {
     pname = "nixpkgs";
-    version = "73dd4dd33474b441dfb4d3a079f6bbad8ef7a66a";
+    version = "d1029cdb3cae4e57c005f1e18ed38ca3cf8da735";
     src = fetchgit {
       url = "https://github.com/nixos/nixpkgs";
-      rev = "73dd4dd33474b441dfb4d3a079f6bbad8ef7a66a";
+      rev = "d1029cdb3cae4e57c005f1e18ed38ca3cf8da735";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "sha256-yotp7SGmLplxzSFivYFsqlV4shjniTLJYRh2ZuD+tKY=";
+      sha256 = "sha256-Wxsqu2qvILyvKOtn9MKfceTL1XD2bcHh1jMx0y3EEj0=";
     };
   };
   nvfetcher = {
