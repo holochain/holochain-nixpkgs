@@ -38,12 +38,13 @@
   nixpkgs = {
     pname = "nixpkgs";
     version = "8d373df05fb709a00b78648d1a63dbce7678bf79";
-    src = fetchFromGitHub ({
-      owner = "nixos";
-      repo = "nixpkgs";
+    src = fetchgit {
+      url = "https://github.com/nixos/nixpkgs";
       rev = "8d373df05fb709a00b78648d1a63dbce7678bf79";
       fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
       sha256 = "sha256-k43dodTc3IUH2cJfdzHFhZZOILQeAdtB1mBxbVSu7vw=";
-    });
+    };
   };
 }
