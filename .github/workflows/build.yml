@@ -27,6 +27,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2.4.0
+      - name: Cache multiple paths
+        uses: actions/cache@v2
+        with:
+          key: "${{ matrix.platform }}"
+          path: |
+            ~/.cache
       - name: Install nix
         uses: cachix/install-nix-action@v16
       - name: Setup cachix
