@@ -62,7 +62,7 @@ pub(crate) fn nix_to_json_partial<R: std::io::Read>(mut input: R) -> Fallible<se
         .unwrap()
         .replace_all(&output, r#"": "#);
 
-    let output = regex::Regex::new(r"fetch(url|FromGitHub|git) \(?\{")
+    let output = regex::Regex::new(r"fetch(url|FromGitHub|git|Tarball) \(?\{")
         .unwrap()
         .replace_all(&output, r#"{"#);
 
