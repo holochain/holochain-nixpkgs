@@ -62,7 +62,7 @@ pub(crate) fn nix_to_json_partial<R: std::io::Read>(mut input: R) -> Fallible<se
         .unwrap()
         .replace_all(&output, r#"": "#);
 
-    let output = regex::Regex::new(r"fetch(url|FromGitHub|git) \(?\{")
+    let output = regex::Regex::new(r"fetch(url|FromGitHub|git|Tarball) \(?\{")
         .unwrap()
         .replace_all(&output, r#"{"#);
 
@@ -171,7 +171,8 @@ impl<'a> NvfetcherWrapper<'a> {
 
                 nvfetcher_toml_editable["nixpkgs"]["src"]["git"] =
                     value("https://github.com/nixos/nixpkgs");
-                nvfetcher_toml_editable["nixpkgs"]["fetch"]["github"] = value("nixos/nixpkgs");
+                nvfetcher_toml_editable["nixpkgs"]["fetch"]["tarball"] =
+                    value("https://github.com/nixos/nixpkgs/archive/$ver.tar.gz");
                 nvfetcher_toml_editable["nixpkgs"]["src"]["branch"] = value("release-21.11");
             }
 
