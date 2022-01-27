@@ -370,9 +370,14 @@ fn read_lair_revision(
     let import_fn = r#"
 { generated ? ./_sources/generated.nix }:
 let
-  _nixpkgs = ((import <nixpkgs> {}).callPackage ./_sources/generated.nix { }).nixpkgs.src;
-  nixpkgs = import _nixpkgs {};
-in nixpkgs.callPackage generated {}
+  _nixpkgs = (import ./_sources/generated.nix {
+    fetchgit = null;
+    fetchurl = null;
+    fetchFromGitHub = null;
+  }).nixpkgs.src;
+  nixpkgs = import _nixpkgs { };
+in
+nixpkgs.callPackage generated { }
 "#;
     let sources_fn_path = nvfetcher_holochain.nvfetcher_dir.join("sources.nix");
     std::fs::write(&sources_fn_path, import_fn)?;

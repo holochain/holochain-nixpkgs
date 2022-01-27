@@ -37,13 +37,10 @@
   };
   nixpkgs = {
     pname = "nixpkgs";
-    version = "8d373df05fb709a00b78648d1a63dbce7678bf79";
-    src = fetchFromGitHub ({
-      owner = "nixos";
-      repo = "nixpkgs";
-      rev = "8d373df05fb709a00b78648d1a63dbce7678bf79";
-      fetchSubmodules = false;
-      sha256 = "sha256-k43dodTc3IUH2cJfdzHFhZZOILQeAdtB1mBxbVSu7vw=";
-    });
+    version = "242d8aef0fed3ee24bca9361cc452f803c6647f2";
+    src = fetchTarball {
+      url = "https://github.com/nixos/nixpkgs/archive/242d8aef0fed3ee24bca9361cc452f803c6647f2.tar.gz";
+      sha256 = "06sf8vdmadddx6cy9wzjfcavw2ilc0813b14c3ny4hws6bkqswzm";
+    };
   };
 }

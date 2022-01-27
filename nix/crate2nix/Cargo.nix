@@ -2,7 +2,7 @@
 #   "generate" "--default-features" "--output=nix/crate2nix/Cargo.nix"
 # See https://github.com/kolloch/crate2nix for more info.
 
-{ nixpkgs ? <nixpkgs>
+{ nixpkgs ? (import ../nvfetcher/sources.nix).nixpkgs.src
 , pkgs ? import nixpkgs { config = { }; }
 , lib ? pkgs.lib
 , stdenv ? pkgs.stdenv
