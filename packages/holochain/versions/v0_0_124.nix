@@ -1,10 +1,10 @@
 # This file was generated with the following command:
-# update-holochain-versions --nvfetcher-dir=nix/nvfetcher --output-file=packages/holochain/versions/develop.nix --git-src=branch:develop
+# update-holochain-versions --nvfetcher-dir=nix/nvfetcher --output-file=packages/holochain/versions/v0_0_124.nix --git-src=revision:holochain-0.0.124 --lair-version-req=~0.0
 # For usage instructions please visit https://github.com/holochain/holochain-nixpkgs/#readme
 
 {
     url = "https://github.com/holochain/holochain";
-    rev = "005a258735716b5be95d9d2e96d219ed8e95413e";
+    rev = "holochain-0.0.124";
     sha256 = "sha256-TIBlBVSH/oWVWEFiBbM0rklyR7Ru5aKR0A9oaVGvalU=";
     cargoLock = {
         outputHashes = {
