@@ -35,6 +35,9 @@ jobs:
           name: ${{ matrix.cachixName }}
           signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+      - name: Set NIX_PATH (FIXME)
+        if: ${{ matrix.platform == 'macos-latest' }}
+        run: echo NIX_PATH=nixpkgs=$(nix eval --impure --raw --expr '(import ./nix/nvfetcher/sources.nix {}).nixpkgs.src') >> $GITHUB_ENV
       - name: Run cargo tests
         run: nix-shell --pure --run "cargo test"
   holochain-binaries:
