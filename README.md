@@ -76,8 +76,8 @@ in nixpkgs.mkShell {
 This requires that you create a `holochain_version.nix` file as well. You can automatically generate one with the following command:
 
 ```shell
-nix run -f https://github.com/holochain/holochain-nixpkgs/archive/develop.tar.gz packages.update-holochain-versions -c update-holochain-versions \
---git-src=revision:holochain-0.0.115  --lair-version-req='~0.1' --output-file=holochain_version.nix
+nix-shell --pure https://github.com/holochain/holochain-nixpkgs/archive/develop.tar.gz \
+  --run "update-holochain-versions --git-src=revision:holochain-0.0.115  --lair-version-req='~0.1' --output-file=holochain_version.nix"
 ```
 
 `holochain-0.1.115` can be replaced with any commit hash or tag from the [Holochain repo](https://github.com/holochain/holochain), and `~0.1` can be replaced with any [SemVer specification](https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html) for [lair_keystore](https://crates.io/crates/lair_keystore)
@@ -142,7 +142,7 @@ lair-version-req = "~0.1"
 After updating the files with the aforementioned command you could (build and run) holochain and lair-keystore like so.
 
 ```shell
-$ nix run -f . packages.holochain.holochainAllBinariesWithDeps.develop_lair_0_1.holochain -c holochain --version && nix run -f . packages.holochain.holochainAllBinariesWithDeps.develop_lair_0_1.lair-keystore -c lair-keystore --version
+$ `nix-build . -A packages.holochain.holochainAllBinariesWithDeps.develop_lair_0_1.holochain --no-out-link`/bin/holochain --version && `nix-build . -A packages.holochain.holochainAllBinariesWithDeps.develop_lair_0_1.lair-keystore --no-out-link`/bin/lair-keystore --version
 holochain 0.0.114
 lair_keystore 0.1.0
 ```
@@ -150,7 +150,7 @@ lair_keystore 0.1.0
 ### Holochain Version Update Utility
 
 ```shell
-nix run -f . packages.update-holochain-versions -c update-holochain-versions --help
+nix-shell --pure --run "update-holochain-versions --help"
 ```
 
 ## Nix Caching and Continuous Integration
