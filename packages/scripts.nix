@@ -1,4 +1,4 @@
- {pkgs
+{ pkgs
 , lib
 , writeScriptBin
 , git
@@ -36,9 +36,8 @@ let
       }
   '';
 
-  diffTargetsState = "${toplevel}/packages/holochain/versions ${toplevel}/nix/nvfetcher/_sources/.shake.*";
-  diffTargetsVersions = "${toplevel}/packages/holochain/versions ${toplevel}/nix/nvfetcher/_sources/generated.nix";
-  commitPaths = "${toplevel}/packages/holochain/versions ${toplevel}/nix/nvfetcher";
+  diffPaths = "${toplevel}/nix/nvfetcher/_sources/generated.json";
+  addPaths = "${toplevel}/packages/holochain/versions ${toplevel}/nix/nvfetcher";
 
   hnixpkgs-update = configKeys: ''
     #!/bin/sh
@@ -57,17 +56,10 @@ let
 
     trap "" ERR INT
 
-    ${git}/bin/git add ${diffTargetsState}
-    if ! ${git}/bin/git diff --staged --exit-code -- ${diffTargetsState}; then
-        echo Committing state files..
-        ${git}/bin/git commit ${diffTargetsState} \
-          -m "update nvfetcher state"
-    fi
-
-    ${git}/bin/git add ${diffTargetsVersions}
-    if ! ${git}/bin/git diff --staged --exit-code -- ${diffTargetsVersions}; then
+    ${git}/bin/git add ${addPaths}
+    if ! ${git}/bin/git diff --staged --exit-code -- ${diffPaths}; then
         echo New versions found, commiting..
-        ${git}/bin/git commit ${commitPaths} \
+        ${git}/bin/git commit ${addPaths} \
           -m "update nvfetcher sources" \
           -m "the following keys were updated" \
           -m "${builtins.concatStringsSep " " configKeys}"

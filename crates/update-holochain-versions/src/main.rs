@@ -321,7 +321,7 @@ fn get_holochain_version(
         cargo_lock: CargoLock {
             // TODO: get the store path for the lockfile
             lock_file: None,
-            output_hashes: holochain_crate_srcinfo.cargo_lock.output_hashes,
+            output_hashes: holochain_crate_srcinfo.rust_git_deps,
         },
 
         lair: LairVersion {
@@ -331,7 +331,7 @@ fn get_holochain_version(
             cargo_lock: CargoLock {
                 // TODO: get the store path for the lockfile
                 lock_file: None,
-                output_hashes: lair_crate_srcinfo.cargo_lock.output_hashes,
+                output_hashes: lair_crate_srcinfo.rust_git_deps,
             },
         },
 
