@@ -450,8 +450,15 @@ nixpkgs.callPackage generated { }
 
 #[cfg(test)]
 mod tests {
-    use crate::{nvfetcher::nix_to_json_partial, *};
+    use std::str::FromStr;
+
     use pretty_assertions::assert_eq;
+    use update_holochain_versions::nix_to_json_partial;
+
+    use crate::{
+        get_holochain_version, nvfetcher::NvfetcherWrapper, render_holochain_version,
+        BinCrateSource, GitSrc, HolochainVersion,
+    };
 
     #[test]
     fn nvfetcher_generate_and_render() {
