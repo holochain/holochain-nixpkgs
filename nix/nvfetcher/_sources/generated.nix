@@ -3,28 +3,28 @@
 {
   crate2nix = {
     pname = "crate2nix";
-    version = "d9854e53b5f17dc2a7fb5e8c7a32bb2299bd0a0a";
+    version = "7178e530f7d617ac0b61a6e53c7f3b28710fb6cf";
     src = fetchFromGitHub ({
       owner = "kolloch";
       repo = "crate2nix";
-      rev = "d9854e53b5f17dc2a7fb5e8c7a32bb2299bd0a0a";
+      rev = "7178e530f7d617ac0b61a6e53c7f3b28710fb6cf";
       fetchSubmodules = false;
-      sha256 = "sha256-s/ts3lI9ImiKMAhZTh6ReHPoxxXcp9w8z+1JjrZpm1U=";
+      sha256 = "sha256-d+SsMV/ysXNu5mE1qIywpQdgleEKOdsK6L4h58AoFdc=";
     });
   };
   holochain_branch_develop = {
     pname = "holochain_branch_develop";
-    version = "1a2efe5917f705029437c476c5fdb235456adc2d";
+    version = "174fbe799518550a69c6d35d12767bc9178c1282";
     src = fetchgit {
       url = "https://github.com/holochain/holochain";
-      rev = "1a2efe5917f705029437c476c5fdb235456adc2d";
+      rev = "174fbe799518550a69c6d35d12767bc9178c1282";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "sha256-3vlTngrNxaKeBRb0qcYzBjZi5S8M8ooFjguOK5GuuO4=";
+      sha256 = "sha256-M9XlUfQG1CY4LjW6eyW9wDx7qO5ZHFrGyLM5R2gcudQ=";
     };
     cargoLock = {
-      lockFile = ./holochain_branch_develop-1a2efe5917f705029437c476c5fdb235456adc2d/Cargo.lock;
+      lockFile = ./holochain_branch_develop-174fbe799518550a69c6d35d12767bc9178c1282/Cargo.lock;
       outputHashes = {
         "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
       };
@@ -43,6 +43,24 @@
     };
     cargoLock = {
       lockFile = ./holochain_branch_main-b2159249935c30ee641cc60a6fa52d29454b1173/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
+    };
+  };
+  holochain_branch_staging = {
+    pname = "holochain_branch_staging";
+    version = "2c873627a1cf8a475d36a70d8474e84440b9bcb8";
+    src = fetchgit {
+      url = "https://github.com/holochain/holochain";
+      rev = "2c873627a1cf8a475d36a70d8474e84440b9bcb8";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "sha256-/KMlWEL7iu4mL0G1LaaavQ++/152uV3pVJf9ltsNtqI=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_branch_staging-2c873627a1cf8a475d36a70d8474e84440b9bcb8/Cargo.lock;
       outputHashes = {
         "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
       };
@@ -320,33 +338,33 @@
   };
   nixpkgs = {
     pname = "nixpkgs";
-    version = "242d8aef0fed3ee24bca9361cc452f803c6647f2";
+    version = "2a5f05c0b87a4230c950c362a0d6b80f819032c3";
     src = fetchTarball {
-      url = "https://github.com/nixos/nixpkgs/archive/242d8aef0fed3ee24bca9361cc452f803c6647f2.tar.gz";
-      sha256 = "06sf8vdmadddx6cy9wzjfcavw2ilc0813b14c3ny4hws6bkqswzm";
+      url = "https://github.com/nixos/nixpkgs/archive/2a5f05c0b87a4230c950c362a0d6b80f819032c3.tar.gz";
+      sha256 = "0x6ad4p9sd2lr60k532x2wi4j14jsvqbk81nykcxmdzyc6h3fz4n";
     };
   };
   nvfetcher = {
     pname = "nvfetcher";
-    version = "58d296aafd6e3e979b6bed56f08d286a416e7718";
+    version = "6bd24e64192add7778a523686ab1dac3fdac05c0";
     src = fetchFromGitHub ({
       owner = "berberman";
       repo = "nvfetcher";
-      rev = "58d296aafd6e3e979b6bed56f08d286a416e7718";
+      rev = "6bd24e64192add7778a523686ab1dac3fdac05c0";
       fetchSubmodules = false;
-      sha256 = "sha256-9G1V0NYpQZgr4chuS/L3p94M06B+sUQBAIbi3l4mCIo=";
+      sha256 = "sha256-d/0RIOJyArefrxRcGT4RFFRa6zWCo2WxebtLE5UToRg=";
     });
   };
   rust-overlay = {
     pname = "rust-overlay";
-    version = "9fb49daf1bbe1d91e6c837706c481f9ebb3d8097";
+    version = "d480bb17451c57cf4ef67a14f6772f752ced382c";
     src = fetchgit {
       url = "https://github.com/oxalica/rust-overlay";
-      rev = "9fb49daf1bbe1d91e6c837706c481f9ebb3d8097";
+      rev = "d480bb17451c57cf4ef67a14f6772f752ced382c";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "sha256-pHnhm3HWwtvtOK7NdNHwERih3PgNlacrfeDwachIG8E=";
+      sha256 = "sha256-tRnuR2qoILwKzSkiIlQe0B5OR6CAQbJxhpt9jYHQD08=";
     };
   };
 }

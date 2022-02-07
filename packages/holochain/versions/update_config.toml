@@ -4,6 +4,9 @@ git-src = "branch:main"
 [develop]
 git-src = "branch:develop"
 
+[staging]
+git-src = "branch:staging"
+
 [develop_lair_0_1]
 git-src = "branch:develop"
 lair-version-req = "~0.1"
