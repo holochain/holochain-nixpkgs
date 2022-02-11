@@ -22,7 +22,7 @@
 }:
 
 let
-  packages = pkgs.callPackage ./packages { inherit rustPlatform; };
+  packages = pkgs.callPackage ./packages { inherit (pkgs) makeRustPlatform; mkRust = pkgs.rust.mkRust; };
 in
 
 {
@@ -57,7 +57,6 @@ in
 
       packages.scripts.nvfetcher-build
       packages.scripts.nvfetcher-clean
-      packages.update-holochain-versions
     ] ++ pkgs.lib.optionals (builtins.elem "dev" flavors) [
       rustPlatform.rust.rustc
       rustPlatform.rust.cargo
@@ -66,6 +65,7 @@ in
       pkgs.crate2nix
       packages.scripts.nixpkgs-regen-crate-expressions
     ] ++ pkgs.lib.optionals (builtins.elem "release" flavors) [
+      packages.update-holochain-versions
       packages.scripts.hnixpkgs-update-single
       packages.scripts.hnixpkgs-update-all
     ]

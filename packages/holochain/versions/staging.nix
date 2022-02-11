@@ -4,11 +4,10 @@
 
 {
     url = "https://github.com/holochain/holochain";
-    rev = "2c873627a1cf8a475d36a70d8474e84440b9bcb8";
-    sha256 = "sha256-/KMlWEL7iu4mL0G1LaaavQ++/152uV3pVJf9ltsNtqI=";
+    rev = "8be9fcb86655fe6edc50abeb5b52d6116906c364";
+    sha256 = "sha256-WApRUTphA4RWaw2GPZT+yJx+J8AVzOgfH5jkcQflfRw=";
     cargoLock = {
         outputHashes = {
-            "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
         };
     };
 
@@ -18,6 +17,8 @@
         "kitsune-p2p-proxy"
     ];
 
+    rustVersion = "1.58.1";
+
     lair = {
         url = "https://github.com/holochain/lair";
         rev = "v0.0.9";
@@ -26,6 +27,8 @@
         binsFilter = [
             "lair-keystore"
         ];
+
+        rustVersion = "1.58.1";
 
         cargoLock = {
             outputHashes = {

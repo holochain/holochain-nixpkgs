@@ -48,6 +48,10 @@ struct Opt {
         use_delimiter = true
     )]
     bins_filter: Vec<String>,
+
+    // TODO: use a single source of truth for the default rust version in the repo
+    #[structopt(long, default_value = "1.58.1")]
+    rust_version: String,
 }
 
 /// Parse a comma separated list of key:value pairs into a map
@@ -139,6 +143,7 @@ struct HolochainVersion {
     sha256: String,
     cargo_lock: CargoLock,
     bins_filter: Vec<String>,
+    rust_version: String,
 
     lair: LairVersion,
 
@@ -193,6 +198,8 @@ static HANDLEBARS: Lazy<handlebars::Handlebars> = Lazy::new(|| {
         {{/each}}
     ];
 
+    rustVersion = "{{this.rustVersion}}";
+
     lair = {
         url = "{{this.lair.url}}";
         rev = "{{this.lair.rev}}";
@@ -201,6 +208,8 @@ static HANDLEBARS: Lazy<handlebars::Handlebars> = Lazy::new(|| {
         binsFilter = [
             "lair-keystore"
         ];
+
+        rustVersion = "{{this.rustVersion}}";
 
         cargoLock = {
             outputHashes = {
@@ -245,7 +254,12 @@ fn main() -> Fallible<()> {
         None,
     )?;
 
-    let holochain_version = get_holochain_version(true, nvfetcher_holochain, opt.lair_version_req)?;
+    let holochain_version = get_holochain_version(
+        opt.rust_version.clone(),
+        true,
+        nvfetcher_holochain,
+        opt.lair_version_req,
+    )?;
 
     let rendered_holochain_source = render_holochain_version(&holochain_version)?;
     std::fs::write(opt.output_file, rendered_holochain_source)?;
@@ -254,6 +268,7 @@ fn main() -> Fallible<()> {
 }
 
 fn get_holochain_version(
+    rust_version: String,
     update: bool,
     nvfetcher_holochain: NvfetcherWrapper,
     lair_version_req: semver::VersionReq,
@@ -318,6 +333,7 @@ fn get_holochain_version(
         rev: holochain_crate_srcinfo.src.rev,
         sha256: holochain_crate_srcinfo.src.sha256,
         bins_filter: nvfetcher_holochain.src.bins_filter,
+        rust_version,
         cargo_lock: CargoLock {
             // TODO: get the store path for the lockfile
             lock_file: None,
@@ -483,6 +499,7 @@ mod tests {
         .unwrap();
 
         let mut holochain_version = get_holochain_version(
+            "1.58.1".to_string(),
             false,
             nvfetcher_holochain,
             semver::VersionReq::from_str("*").unwrap(),
