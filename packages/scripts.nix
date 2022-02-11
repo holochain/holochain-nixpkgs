@@ -36,8 +36,20 @@ let
       }
   '';
 
-  diffPaths = "${toplevel}/nix/nvfetcher/_sources/generated.json";
-  addPaths = "${toplevel}/packages/holochain/versions ${toplevel}/nix/nvfetcher";
+  diffPaths = configKeys:
+    builtins.concatStringsSep " " (
+      [
+        "${toplevel}/nix/nvfetcher/_sources/generated.json"
+      ]
+      ++ (builtins.map (configKey: "${toplevel}/packages/holochain/versions/${configKey}.nix") configKeys)
+    );
+  addPaths = configKeys:
+    builtins.concatStringsSep " " (
+      [
+        "${toplevel}/nix/nvfetcher/_sources/"
+      ]
+      ++ (builtins.map (configKey: "${toplevel}/packages/holochain/versions/${configKey}.nix") configKeys)
+    );
 
   hnixpkgs-update = configKeys: ''
     #!/bin/sh
@@ -46,6 +58,8 @@ let
     pushd ${toplevel}
 
     trap "git checkout ${toplevel}/nix/nvfetcher" ERR INT
+
+    git clean -fd ${toplevel}/nix/nvfetcher/_sources/
 
     ${builtins.concatStringsSep "\n"
       (builtins.map
@@ -56,10 +70,10 @@ let
 
     trap "" ERR INT
 
-    ${git}/bin/git add ${addPaths}
-    if ! ${git}/bin/git diff --staged --exit-code -- ${diffPaths}; then
+    ${git}/bin/git add ${addPaths configKeys}
+    if ! ${git}/bin/git diff --staged --exit-code -- ${diffPaths configKeys}; then
         echo New versions found, commiting..
-        ${git}/bin/git commit ${addPaths} \
+        ${git}/bin/git commit ${addPaths configKeys} \
           -m "update nvfetcher sources" \
           -m "the following keys were updated" \
           -m "${builtins.concatStringsSep " " configKeys}"
