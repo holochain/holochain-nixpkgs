@@ -1,6 +1,6 @@
 { pkgs
 , lib
-, writeScriptBin
+, writeShellScriptBin
 , git
 , cargo
 , crate2nix
@@ -12,7 +12,7 @@
 }:
 
 let
-  nvfetcher-clean = writeScriptBin "nvfetcher-clean" ''
+  nvfetcher-clean = writeShellScriptBin "nvfetcher-clean" ''
     #!/bin/sh
     cd ${toString toplevel}/nix/nvfetcher
     ${nvfetcher}/bin/nvfetcher clean $@
@@ -84,19 +84,19 @@ in
 {
   inherit nvfetcher-clean;
 
-  nvfetcher-build = writeScriptBin "nvfetcher-build" ''
+  nvfetcher-build = writeShellScriptBin "nvfetcher-build" ''
     #!/bin/sh
     cd ${toString toplevel}/nix/nvfetcher
     ${nvfetcher}/bin/nvfetcher build $@
   '';
 
-  _hnixpkgs-update = configKey: writeScriptBin "hnixpkgs-update"
+  _hnixpkgs-update = configKey: writeShellScriptBin "hnixpkgs-update"
     (hnixpkgs-update
       [ configKey ]
     )
   ;
 
-  hnixpkgs-update-single = writeScriptBin "hnixpkgs-update-single" (
+  hnixpkgs-update-single = writeShellScriptBin "hnixpkgs-update-single" (
     let
       errMsg = ''
         ERROR: no argument provided.
@@ -125,7 +125,7 @@ in
     ''
   );
 
-  hnixpkgs-update-all = writeScriptBin "hnixpkgs-update-all"
+  hnixpkgs-update-all = writeShellScriptBin "hnixpkgs-update-all"
     (hnixpkgs-update
       (builtins.attrNames holochain.holochainVersionUpdateConfig)
     )
@@ -138,7 +138,7 @@ in
       diffTargets = "${outputPath} Cargo.lock";
       buildTargets = "-A packages.update-holochain-versions";
     in
-    writeScriptBin "hnixpkgs-regen-crate-expressions" ''
+    writeShellScriptBin "hnixpkgs-regen-crate-expressions" ''
       #!/bin/sh
       set -e
       cd ${toplevel}
