@@ -14,7 +14,7 @@
 let
   nvfetcher-clean = writeScriptBin "nvfetcher-clean" ''
     #!/bin/sh
-    pushd ${toString toplevel}/nix/nvfetcher
+    cd ${toString toplevel}/nix/nvfetcher
     ${nvfetcher}/bin/nvfetcher clean $@
   '';
 
@@ -55,7 +55,7 @@ let
     #!/bin/sh
     set -e
 
-    pushd ${toplevel}
+    cd ${toplevel}
 
     trap "git checkout ${toplevel}/nix/nvfetcher" ERR INT
 
@@ -86,7 +86,7 @@ in
 
   nvfetcher-build = writeScriptBin "nvfetcher-build" ''
     #!/bin/sh
-    pushd ${toString toplevel}/nix/nvfetcher
+    cd ${toString toplevel}/nix/nvfetcher
     ${nvfetcher}/bin/nvfetcher build $@
   '';
 
@@ -141,7 +141,7 @@ in
     writeScriptBin "hnixpkgs-regen-crate-expressions" ''
       #!/bin/sh
       set -e
-      pushd ${toplevel}
+      cd ${toplevel}
 
       ${cargo}/bin/cargo generate-lockfile
       ${crate2nix}/bin/crate2nix generate --default-features --output=${outputPath}
