@@ -13,7 +13,6 @@
 
 let
   nvfetcher-clean = writeShellScriptBin "nvfetcher-clean" ''
-    #!/bin/sh
     cd ${toString toplevel}/nix/nvfetcher
     ${nvfetcher}/bin/nvfetcher clean $@
   '';
@@ -52,7 +51,6 @@ let
     );
 
   hnixpkgs-update = configKeys: ''
-    #!/bin/sh
     set -e
 
     cd ${toplevel}
@@ -85,7 +83,6 @@ in
   inherit nvfetcher-clean;
 
   nvfetcher-build = writeShellScriptBin "nvfetcher-build" ''
-    #!/bin/sh
     cd ${toString toplevel}/nix/nvfetcher
     ${nvfetcher}/bin/nvfetcher build $@
   '';
@@ -115,7 +112,6 @@ in
 
     in
     ''
-      #!/bin/sh
       if [ -z "$1" ]; then
         printf '${errMsg}'
         exit 1
@@ -139,7 +135,6 @@ in
       buildTargets = "-A packages.update-holochain-versions";
     in
     writeShellScriptBin "hnixpkgs-regen-crate-expressions" ''
-      #!/bin/sh
       set -e
       cd ${toplevel}
 
