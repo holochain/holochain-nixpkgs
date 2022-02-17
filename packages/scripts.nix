@@ -1,6 +1,6 @@
 { pkgs
 , lib
-, writeScriptBin
+, writeShellScriptBin
 , git
 , cargo
 , crate2nix
@@ -12,9 +12,8 @@
 }:
 
 let
-  nvfetcher-clean = writeScriptBin "nvfetcher-clean" ''
-    #!/bin/sh
-    pushd ${toString toplevel}/nix/nvfetcher
+  nvfetcher-clean = writeShellScriptBin "nvfetcher-clean" ''
+    cd ${toString toplevel}/nix/nvfetcher
     ${nvfetcher}/bin/nvfetcher clean $@
   '';
 
@@ -52,10 +51,9 @@ let
     );
 
   hnixpkgs-update = configKeys: ''
-    #!/bin/sh
     set -e
 
-    pushd ${toplevel}
+    cd ${toplevel}
 
     trap "git checkout ${toplevel}/nix/nvfetcher" ERR INT
 
@@ -84,19 +82,18 @@ in
 {
   inherit nvfetcher-clean;
 
-  nvfetcher-build = writeScriptBin "nvfetcher-build" ''
-    #!/bin/sh
-    pushd ${toString toplevel}/nix/nvfetcher
+  nvfetcher-build = writeShellScriptBin "nvfetcher-build" ''
+    cd ${toString toplevel}/nix/nvfetcher
     ${nvfetcher}/bin/nvfetcher build $@
   '';
 
-  _hnixpkgs-update = configKey: writeScriptBin "hnixpkgs-update"
+  _hnixpkgs-update = configKey: writeShellScriptBin "hnixpkgs-update"
     (hnixpkgs-update
       [ configKey ]
     )
   ;
 
-  hnixpkgs-update-single = writeScriptBin "hnixpkgs-update-single" (
+  hnixpkgs-update-single = writeShellScriptBin "hnixpkgs-update-single" (
     let
       errMsg = ''
         ERROR: no argument provided.
@@ -115,7 +112,6 @@ in
 
     in
     ''
-      #!/bin/sh
       if [ -z "$1" ]; then
         printf '${errMsg}'
         exit 1
@@ -125,7 +121,7 @@ in
     ''
   );
 
-  hnixpkgs-update-all = writeScriptBin "hnixpkgs-update-all"
+  hnixpkgs-update-all = writeShellScriptBin "hnixpkgs-update-all"
     (hnixpkgs-update
       (builtins.attrNames holochain.holochainVersionUpdateConfig)
     )
@@ -138,10 +134,9 @@ in
       diffTargets = "${outputPath} Cargo.lock";
       buildTargets = "-A packages.update-holochain-versions";
     in
-    writeScriptBin "hnixpkgs-regen-crate-expressions" ''
-      #!/bin/sh
+    writeShellScriptBin "hnixpkgs-regen-crate-expressions" ''
       set -e
-      pushd ${toplevel}
+      cd ${toplevel}
 
       ${cargo}/bin/cargo generate-lockfile
       ${crate2nix}/bin/crate2nix generate --default-features --output=${outputPath}
