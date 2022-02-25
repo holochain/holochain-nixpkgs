@@ -50,7 +50,6 @@ jobs:
         nixAttribute:
           - main
           - develop
-          - develop_lair_0_1
           - v0_0_117
           - v0_0_118
           - v0_0_119
@@ -119,6 +118,7 @@ jobs:
           - macos-latest
         nixAttribute:
           - update-holochain-versions
+          - holochain-nixpkgs-util
         cachixName:
           - holochain-ci
     runs-on: ${{ matrix.platform }}
