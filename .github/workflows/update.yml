@@ -1,0 +1,46 @@
+name: "auto-update"
+on:
+  # push:
+  #   branches:
+  #     - pr/periodic-updates
+  # schedule:
+  #   - cron: "0 * * * 3" # at 6 AM every day
+  workflow_dispatch: {}
+concurrency:
+  # group: ${{ github.head_ref }}
+  group: one
+  cancel-in-progress: false
+
+jobs:
+  update-holochain-tags:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2.4.0
+      - name: Install nix
+        uses: cachix/install-nix-action@v16
+      - name: Setup cachix
+        uses: cachix/cachix-action@v10
+        with:
+          name: holochain-ci
+          signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+      - name: update tags
+        run: |
+          git config --global user.email "hrabot@holochain.org"
+          git config --global user.name "Holochain Release Automation"
+          nix-shell \
+            --pure --arg flavors '["dev" "release"]' \
+            --run "holochain-nixpkgs-util update-holochain-tags"
+      # - name: Build all versions
+      #     nix build -f . packages.holochain.holochainAllBinariesWithDeps --extra-experimental-features nix-command
+      - name: create pull request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.HRA_GITHUB_TOKEN }}
+          title: update holochain tags
+          branch: auto-update/develop-${{ github.ref_name }}
+          labels: |
+            release
+          draft: true
+          delete-branch: true
