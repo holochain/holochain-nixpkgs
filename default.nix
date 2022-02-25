@@ -47,10 +47,15 @@ in
     NIX_PATH = "nixpkgs=${sources.nixpkgs.src}";
     NIX_CONFIG = "extra-experimental-features = nix-command";
 
+    inputsFrom = pkgs.lib.optionals (builtins.elem "dev" flavors) [
+      (packages.rustInputAttrs { attrs = { }; })
+    ];
+
     packages = [
       # for nix-shell --pure
       pkgs.git
       pkgs.git-lfs
+      pkgs.gh
       pkgs.cacert
       pkgs.nixUnstable
       # pkgs.nix-build-uncached
@@ -65,8 +70,11 @@ in
       pkgs.crate2nix
       packages.scripts.nixpkgs-regen-crate-expressions
       packages.scripts.hnixpkgs-update-nvfetcher-src
+      packages.scripts.hnixpkgs-iter
     ] ++ pkgs.lib.optionals (builtins.elem "release" flavors) [
       packages.update-holochain-versions
+      packages.holochain-nixpkgs-util
+
       packages.scripts.hnixpkgs-update-single
       packages.scripts.hnixpkgs-update-all
     ]

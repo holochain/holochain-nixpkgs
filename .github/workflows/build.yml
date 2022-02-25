@@ -2,12 +2,6 @@ name: "Build"
 on:
   pull_request:
   # push:
-  # TODO: do we need a schedule?
-  # schedule:
-  #   # rebuild everyday at 2:51
-  #   # TIP: Choose a random time here so not all repositories are build at once:
-  #   # https://www.random.org/clock-times/?num=1&earliest=01%3A00&latest=08%3A00&interval=5&format=html&rnd=new
-  #   - cron:  '10 4 * * *'
 concurrency:
   group: ${{ github.head_ref }}
   cancel-in-progress: false
@@ -50,7 +44,6 @@ jobs:
         nixAttribute:
           - main
           - develop
-          - develop_lair_0_1
           - v0_0_117
           - v0_0_118
           - v0_0_119
@@ -119,6 +112,7 @@ jobs:
           - macos-latest
         nixAttribute:
           - update-holochain-versions
+          - holochain-nixpkgs-util
         cachixName:
           - holochain-ci
     runs-on: ${{ matrix.platform }}
@@ -141,13 +135,18 @@ jobs:
         env:
           nix_attribute: ${{ matrix.nixAttribute }}
         run: nix build -f . "packages.${nix_attribute}" --extra-experimental-features nix-command
-#      TODO: this doesn't do anything. investigate and turn back on
-#
-#      - name: Build nix packages
-#        # TODO switch to default nixpkgs channel once nix-build-uncached 1.0.0 is in stable
-#        run: nix run -I 'nixpkgs=channel:nixos-unstable' nixpkgs.nix-build-uncached -c nix-build-uncached ci.nix -A cacheOutputs
-#      TODO: enable this once we're registered as a NUR
-#      - name: Trigger NUR update
-#        # Don't replace <YOUR_REPO_NAME> here!
-#        if: ${{ matrix.nurRepo != '<YOUR_REPO_NAME>' }}
-#        run: curl -XPOST "https://nur-update.herokuapp.com/update?repo=${{ matrix.nurRepo }}"
+  #      TODO: this doesn't do anything. investigate and turn back on
+  #
+  #      - name: Build nix packages
+  #        # TODO switch to default nixpkgs channel once nix-build-uncached 1.0.0 is in stable
+  #        run: nix run -I 'nixpkgs=channel:nixos-unstable' nixpkgs.nix-build-uncached -c nix-build-uncached ci.nix -A cacheOutputs
+  #      TODO: enable this once we're registered as a NUR
+  #      - name: Trigger NUR update
+  #        # Don't replace <YOUR_REPO_NAME> here!
+  #        if: ${{ matrix.nurRepo != '<YOUR_REPO_NAME>' }}
+  #        run: curl -XPOST "https://nur-update.herokuapp.com/update?repo=${{ matrix.nurRepo }}"
+
+  all-jobs-succeed:
+    runs-on: "ubuntu-latest"
+    needs: [crate-tests, holochain-binaries, packages]
+    steps: [{ name: "all-jobs-succeed", run: ":" }]

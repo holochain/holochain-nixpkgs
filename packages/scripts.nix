@@ -1,6 +1,7 @@
 { pkgs
 , lib
 , writeShellScriptBin
+, writeScriptBin
 , git
 , cargo
 , crate2nix
@@ -43,6 +44,7 @@ let
   diffPaths = configKeys:
     builtins.concatStringsSep " " (
       [
+        "${toplevel}/nix/nvfetcher/nvfetcher.toml"
         "${toplevel}/nix/nvfetcher/_sources/generated.json"
       ]
       ++ (builtins.map (configKey: "${toplevel}/packages/holochain/versions/${configKey}.nix") configKeys)
@@ -50,6 +52,7 @@ let
   addPaths = configKeys:
     builtins.concatStringsSep " " (
       [
+        "${toplevel}/nix/nvfetcher/nvfetcher.toml"
         "${toplevel}/nix/nvfetcher/_sources/"
       ]
       ++ (builtins.map (configKey: "${toplevel}/packages/holochain/versions/${configKey}.nix") configKeys)
@@ -142,7 +145,7 @@ in
       ${cargo}/bin/cargo generate-lockfile
       ${crate2nix}/bin/crate2nix generate --default-features --output=${outputPath}
 
-      if git diff --exit-code -- ${diffTargets}; then
+      if env PAGER="" git diff --exit-code -- ${diffTargets}; then
         echo No updates found.
       else
         nix-build default.nix --no-out-link ${buildTargets}
@@ -150,6 +153,7 @@ in
         git commit ${diffTargets} -m "update generated crate expressions"
       fi
     '';
+
   hnixpkgs-update-nvfetcher-src = writeShellScriptBin "hnixpkgs-update-nvfetcher-src" ''
     set -ex
 
@@ -171,5 +175,11 @@ in
         ${git}/bin/git commit ${addPaths []} \
           -m "update nvfetcher source: $@"
     fi
+  '';
+
+  hnixpkgs-iter = writeScriptBin "hnixpkgs-iter" ''
+    set - e
+    nix-shell --pure --arg flavors '[ "dev" ]' --run "hnixpkgs-regen-crate-expressions"
+    exec nix-shell --pure --arg flavors '[ "dev" "release" ]' --run "$(echo $@)"
   '';
 }
