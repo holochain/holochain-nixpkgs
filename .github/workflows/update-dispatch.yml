@@ -17,6 +17,16 @@ jobs:
       fail-fast: false
       matrix:
         command:
+          - name: nixpkgs
+            run: |
+              nix-shell \
+                --pure --arg flavors '["dev"]' \
+                --run "hnixpkgs-nvfetcher-build nixpkgs"
+          - name: rust-overlay
+            run: |
+              nix-shell \
+                --pure --arg flavors '["dev"]' \
+                --run "hnixpkgs-nvfetcher-build nixpkgs"
           - name: tags
             run: |
               nix-shell \
