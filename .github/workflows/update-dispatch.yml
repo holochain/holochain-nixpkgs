@@ -24,10 +24,14 @@ jobs:
                 --run "holochain-nixpkgs-util update-holochain-tags"
           - name: develop
             run: |
-              nix-shell --arg flavors '["release"]' --pure --run "hnixpkgs-update-single develop"
+              nix-shell \
+              --pure --arg flavors '["release"]' \
+              --run "hnixpkgs-update-single develop"
           - name: main
             run: |
-              nix-shell --arg flavors '["release"]' --pure --run "hnixpkgs-update-single main"
+              nix-shell \
+              --pure --arg flavors '["release"]' \
+              --run "hnixpkgs-update-single main"
     runs-on: "ubuntu-latest"
     steps:
       - name: Checkout repository
