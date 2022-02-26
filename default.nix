@@ -64,6 +64,7 @@ in
 
       pkgs.crate2nix
       packages.scripts.nixpkgs-regen-crate-expressions
+      packages.scripts.hnixpkgs-update-nvfetcher-src
     ] ++ pkgs.lib.optionals (builtins.elem "release" flavors) [
       packages.update-holochain-versions
       packages.scripts.hnixpkgs-update-single
