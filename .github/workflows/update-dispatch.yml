@@ -73,5 +73,5 @@ jobs:
           number: ${{ steps.cpr1.outputs.pull-request-number }}
   all-jobs-succeed:
     runs-on: "ubuntu-latest"
-    needs: [update-holochain-tags]
+    needs: [update]
     steps: [{ name: "all-jobs-succeed", run: ":" }]
