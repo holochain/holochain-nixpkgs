@@ -18,6 +18,11 @@ let
     ${nvfetcher}/bin/nvfetcher clean $@
   '';
 
+  nvfetcher-build = writeShellScriptBin "nvfetcher-build" ''
+    cd ${toString toplevel}/nix/nvfetcher
+    ${nvfetcher}/bin/nvfetcher build $@
+  '';
+
   updateSingle = { configKey, cliFlags }: ''
     ${update-holochain-versions}/bin/update-holochain-versions \
       --nvfetcher-dir=${toplevel}/nix/nvfetcher \
@@ -83,12 +88,8 @@ let
 in
 
 {
-  inherit nvfetcher-clean;
+  inherit nvfetcher-clean nvfetcher-build;
 
-  nvfetcher-build = writeShellScriptBin "nvfetcher-build" ''
-    cd ${toString toplevel}/nix/nvfetcher
-    ${nvfetcher}/bin/nvfetcher build $@
-  '';
 
   _hnixpkgs-update = configKey: writeShellScriptBin "hnixpkgs-update"
     (hnixpkgs-update
@@ -157,5 +158,28 @@ in
     set -e
     nix-shell --pure --arg flavors '["dev"]' --run "hnixpkgs-regen-crate-expressions"
     exec nix-shell --pure --arg flavors '["dev" "release"]' --run "$(echo $@)"
+  '';
+
+  hnixpkgs-update-nvfetcher-src = writeShellScriptBin "hnixpkgs-update-nvfetcher-src" ''
+    set -ex
+
+    cd ${toplevel}
+
+    trap "git checkout ${toplevel}/nix/nvfetcher" ERR INT
+
+    git clean -fd ${toplevel}/nix/nvfetcher/_sources/
+
+    ${nvfetcher-build}/bin/nvfetcher-build --filter $@
+
+    cd ${toplevel}
+
+    trap "" ERR INT
+
+    ${git}/bin/git add ${addPaths []}
+    if ! ${git}/bin/git diff --staged --exit-code -- ${diffPaths []}; then
+        echo New versions found, commiting..
+        ${git}/bin/git commit ${addPaths []} \
+          -m "update nvfetcher source: $@"
+    fi
   '';
 }
