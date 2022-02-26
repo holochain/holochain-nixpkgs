@@ -1,5 +1,5 @@
 # This file was generated with the following command:
-# update-holochain-versions --nvfetcher-dir=nix/nvfetcher --output-file=packages/holochain/versions/v0_0_110.nix --git-src=revision:holochain-0.0.110 --lair-version-req=~0.0 --rust-version=1.55.0
+# update-holochain-versions --nvfetcher-dir=nix/nvfetcher --output-file=packages/holochain/versions/v0_0_110.nix --git-src=revision:holochain-0.0.110 --lair-version-req=~0.0
 # For usage instructions please visit https://github.com/holochain/holochain-nixpkgs/#readme
 
 {
@@ -18,7 +18,7 @@
         "kitsune-p2p-proxy"
     ];
 
-    rustVersion = "1.55.0";
+    rustVersion = "1.58.1";
 
     lair = {
         url = "https://github.com/holochain/lair";
@@ -29,7 +29,7 @@
             "lair-keystore"
         ];
 
-        rustVersion = "1.55.0";
+        rustVersion = "1.58.1";
 
         cargoLock = {
             outputHashes = {
