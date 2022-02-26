@@ -276,6 +276,27 @@
             "cargo-test-macro-0.1.0": "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs="
         }
     },
+    "holochain_revision_holochain-0_0_103": {
+        "pinned": true,
+        "cargoLock": "./holochain_revision_holochain-0_0_103-holochain-0.0.103/Cargo.lock",
+        "name": "holochain_revision_holochain-0_0_103",
+        "version": "holochain-0.0.103",
+        "passthru": null,
+        "src": {
+            "deepClone": false,
+            "url": "https://github.com/holochain/holochain",
+            "leaveDotGit": false,
+            "fetchSubmodules": false,
+            "name": null,
+            "type": "git",
+            "sha256": "sha256-p9E1It1iZIsb8gntDljZcU3bL/BnkvwY2Y4JGegKHvw=",
+            "rev": "holochain-0.0.103"
+        },
+        "extract": null,
+        "rustGitDeps": {
+            "cargo-test-macro-0.1.0": "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs="
+        }
+    },
     "rust-overlay": {
         "pinned": true,
         "cargoLock": null,
@@ -296,7 +317,7 @@
         "rustGitDeps": null
     },
     "lair_revision_v0_0_9": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": "./lair_revision_v0_0_9-v0.0.9/Cargo.lock",
         "name": "lair_revision_v0_0_9",
         "version": "v0.0.9",
@@ -334,6 +355,25 @@
         "rustGitDeps": {
             "cargo-test-macro-0.1.0": "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs="
         }
+    },
+    "lair_revision_v0_0_3": {
+        "pinned": false,
+        "cargoLock": "./lair_revision_v0_0_3-v0.0.3/Cargo.lock",
+        "name": "lair_revision_v0_0_3",
+        "version": "v0.0.3",
+        "passthru": null,
+        "src": {
+            "deepClone": false,
+            "url": "https://github.com/holochain/lair",
+            "leaveDotGit": false,
+            "fetchSubmodules": false,
+            "name": null,
+            "type": "git",
+            "sha256": "sha256-EKuxixeCPhvkwv8Fq5+S2GNt59FEeBrgGHB50oJPP8o=",
+            "rev": "v0.0.3"
+        },
+        "extract": null,
+        "rustGitDeps": {}
     },
     "holochain_revision_holochain-0_0_116": {
         "pinned": true,
