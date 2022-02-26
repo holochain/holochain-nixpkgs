@@ -1,8 +1,8 @@
 name: "update dispatch"
 on:
-  push:
-    branches:
-      - pr-periodic-updates
+  # push:
+  #   branches:
+  #     - pr-periodic-updates
   schedule:
     - cron: "0 5 * * *" # at 5 AM every day
   workflow_dispatch: {}
