@@ -1,6 +1,7 @@
 { pkgs
 , lib
 , writeShellScriptBin
+, writeScriptBin
 , git
 , cargo
 , crate2nix
@@ -15,6 +16,11 @@ let
   nvfetcher-clean = writeShellScriptBin "nvfetcher-clean" ''
     cd ${toString toplevel}/nix/nvfetcher
     ${nvfetcher}/bin/nvfetcher clean $@
+  '';
+
+  nvfetcher-build = writeShellScriptBin "nvfetcher-build" ''
+    cd ${toString toplevel}/nix/nvfetcher
+    ${nvfetcher}/bin/nvfetcher build $@
   '';
 
   updateSingle = { configKey, cliFlags }: ''
@@ -38,6 +44,7 @@ let
   diffPaths = configKeys:
     builtins.concatStringsSep " " (
       [
+        "${toplevel}/nix/nvfetcher/nvfetcher.toml"
         "${toplevel}/nix/nvfetcher/_sources/generated.json"
       ]
       ++ (builtins.map (configKey: "${toplevel}/packages/holochain/versions/${configKey}.nix") configKeys)
@@ -45,6 +52,7 @@ let
   addPaths = configKeys:
     builtins.concatStringsSep " " (
       [
+        "${toplevel}/nix/nvfetcher/nvfetcher.toml"
         "${toplevel}/nix/nvfetcher/_sources/"
       ]
       ++ (builtins.map (configKey: "${toplevel}/packages/holochain/versions/${configKey}.nix") configKeys)
@@ -80,12 +88,8 @@ let
 in
 
 {
-  inherit nvfetcher-clean;
+  inherit nvfetcher-clean nvfetcher-build;
 
-  nvfetcher-build = writeShellScriptBin "nvfetcher-build" ''
-    cd ${toString toplevel}/nix/nvfetcher
-    ${nvfetcher}/bin/nvfetcher build $@
-  '';
 
   _hnixpkgs-update = configKey: writeShellScriptBin "hnixpkgs-update"
     (hnixpkgs-update
@@ -141,7 +145,7 @@ in
       ${cargo}/bin/cargo generate-lockfile
       ${crate2nix}/bin/crate2nix generate --default-features --output=${outputPath}
 
-      if git diff --exit-code -- ${diffTargets}; then
+      if git diff --quiet --exit-code -- ${diffTargets}; then
         echo No updates found.
       else
         nix-build default.nix --no-out-link ${buildTargets}
@@ -149,4 +153,33 @@ in
         git commit ${diffTargets} -m "update generated crate expressions"
       fi
     '';
+
+  hnixpkgs-update-nvfetcher-src = writeShellScriptBin "hnixpkgs-update-nvfetcher-src" ''
+    set -ex
+
+    cd ${toplevel}
+
+    trap "git checkout ${toplevel}/nix/nvfetcher" ERR INT
+
+    git clean -fd ${toplevel}/nix/nvfetcher/_sources/
+
+    ${nvfetcher-build}/bin/nvfetcher-build --filter $@
+
+    cd ${toplevel}
+
+    trap "" ERR INT
+
+    ${git}/bin/git add ${addPaths []}
+    if ! ${git}/bin/git diff --staged --exit-code -- ${diffPaths []}; then
+        echo New versions found, commiting..
+        ${git}/bin/git commit ${addPaths []} \
+          -m "update nvfetcher source: $@"
+    fi
+  '';
+
+  hnixpkgs-iter = writeScriptBin "hnixpkgs-iter" ''
+    set - e
+    nix-shell --pure --arg flavors '[ "dev" ]' --run "hnixpkgs-regen-crate-expressions"
+    exec nix-shell --pure --arg flavors '[ "dev" "release" ]' --run "$(echo $@)"
+  '';
 }
