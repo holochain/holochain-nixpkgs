@@ -27,17 +27,17 @@ jobs:
               nix-shell \
                 --pure --arg flavors '["dev"]' \
                 --run "hnixpkgs-nvfetcher-build nixpkgs"
-          - name: tags
+          - name: holochain-tags
             run: |
               nix-shell \
                 --pure --arg flavors '["release"]' \
                 --run "holochain-nixpkgs-util update-holochain-tags"
-          - name: develop
+          - name: holochain-develop
             run: |
               nix-shell \
               --pure --arg flavors '["release"]' \
               --run "hnixpkgs-update-single develop"
-          - name: main
+          - name: holochain-main
             run: |
               nix-shell \
               --pure --arg flavors '["release"]' \
@@ -66,7 +66,7 @@ jobs:
         with:
           token: ${{ secrets.HRA_GITHUB_TOKEN }}
           title: update ${{ matrix.command.name }} on ${{ github.ref_name }}
-          branch: auto-update/${{ github.ref_name }}/${{ matrix.command.name}}
+          branch: auto-update/${{ github.ref_name }}/${{ matrix.command.name }}
           labels: |
             release
           draft: false
