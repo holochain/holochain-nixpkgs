@@ -12,16 +12,22 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  update-holochain-tags:
+  update:
     strategy:
       fail-fast: false
       matrix:
         command:
-          - name: update update tags
+          - name: tags
             run: |
               nix-shell \
-                --pure --arg flavors '["dev" "release"]' \
+                --pure --arg flavors '["release"]' \
                 --run "holochain-nixpkgs-util update-holochain-tags"
+          - name: develop
+            run: |
+              nix-shell --arg flavors '["release"]' --pure --run "hnixpkgs-update-single develop"
+          - name: main
+            run: |
+              nix-shell --arg flavors '["release"]' --pure --run "hnixpkgs-update-single main"
     runs-on: "ubuntu-latest"
     steps:
       - name: Checkout repository
@@ -45,8 +51,8 @@ jobs:
         id: cpr1
         with:
           token: ${{ secrets.HRA_GITHUB_TOKEN }}
-          title: update holochain tags
-          branch: auto-update/${{ github.ref_name }}
+          title: update ${{ matrix.command.name }} on ${{ github.ref_name }}
+          branch: auto-update/${{ github.ref_name }}/${{ matrix.command.name}}
           labels: |
             release
           draft: false
