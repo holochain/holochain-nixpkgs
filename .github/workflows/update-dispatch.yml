@@ -1,4 +1,4 @@
-name: "auto-update"
+name: "update dispatch"
 on:
   # push:
   #   branches:
