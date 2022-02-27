@@ -223,7 +223,7 @@
         }
     },
     "nixpkgs": {
-        "pinned": true,
+        "pinned": false,
         "cargoLock": null,
         "name": "nixpkgs",
         "version": "1622abf0e7890a3dac995f6eb5a92f56819ae38e",
