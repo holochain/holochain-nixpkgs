@@ -1,6 +1,6 @@
 {
     "lair_revision_v0_0_7": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": "./lair_revision_v0_0_7-v0.0.7/Cargo.lock",
         "name": "lair_revision_v0_0_7",
         "version": "v0.0.7",
@@ -381,6 +381,27 @@
             "cargo-test-macro-0.1.0": "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs="
         }
     },
+    "holochain_revision_holochain-0_0_111": {
+        "pinned": true,
+        "cargoLock": "./holochain_revision_holochain-0_0_111-holochain-0.0.111/Cargo.lock",
+        "name": "holochain_revision_holochain-0_0_111",
+        "version": "holochain-0.0.111",
+        "passthru": null,
+        "src": {
+            "deepClone": false,
+            "url": "https://github.com/holochain/holochain",
+            "leaveDotGit": false,
+            "fetchSubmodules": false,
+            "name": null,
+            "type": "git",
+            "sha256": "sha256-EkLYJJHdOKbJDrMQk4YwAyaXN1eivFW06eLnocYNBZw=",
+            "rev": "holochain-0.0.111"
+        },
+        "extract": null,
+        "rustGitDeps": {
+            "cargo-test-macro-0.1.0": "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs="
+        }
+    },
     "rust-overlay": {
         "pinned": true,
         "cargoLock": null,
@@ -519,6 +540,25 @@
         "rustGitDeps": {
             "cargo-test-macro-0.1.0": "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs="
         }
+    },
+    "lair_revision_v0_0_8": {
+        "pinned": false,
+        "cargoLock": "./lair_revision_v0_0_8-v0.0.8/Cargo.lock",
+        "name": "lair_revision_v0_0_8",
+        "version": "v0.0.8",
+        "passthru": null,
+        "src": {
+            "deepClone": false,
+            "url": "https://github.com/holochain/lair",
+            "leaveDotGit": false,
+            "fetchSubmodules": false,
+            "name": null,
+            "type": "git",
+            "sha256": "sha256-AeyEQWLP2xw8WezDHqfq0oEFxYWY0E7kmuciz/qtCP8=",
+            "rev": "v0.0.8"
+        },
+        "extract": null,
+        "rustGitDeps": {}
     },
     "holochain_revision_holochain-0_0_126": {
         "pinned": true,
