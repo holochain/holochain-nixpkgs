@@ -17,31 +17,31 @@ jobs:
       fail-fast: false
       matrix:
         command:
-          - name: nixpkgs
-            run: |
-              nix-shell \
-                --pure --arg flavors '["dev"]' \
-                --run "hnixpkgs-update-nvfetcher-src nixpkgs"
-          - name: rust-overlay
-            run: |
-              nix-shell \
-                --pure --arg flavors '["dev"]' \
-                --run "hnixpkgs-update-nvfetcher-src rust-overlay"
           - name: holochain-tags
             run: |
               nix-shell \
                 --pure --arg flavors '["release"]' \
                 --run "holochain-nixpkgs-util update-holochain-tags"
-          - name: holochain-develop
-            run: |
-              nix-shell \
-              --pure --arg flavors '["release"]' \
-              --run "hnixpkgs-update-single develop"
           - name: holochain-main
             run: |
               nix-shell \
               --pure --arg flavors '["release"]' \
               --run "hnixpkgs-update-single main"
+          - name: holochain-develop
+            run: |
+              nix-shell \
+              --pure --arg flavors '["release"]' \
+              --run "hnixpkgs-update-single develop"
+          - name: rust-overlay
+            run: |
+              nix-shell \
+                --pure --arg flavors '["dev"]' \
+                --run "hnixpkgs-update-nvfetcher-src rust-overlay"
+          - name: nixpkgs
+            run: |
+              nix-shell \
+                --pure --arg flavors '["dev"]' \
+                --run "hnixpkgs-update-nvfetcher-src nixpkgs"
     runs-on: "ubuntu-latest"
     steps:
       - name: Checkout repository
