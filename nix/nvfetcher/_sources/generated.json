@@ -277,7 +277,7 @@
         }
     },
     "rust-overlay": {
-        "pinned": true,
+        "pinned": false,
         "cargoLock": null,
         "name": "rust-overlay",
         "version": "4f6e6588b07427cd8ddc99b664bf0fab02799804",
@@ -296,7 +296,7 @@
         "rustGitDeps": null
     },
     "lair_revision_v0_0_9": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": "./lair_revision_v0_0_9-v0.0.9/Cargo.lock",
         "name": "lair_revision_v0_0_9",
         "version": "v0.0.9",
