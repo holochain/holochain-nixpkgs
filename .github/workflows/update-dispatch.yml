@@ -60,9 +60,25 @@ jobs:
           git config --global user.name "Holochain Release Automation"
       - name: ${{ matrix.command.name }}
         run: ${{ matrix.command.run }}
+      - name: evaluate the existence of relevant commits
+        id: eval-commits
+        run: |
+          set -x
+
+          echo ${GITHUB_HEAD_REF}
+          echo ${GITHUB_REF_NAME}
+          env PAGER="" git diff ${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}} -I pinned
+
+          if ! git diff ${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}} -I pinned --exit-code --quiet; then
+            echo "::set-output name=pr-justified::true"
+          else
+            echo "::set-output name=pr-justified::false"
+          fi
+
       - name: create pull request
         uses: peter-evans/create-pull-request@v3
         id: cpr1
+        if: steps.eval-commits.pr-justified == 'true'
         with:
           token: ${{ secrets.HRA_GITHUB_TOKEN }}
           title: update ${{ matrix.command.name }} on ${{ github.ref_name }}
