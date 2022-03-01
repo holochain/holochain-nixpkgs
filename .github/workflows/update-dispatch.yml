@@ -67,9 +67,9 @@ jobs:
 
           echo ${GITHUB_HEAD_REF}
           echo ${GITHUB_REF_NAME}
-          env PAGER="" git diff ${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}} -I pinned
+          env PAGER="" git diff origin/${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}} -I pinned
 
-          if ! git diff ${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}} -I pinned --exit-code --quiet; then
+          if ! git diff ${GITHUB_HEAD_REF:-origin/${GITHUB_REF_NAME}} -I pinned --exit-code --quiet; then
             echo "::set-output name=pr-justified::true"
           else
             echo "::set-output name=pr-justified::false"
@@ -77,8 +77,8 @@ jobs:
 
       - name: create pull request
         uses: peter-evans/create-pull-request@v3
+        if: steps.eval-commits.outputs.pr-justified == 'true'
         id: cpr1
-        if: steps.eval-commits.pr-justified == 'true'
         with:
           token: ${{ secrets.HRA_GITHUB_TOKEN }}
           title: update ${{ matrix.command.name }} on ${{ github.ref_name }}

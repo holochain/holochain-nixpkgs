@@ -44,7 +44,7 @@ struct Opt {
 
     #[structopt(
         long,
-        default_value = "holochain,hc,kitsune-p2p-proxy",
+        default_value = "holochain,hc,kitsune-p2p-proxy,kitsune-p2p-tx2-proxy",
         use_delimiter = true
     )]
     bins_filter: Vec<String>,
