@@ -15,6 +15,7 @@
         "holochain"
         "hc"
         "kitsune-p2p-proxy"
+        "kitsune-p2p-tx2-proxy"
     ];
 
     rustVersion = "1.58.1";
