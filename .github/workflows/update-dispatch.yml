@@ -69,7 +69,7 @@ jobs:
           echo ${GITHUB_REF_NAME}
           env PAGER="" git diff ${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}} -I pinned
 
-          if ! git diff ${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}} -I pinned --exit-code --quiet; then
+          if ! git diff ${GITHUB_HEAD_REF:-origin/${GITHUB_REF_NAME}} -I pinned --exit-code --quiet; then
             echo "::set-output name=pr-justified::true"
           else
             echo "::set-output name=pr-justified::false"
