@@ -466,7 +466,7 @@
         }
     },
     "rust-overlay": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": null,
         "name": "rust-overlay",
         "version": "7e9f7b17e523ae93c12b678d94c66700f37e21bc",
