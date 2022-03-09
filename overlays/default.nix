@@ -13,4 +13,10 @@
 
   rust-overlay = import ./rust-overlay.nix;
   rust = import ./rust.nix;
+
+  packages = self: super: {
+    holochainPackages = self.callPackage ../packages {
+      inherit (self) makeRustPlatform;
+      mkRust = self.rust.mkRust; };
+  };
 }
