@@ -14,7 +14,6 @@
     static = true;
   })
 , runCommand
-, cargo
 , jq
 , mkRust
 , makeRustPlatform
@@ -23,14 +22,22 @@
 # TODO: investigate the use-case around 'binsFilter' with end-users before further optimizations
 
 let
+  rustHelper = rustVersion: rec {
+    rust = mkRust { track = "stable"; version = rustVersion; };
+    rustPlatform = makeRustPlatform { rustc = rust; cargo = rust; };
+    cargo = rust;
+  };
+
   binaryPackages =
     { url
     , rev
     , sha256
     , binsFilter ? null
+    , rustVersion
     }:
 
     let
+      cargo = (rustHelper rustVersion).cargo;
       src = fetchgit {
         inherit url rev sha256;
 
@@ -103,7 +110,7 @@ let
     , cargoLock
     , cargoBuildFlags ? [ ]
     , binsFilter ? null
-    , binaryPackagesResult ? binaryPackages { inherit url rev sha256 binsFilter; }
+    , binaryPackagesResult ? binaryPackages { inherit url rev sha256 binsFilter rustVersion; }
     , rustVersion
     }:
     let
@@ -116,8 +123,8 @@ let
         leaveDotGit = false;
       };
 
-      rust = mkRust { track = "stable"; version = rustVersion; };
-      rustPlatform = makeRustPlatform { rustc = rust; cargo = rust; };
+      inherit (rustHelper rustVersion) rust rustPlatform;
+
 
     in
     rustPlatform.buildRustPackage {
@@ -200,7 +207,7 @@ let
     , rustVersion
     }:
     let
-      binaryPackagesResult = binaryPackages { inherit url rev sha256 binsFilter; };
+      binaryPackagesResult = binaryPackages { inherit url rev sha256 binsFilter rustVersion; };
     in
 
     lib.attrsets.mapAttrs
