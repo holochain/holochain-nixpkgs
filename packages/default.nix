@@ -3,12 +3,21 @@
 , stdenv
 , callPackage
 , symlinkJoin
-, nvfetcher
 , nixUnstable
 , makeWrapper
+, rsync
+
+, nvfetcher
 , mkRust
 , makeRustPlatform
+, defaultCrateOverrides
 
+, perl
+, pkg-config
+, openssl
+, zlib
+, libgit2
+, libssh2
 , libsodium
 , darwin
 , xcbuild
@@ -25,23 +34,23 @@ let
     OPENSSL_INCLUDE_DIR = "${opensslStatic.dev}/include";
 
     nativeBuildInputs = (attrs.nativeBuildInputs or [ ])
-      ++ (with pkgs; [
+      ++ [
       perl
       pkg-config
-    ])
+    ]
       ++ (lib.optionals stdenv.isDarwin [
       xcbuild
     ])
     ;
 
     buildInputs = (attrs.buildInputs or [ ])
-      ++ (with pkgs; [
+      ++ [
       openssl
       zlib
       opensslStatic
       libgit2
       libssh2
-    ])
+    ]
       ++ (lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
       AppKit
       CoreFoundation
@@ -51,13 +60,13 @@ let
     ]))
     ;
   };
-  opensslStatic = pkgs.openssl.override (_: {
+  opensslStatic = openssl.override (_: {
     static = true;
   });
   holochain = callPackage ./holochain { inherit mkRust makeRustPlatform; };
   crate2nixGenerated = import ../nix/crate2nix/Cargo.nix {
     inherit pkgs;
-    defaultCrateOverrides = lib.attrsets.recursiveUpdate pkgs.defaultCrateOverrides {
+    defaultCrateOverrides = lib.attrsets.recursiveUpdate defaultCrateOverrides {
       holochain-nixpkgs-util = rustInputAttrs;
       openssl-sys = rustInputAttrs;
       libgit2-sys = rustInputAttrs;
@@ -70,14 +79,14 @@ let
     testPreRun = ''
       mv test test.bkp
       mkdir test
-      ${pkgs.rsync}/bin/rsync -rLv test.bkp/ test/
+      ${rsync}/bin/rsync -rLv test.bkp/ test/
       find test/
       chmod -R +w test
 
       # mkdir nix-store
       export NIX_PATH=nixpkgs=${pkgs.path}
     '';
-    testInputs = [ pkgs.nixUnstable ];
+    testInputs = [ nixUnstable ];
   };
   update-holochain-versions = symlinkJoin {
     inherit (update-holochain-versions-raw) name;
@@ -116,7 +125,7 @@ in
     ;
 
 
-  inherit (pkgs)
+  inherit
     nvfetcher
     ;
 

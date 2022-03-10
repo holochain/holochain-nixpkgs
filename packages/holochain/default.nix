@@ -114,8 +114,8 @@ let
     , rustVersion
     }:
     let
-      filteredBinariesCompat = binaryPackagesResult.binariesCompatFiltered;
-      pname = builtins.toString (builtins.replaceStrings [ "https" "http" "git+" "://" "/" ] [ "" "" "" "" "_" ] url);
+      binariesCompatFiltered = binaryPackagesResult.binariesCompatFiltered;
+      name = builtins.concatStringsSep "_" (builtins.attrNames binariesCompatFiltered);
       src = fetchgit {
         inherit url rev sha256;
 
@@ -128,17 +128,12 @@ let
 
     in
     rustPlatform.buildRustPackage {
-      passthru = {
-        inherit binaryPackagesResult;
-      };
-
       inherit
         src
-        pname
+        name
         ;
 
-      cargoDepsName = pname + "-" + rev;
-      name = pname + "-" + rev;
+      cargoDepsName = "deps";
 
       cargoLock = cargoLock // {
         lockFile = "${src}/Cargo.lock";
@@ -147,7 +142,7 @@ let
       cargoBuildFlags = builtins.concatStringsSep " " [
         (builtins.concatStringsSep " " cargoBuildFlags)
         # only build the binaries that were requested and found
-        (builtins.concatStringsSep " " (builtins.map (bin: "--bin ${bin}") (builtins.attrNames filteredBinariesCompat)))
+        (builtins.concatStringsSep " " (builtins.map (bin: "--bin ${bin}") (builtins.attrNames binariesCompatFiltered)))
       ];
 
       outputs = [
@@ -155,7 +150,7 @@ let
         "bin"
       ]
       # this evaluates to all the shell compatible binary names
-      ++ builtins.attrValues filteredBinariesCompat
+      ++ builtins.attrValues binariesCompatFiltered
       ;
 
       postInstall = ''
@@ -166,7 +161,7 @@ let
         (orig: compat:
           ''mv ''${tmpDir}/${orig} ''\${${compat}}/bin/''
         )
-        filteredBinariesCompat
+        binariesCompatFiltered
       )
       ;
 

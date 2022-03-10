@@ -1,12 +1,12 @@
 self: super:
 
 {
-  rust = super.rust // (
-    let
-      extensions = [
+  rust = super.rust // ({
+      defaultExtensions = [
         "rust-src"
       ];
-      targets = [
+
+      defaultTargets = [
         "aarch64-unknown-linux-musl"
         "wasm32-unknown-unknown"
         "x86_64-pc-windows-gnu"
@@ -15,22 +15,19 @@ self: super:
       ];
 
       mkRust = { track, version }: self.rust-bin."${track}"."${version}".default.override {
-        inherit extensions targets;
+        extensions = self.rust.defaultExtensions;
+        targets = self.rust.defaultTargets;
       };
 
-      rustNightly = mkRust { track = "nightly"; version = "latest"; };
+      rustNightly = self.rust.mkRust { track = "nightly"; version = "latest"; };
       # TODO: use a single source of truth for the default rust version in the repo
-      rustStable = mkRust { track = "stable"; version = "1.58.1"; };
-
-    in
-    {
-      inherit mkRust;
+      rustStable = self.rust.mkRust { track = "stable"; version = "1.58.1"; };
 
       packages = super.rust.packages // {
         nightly = {
           rustPlatform = self.makeRustPlatform {
-            rustc = rustNightly;
-            cargo = rustNightly;
+            rustc = self.rust.rustNightly;
+            cargo = self.rust.rustNightly;
           };
 
           inherit (self.rust.packages.nightly.rustPlatform) rust;
@@ -38,8 +35,8 @@ self: super:
 
         stable = {
           rustPlatform = self.makeRustPlatform {
-            rustc = rustStable;
-            cargo = rustStable;
+            rustc = self.rust.rustStable;
+            cargo = self.rust.rustStable;
           };
 
           inherit (self.rust.packages.stable.rustPlatform) rust;
