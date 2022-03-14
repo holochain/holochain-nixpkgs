@@ -681,14 +681,14 @@
   };
   rust-overlay = {
     pname = "rust-overlay";
-    version = "c984623eb0584a2aadeca505dd85ec68a3f5a576";
+    version = "fea74aea1b2b99e13338a345034089a344399359";
     src = fetchgit {
       url = "https://github.com/oxalica/rust-overlay";
-      rev = "c984623eb0584a2aadeca505dd85ec68a3f5a576";
+      rev = "fea74aea1b2b99e13338a345034089a344399359";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "sha256-rG9G4ND7hoG7VVIe614s0s76jEcZjhFm1JO1m5EiSsI=";
+      sha256 = "sha256-Lt8Vo2eRahkww3Ia7AyxAiKCf59TW0OWZ9vKd5WvAJ4=";
     };
   };
 }
