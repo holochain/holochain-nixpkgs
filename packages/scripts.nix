@@ -127,7 +127,16 @@ in
 
   hnixpkgs-update-all = writeShellScriptBin "hnixpkgs-update-all"
     (hnixpkgs-update
-      (builtins.attrNames holochain.holochainVersionUpdateConfig)
+      (builtins.attrNames
+        (builtins.removeAttrs
+          holochain.holochainVersionUpdateConfig
+          # the update utility is no longer compatible with these so we can't regenerate them
+          [
+            "v0_0_101"
+            "v0_0_102"
+          ]
+        )
+      )
     )
   ;
 
