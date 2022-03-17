@@ -96,25 +96,6 @@
             "cargo-test-macro-0.1.0": "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs="
         }
     },
-    "holochain_branch_staging": {
-        "pinned": true,
-        "cargoLock": "./holochain_branch_staging-8be9fcb86655fe6edc50abeb5b52d6116906c364/Cargo.lock",
-        "name": "holochain_branch_staging",
-        "version": "8be9fcb86655fe6edc50abeb5b52d6116906c364",
-        "passthru": null,
-        "src": {
-            "deepClone": false,
-            "url": "https://github.com/holochain/holochain",
-            "leaveDotGit": false,
-            "fetchSubmodules": false,
-            "name": null,
-            "type": "git",
-            "sha256": "sha256-WApRUTphA4RWaw2GPZT+yJx+J8AVzOgfH5jkcQflfRw=",
-            "rev": "8be9fcb86655fe6edc50abeb5b52d6116906c364"
-        },
-        "extract": null,
-        "rustGitDeps": {}
-    },
     "holochain_revision_holochain-0_0_122": {
         "pinned": true,
         "cargoLock": "./holochain_revision_holochain-0_0_122-holochain-0.0.122/Cargo.lock",
@@ -280,15 +261,15 @@
         }
     },
     "nixpkgs": {
-        "pinned": true,
+        "pinned": false,
         "cargoLock": null,
         "name": "nixpkgs",
-        "version": "1b930979f1c9f323d3de80defe0866f7859cc637",
+        "version": "2c645230e7dcae7c8f46780dc35077887f38709c",
         "passthru": null,
         "src": {
-            "url": "https://github.com/nixos/nixpkgs/archive/1b930979f1c9f323d3de80defe0866f7859cc637.tar.gz",
+            "url": "https://github.com/nixos/nixpkgs/archive/2c645230e7dcae7c8f46780dc35077887f38709c.tar.gz",
             "type": "tarball",
-            "sha256": "12029rsf8ycr081chcwy1qaaf1rzp8dwkyaghk4m647qwvcdxjsl"
+            "sha256": "117jv033rjlmk480dm9igasqhsih84i94kcq22rphzhm77wbhl30"
         },
         "extract": null,
         "rustGitDeps": null
@@ -523,7 +504,7 @@
         }
     },
     "rust-overlay": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": null,
         "name": "rust-overlay",
         "version": "34dd07a5d195f33b7060468c854b0199b5f7b232",
