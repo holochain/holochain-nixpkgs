@@ -673,7 +673,9 @@
     };
     cargoLock = {
       lockFile = ./lair_revision_v0_1_0-v0.1.0/Cargo.lock;
-      outputHashes = { };
+      outputHashes = {
+        
+      };
     };
   };
   nixpkgs = {
