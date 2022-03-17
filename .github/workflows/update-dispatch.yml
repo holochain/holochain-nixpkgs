@@ -104,5 +104,10 @@ jobs:
           number: ${{ steps.cpr1.outputs.pull-request-number }}
   all-jobs-succeed:
     runs-on: "ubuntu-latest"
+    if: always()
     needs: [update]
-    steps: [{ name: "all-jobs-succeed", run: ":" }]
+    steps:
+      - name: Check status
+        env:
+          RESULTS: "${{ toJSON(needs.*.result) }}"
+        run: "[[ $(jq -n 'env.RESULTS | fromjson | unique == [\"success\"]') == \"true\" ]]\n"

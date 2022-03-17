@@ -109,10 +109,13 @@ jobs:
         run: "nix build -f . \"packages.${nix_attribute}\" --extra-experimental-features nix-command"
   all-jobs-succeed:
     runs-on: ubuntu-latest
+    if: always()
     needs:
       - crate-tests
       - holochain-binaries
       - packages
     steps:
-      - name: all-jobs-succeed
-        run: ":"
+      - name: Check status
+        env:
+          RESULTS: "${{ toJSON(needs.*.result) }}"
+        run: "[[ $(jq -n 'env.RESULTS | fromjson | unique == [\"success\"]') == \"true\" ]]\n"
