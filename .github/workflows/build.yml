@@ -109,10 +109,11 @@ jobs:
         run: "nix build -f . \"packages.${nix_attribute}\" --extra-experimental-features nix-command"
   all-jobs-succeed:
     runs-on: ubuntu-latest
+    if: always()
     needs:
       - crate-tests
       - holochain-binaries
       - packages
     steps:
       - name: all-jobs-succeed
-        run: ":"
+        run: "exec ci/github-action-status.sh ${{ github.action_status }}"
