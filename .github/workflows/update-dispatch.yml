@@ -105,4 +105,6 @@ jobs:
   all-jobs-succeed:
     runs-on: "ubuntu-latest"
     needs: [update]
-    steps: [{ name: "all-jobs-succeed", run: ":" }]
+    steps:
+      - name: "all-jobs-succeed"
+        run: exec ci/github-action-status.sh ${{ github.action_status }}
