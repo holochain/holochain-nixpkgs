@@ -117,6 +117,5 @@ jobs:
     steps:
       - name: Check status
         env:
-          RESULTS: ${{ toJSON(needs.*.results) }}
-        run: |
-          [[ $(jq -n 'env.RESULTS | fromjson | unique == ["success"]') == "true" ]]
+          RESULTS: "${{ toJSON(needs.*.results) }}"
+        run: "[[ $(jq -n 'env.RESULTS | fromjson | unique == [\"success\"]') == \"true\" ]]\n"
