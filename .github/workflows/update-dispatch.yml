@@ -4,8 +4,8 @@ on:
   #   branches:
   #     - pr-periodic-updates
   schedule:
-    - cron: "0 4 * * *" # at 3:00 AM UTC every day
-    - cron: "0 6,9,12 * * 3" # run several more times on wednesday to make up for a delayed release
+    - cron: "0 4 * * *" # run daily
+    - cron: "0 7,10,13 * * 3" # run several more times on wednesday to make up for a delayed release
   workflow_dispatch: {}
 concurrency:
   # group: ${{ github.head_ref }}
