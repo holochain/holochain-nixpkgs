@@ -178,6 +178,25 @@
             "cargo-test-macro-0.1.0": "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs="
         }
     },
+    "holochain_revision_holochain-0_0_131": {
+        "pinned": true,
+        "cargoLock": "./holochain_revision_holochain-0_0_131-holochain-0.0.131/Cargo.lock",
+        "name": "holochain_revision_holochain-0_0_131",
+        "version": "holochain-0.0.131",
+        "passthru": null,
+        "src": {
+            "deepClone": false,
+            "url": "https://github.com/holochain/holochain",
+            "leaveDotGit": false,
+            "fetchSubmodules": false,
+            "name": null,
+            "type": "git",
+            "sha256": "sha256-zEsVDzbhMBBp6hJ4d79PcVIjFTl+Lmpwkl5TAmqZOyM=",
+            "rev": "holochain-0.0.131"
+        },
+        "extract": null,
+        "rustGitDeps": {}
+    },
     "holochain_revision_holochain-0_0_113": {
         "pinned": true,
         "cargoLock": "./holochain_revision_holochain-0_0_113-holochain-0.0.113/Cargo.lock",
@@ -261,7 +280,7 @@
         }
     },
     "nixpkgs": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": null,
         "name": "nixpkgs",
         "version": "31aa631dbc496500efd2507baaed39626f6650f2",
