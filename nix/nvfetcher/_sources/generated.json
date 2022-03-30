@@ -280,15 +280,15 @@
         }
     },
     "nixpkgs": {
-        "pinned": true,
+        "pinned": false,
         "cargoLock": null,
         "name": "nixpkgs",
-        "version": "5e2fbbab01e6ac88355514facb32eefc77fd8de6",
+        "version": "ba93b1d8253ed4b359b9e81d10e02c106d3f8b11",
         "passthru": null,
         "src": {
-            "url": "https://github.com/nixos/nixpkgs/archive/5e2fbbab01e6ac88355514facb32eefc77fd8de6.tar.gz",
+            "url": "https://github.com/nixos/nixpkgs/archive/ba93b1d8253ed4b359b9e81d10e02c106d3f8b11.tar.gz",
             "type": "tarball",
-            "sha256": "10wyn7kbl1vhnsd0zz2vdcijmr80200zbwja2k3c2sdqdw9h7fvv"
+            "sha256": "0pzlw69mbq0aa1c158ap4fyzhmcbpzgbdpapcxcwylzhs21xjf55"
         },
         "extract": null,
         "rustGitDeps": null
