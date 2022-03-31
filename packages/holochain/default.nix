@@ -49,16 +49,18 @@ let
       cargoMetadataOutput = runCommand "packages_binaries" { } ''
         ${cargo}/bin/cargo metadata --format-version 1 --no-deps --manifest-path ${src}/Cargo.toml | \
           ${jq}/bin/jq '.packages | map(
-          {name: .name, target: .targets[]}
+          {name: .name, version: .version, target: .targets[]}
           | select(.target.kind | contains(["bin"]))
-          | {name: .name, binaries: [.target.name]}
+          | {name: .name, version: .version, binaries: [.target.name]}
           )
-          | reduce .[] as $package ({}; . + { ($package.name): (.[($package.name)] + $package.binaries) })
+          | reduce .[] as $package ({}; . + { ($package.name): {version: ($package.version), binaries: (.[($package.name)].binaries + $package.binaries) } })
           ' > $out
+
+          cat $out
       '';
 
-      # contains a set of (package_name: [binary_names...])
-      # example: { holochain_cli = [ "hc" ]; }
+      # contains a set of (package_name: {version, [binary_names...]})
+      # example: { holochain_cli = { "version": "0.0.1"; binaries: [ "hc" ]; }; }
       packageBinaries = lib.trivial.importJSON cargoMetadataOutput;
 
       # we want the output names to be valid shell variable names so we can refer to them in the postInstall script
@@ -68,7 +70,7 @@ let
         (lib.lists.flatten
           (builtins.attrValues
             (builtins.mapAttrs
-              (binaries:
+              (attr: value:
                 builtins.map
                   (binary:
                     (lib.attrsets.nameValuePair
@@ -76,6 +78,7 @@ let
                       (builtins.replaceStrings [ "-" ] [ "_" ] binary)
                     )
                   )
+                  value.binaries
               )
               packageBinaries
             )
@@ -125,73 +128,86 @@ let
 
       inherit (rustHelper rustVersion) rust rustPlatform;
 
+      rustPackage = rustPlatform.buildRustPackage {
+        inherit
+          src
+          name
+          ;
 
-    in
-    rustPlatform.buildRustPackage {
-      inherit
-        src
-        name
+        cargoDepsName = "deps";
+
+        cargoLock = cargoLock // {
+          lockFile = "${src}/Cargo.lock";
+        };
+
+        cargoBuildFlags = builtins.concatStringsSep " " [
+          (builtins.concatStringsSep " " cargoBuildFlags)
+          # only build the binaries that were requested and found
+          (builtins.concatStringsSep " " (builtins.map (bin: "--bin ${bin}") (builtins.attrNames binariesCompatFiltered)))
+        ];
+
+        outputs = [
+          "out"
+          "bin"
+        ]
+        # this evaluates to all the shell compatible binary names
+        ++ builtins.attrValues binariesCompatFiltered
         ;
 
-      cargoDepsName = "deps";
-
-      cargoLock = cargoLock // {
-        lockFile = "${src}/Cargo.lock";
-      };
-
-      cargoBuildFlags = builtins.concatStringsSep " " [
-        (builtins.concatStringsSep " " cargoBuildFlags)
-        # only build the binaries that were requested and found
-        (builtins.concatStringsSep " " (builtins.map (bin: "--bin ${bin}") (builtins.attrNames binariesCompatFiltered)))
-      ];
-
-      outputs = [
-        "out"
-        "bin"
-      ]
-      # this evaluates to all the shell compatible binary names
-      ++ builtins.attrValues binariesCompatFiltered
-      ;
-
-      postInstall = ''
-        for d in $outputs; do
-          mkdir -p ''${!d}/bin
-        done
-      '' + builtins.concatStringsSep "\n" (lib.attrsets.mapAttrsToList
-        (orig: compat:
-          ''mv ''${tmpDir}/${orig} ''\${${compat}}/bin/''
+        postInstall = ''
+          for d in $outputs; do
+            mkdir -p ''${!d}/bin
+          done
+        '' + builtins.concatStringsSep "\n" (lib.attrsets.mapAttrsToList
+          (orig: compat:
+            ''mv ''${tmpDir}/${orig} ''\${${compat}}/bin/''
+          )
+          binariesCompatFiltered
         )
-        binariesCompatFiltered
+        ;
+
+        nativeBuildInputs = [ perl pkg-config ] ++ lib.optionals stdenv.isDarwin [
+          xcbuild
+        ];
+
+        buildInputs = [ openssl opensslStatic sqlcipher ] ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
+          AppKit
+          CoreFoundation
+          CoreServices
+          Security
+          libiconv
+        ]);
+
+        RUST_SODIUM_LIB_DIR = "${libsodium}/lib";
+        RUST_SODIUM_SHARED = "1";
+
+        OPENSSL_NO_VENDOR = "1";
+        OPENSSL_LIB_DIR = "${opensslStatic.out}/lib";
+        OPENSSL_INCLUDE_DIR = "${opensslStatic.dev}/include";
+
+        doCheck = false;
+
+        meta.platforms = [
+          "aarch64-linux"
+          "x86_64-linux"
+          "x86_64-darwin"
+        ];
+      };
+    in
+    # patch the name and version attributes for each output
+    builtins.mapAttrs
+      (attr: value:
+      if (builtins.elem attr (builtins.attrValues binariesCompatFiltered))
+      then
+        (value // {
+          name = attr;
+          version = binaryPackagesResult.packageBinaries."${attr}".version;
+        })
+      else
+        value
       )
-      ;
+      rustPackage;
 
-      nativeBuildInputs = [ perl pkg-config ] ++ lib.optionals stdenv.isDarwin [
-        xcbuild
-      ];
-
-      buildInputs = [ openssl opensslStatic sqlcipher ] ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
-        AppKit
-        CoreFoundation
-        CoreServices
-        Security
-        libiconv
-      ]);
-
-      RUST_SODIUM_LIB_DIR = "${libsodium}/lib";
-      RUST_SODIUM_SHARED = "1";
-
-      OPENSSL_NO_VENDOR = "1";
-      OPENSSL_LIB_DIR = "${opensslStatic.out}/lib";
-      OPENSSL_INCLUDE_DIR = "${opensslStatic.dev}/include";
-
-      doCheck = false;
-
-      meta.platforms = [
-        "aarch64-linux"
-        "x86_64-linux"
-        "x86_64-darwin"
-      ];
-    };
 
   mkHolochainAllBinaries =
     { url
