@@ -14,17 +14,17 @@
   };
   holochain_branch_develop = {
     pname = "holochain_branch_develop";
-    version = "71f89b928ff9fa4ee43c6464c75a7c85e5e8348e";
+    version = "e7c7c0ce8f390009f56c42ef5fdd84047aec2985";
     src = fetchgit {
       url = "https://github.com/holochain/holochain";
-      rev = "71f89b928ff9fa4ee43c6464c75a7c85e5e8348e";
+      rev = "e7c7c0ce8f390009f56c42ef5fdd84047aec2985";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "sha256-P4maipv+NL/5FUpaZUy+2jf7Cm5WVlcCCPaapIuDGUg=";
+      sha256 = "sha256-d1r92rD1HVmJU/6rZvNIkNKm5w1S+Lu+U0wFSL114KA=";
     };
     cargoLock = {
-      lockFile = ./holochain_branch_develop-71f89b928ff9fa4ee43c6464c75a7c85e5e8348e/Cargo.lock;
+      lockFile = ./holochain_branch_develop-e7c7c0ce8f390009f56c42ef5fdd84047aec2985/Cargo.lock;
       outputHashes = {
         
       };
