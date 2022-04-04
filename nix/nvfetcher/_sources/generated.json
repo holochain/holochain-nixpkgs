@@ -283,12 +283,12 @@
         "pinned": true,
         "cargoLock": null,
         "name": "nixpkgs",
-        "version": "22d49109b6531c377239dd9eaf8f5f695ba73c37",
+        "version": "af0a9bc0e5341855518e9c1734d7ef913e5138b9",
         "passthru": null,
         "src": {
-            "url": "https://github.com/nixos/nixpkgs/archive/22d49109b6531c377239dd9eaf8f5f695ba73c37.tar.gz",
+            "url": "https://github.com/nixos/nixpkgs/archive/af0a9bc0e5341855518e9c1734d7ef913e5138b9.tar.gz",
             "type": "tarball",
-            "sha256": "1ip99cj4kcw7fxym5xp1vkncgaignghr08kps848kzbfb3kkkv64"
+            "sha256": "0qqxa8xpy1k80v5al45bsxqfs3n6cphm9nki09q7ara7yf7yyrh1"
         },
         "extract": null,
         "rustGitDeps": null
