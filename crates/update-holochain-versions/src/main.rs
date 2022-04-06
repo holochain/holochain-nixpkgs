@@ -52,6 +52,10 @@ struct Opt {
     // TODO: use a single source of truth for the default rust version in the repo
     #[structopt(long, default_value = "1.58.1")]
     rust_version: String,
+
+    /// indicates if this version is broken and will not lead to any file generation
+    #[structopt(long)]
+    broken: bool,
 }
 
 /// Parse a comma separated list of key:value pairs into a map
@@ -242,6 +246,11 @@ static HANDLEBARS: Lazy<handlebars::Handlebars> = Lazy::new(|| {
 
 fn main() -> Fallible<()> {
     let opt = Opt::from_args();
+
+    if opt.broken {
+        eprintln!("skipping update as `--broken=true` was passed.");
+        return Ok(());
+    }
 
     let nvfetcher_holochain = NvfetcherWrapper::new(
         BinCrateSource {
