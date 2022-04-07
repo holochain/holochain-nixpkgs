@@ -564,7 +564,7 @@
         "pinned": true,
         "cargoLock": null,
         "name": "rust-overlay",
-        "version": "69e0fdf70582e1b1e3b4d84e5201ca72b58b5b9f",
+        "version": "c6fe2a14f10cb85659b8848bac87e4ff29a00f9a",
         "passthru": null,
         "src": {
             "deepClone": false,
@@ -573,8 +573,8 @@
             "fetchSubmodules": false,
             "name": null,
             "type": "git",
-            "sha256": "sha256-inr/6z2/3aekw3HP51dSSjbY6oPaaOmd1yHqRbnPHr0=",
-            "rev": "69e0fdf70582e1b1e3b4d84e5201ca72b58b5b9f"
+            "sha256": "sha256-rUwQKjBOZiRpzgkG3h9OM5pUyxRYIV45ohgqZJtSZtE=",
+            "rev": "c6fe2a14f10cb85659b8848bac87e4ff29a00f9a"
         },
         "extract": null,
         "rustGitDeps": null
