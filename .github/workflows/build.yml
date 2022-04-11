@@ -20,7 +20,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Install nix
-        uses: cachix/install-nix-action@v16
+        uses: cachix/install-nix-action@v17
       - name: Setup cachix
         uses: cachix/cachix-action@v10
         if: "${{ matrix.cachixName != '<YOUR_CACHIX_NAME>' }}"
@@ -62,7 +62,7 @@ jobs:
         with:
           lfs: false
       - name: Install nix
-        uses: cachix/install-nix-action@v16
+        uses: cachix/install-nix-action@v17
       - name: Show nixpkgs version
         run: "nix-instantiate --eval -E '(import (import ./nix/nvfetcher/sources.nix {}).nixpkgs.src {}).lib.version'"
       - name: Setup cachix
@@ -93,7 +93,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Install nix
-        uses: cachix/install-nix-action@v16
+        uses: cachix/install-nix-action@v17
       - name: Show nixpkgs version
         run: "nix-instantiate --eval -E '(import (import ./nix/nvfetcher/sources.nix {}).nixpkgs.src {}).lib.version'"
       - name: Setup cachix
