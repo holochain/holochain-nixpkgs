@@ -4,8 +4,8 @@
 
 {
     url = "https://github.com/holochain/holochain";
-    rev = "8be9fcb86655fe6edc50abeb5b52d6116906c364";
-    sha256 = "sha256-WApRUTphA4RWaw2GPZT+yJx+J8AVzOgfH5jkcQflfRw=";
+    rev = "9503cf412b109ad49263e6be86005dcbb26224c1";
+    sha256 = "sha256-eeKYftJ2AxVONfM/dev9SVPrFUpiM+P6gkOp/KXT6M8=";
     cargoLock = {
         outputHashes = {
         };
@@ -15,6 +15,7 @@
         "holochain"
         "hc"
         "kitsune-p2p-proxy"
+        "kitsune-p2p-tx2-proxy"
     ];
 
     rustVersion = "1.58.1";

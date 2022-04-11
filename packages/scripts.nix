@@ -58,33 +58,39 @@ let
       ++ (builtins.map (configKey: "${toplevel}/packages/holochain/versions/${configKey}.nix") configKeys)
     );
 
-  hnixpkgs-update = configKeys: ''
-    set -e
+  hnixpkgs-update = _configKeys:
+    let
+      configKeys = builtins.filter
+        (configKey: (holochain.holochainVersionUpdateConfig."${configKey}".broken or "false") != "true")
+        _configKeys;
+    in
+    ''
+      set -ex
 
-    cd ${toplevel}
+      cd ${toplevel}
 
-    trap "git checkout ${toplevel}/nix/nvfetcher" ERR INT
+      trap "git checkout ${toplevel}/nix/nvfetcher" ERR INT
 
-    git clean -fd ${toplevel}/nix/nvfetcher/_sources/
+      git clean -fd ${toplevel}/nix/nvfetcher/_sources/
 
-    ${builtins.concatStringsSep "\n"
-      (builtins.map
-        (configKey: (updateSingle' configKey))
-        configKeys
-      )
-    }
+      ${builtins.concatStringsSep "\n"
+        (builtins.map
+          (configKey: (updateSingle' configKey))
+          configKeys
+        )
+      }
 
-    trap "" ERR INT
+      trap "" ERR INT
 
-    ${git}/bin/git add ${addPaths configKeys}
-    if ! ${git}/bin/git diff --staged --exit-code -- ${diffPaths configKeys}; then
-        echo New versions found, commiting..
-        ${git}/bin/git commit ${addPaths configKeys} \
-          -m "update nvfetcher sources" \
-          -m "the following keys were updated" \
-          -m "${builtins.concatStringsSep " " configKeys}"
-    fi
-  '';
+      ${git}/bin/git add ${addPaths configKeys}
+      if ! ${git}/bin/git diff --staged --exit-code -- ${diffPaths configKeys}; then
+          echo New versions found, commiting..
+          ${git}/bin/git commit ${addPaths configKeys} \
+            -m "update nvfetcher sources" \
+            -m "the following keys were updated" \
+            -m "${builtins.concatStringsSep " " configKeys}"
+      fi
+    '';
 in
 
 {
