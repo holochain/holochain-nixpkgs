@@ -11,13 +11,17 @@ git-src = "branch:staging"
 git-src = "branch:develop"
 lair-version-req = "~0.1"
 
-[v0_0_101] # broken
+[v0_0_101]
 git-src = "revision:holochain-0.0.101"
 lair-version-req = "~0.0"
+# broken becasue the used a different lair dependency and can't be processed
+broken = "true"
 
 [v0_0_102] # broken
 git-src = "revision:holochain-0.0.102"
 lair-version-req = "~0.0"
+# broken becasue the used a different lair dependency and can't be processed
+broken = "true"
 
 [v0_0_110]
 git-src = "revision:holochain-0.0.110"
