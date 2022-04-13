@@ -146,3 +146,9 @@ git-src = "revision:holochain-0.0.133"
 lair-version-req = "~0.0"
 # broken becasue the required hdk wasn't published so it's not available on crates.io
 broken = "true"
+
+[v0_0_134]
+git-src = "revision:holochain-0.0.134"
+lair-version-req = "~0.0"
+# broken becasue the required hdk wasn't published so it's not available on crates.io
+broken = "true"
