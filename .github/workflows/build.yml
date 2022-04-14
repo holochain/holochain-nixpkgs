@@ -50,8 +50,6 @@ jobs:
           - v0_0_130
           - v0_0_131
           - v0_0_132
-          - v0_0_133
-          - v0_0_134
           - v0_0_135
         nurRepo:
           - holochain-nixpkgs
