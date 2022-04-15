@@ -542,10 +542,10 @@
         }
     },
     "rust-overlay": {
-        "pinned": true,
+        "pinned": false,
         "cargoLock": null,
         "name": "rust-overlay",
-        "version": "e45696bedc4a13a5970376b8fc09660fdd0e6f6c",
+        "version": "bed82617ca9e139ff1374eb49f98d25ca781eb04",
         "passthru": null,
         "src": {
             "deepClone": false,
@@ -554,8 +554,8 @@
             "fetchSubmodules": false,
             "name": null,
             "type": "git",
-            "sha256": "sha256-m+3EZo0a4iS8IwHQhkM/riPuFpu76505xKqmN9j5O+E=",
-            "rev": "e45696bedc4a13a5970376b8fc09660fdd0e6f6c"
+            "sha256": "sha256-qk2Y8zpCFLL9eznilJUojDa4ELitZa9V5upc8VBDp2s=",
+            "rev": "bed82617ca9e139ff1374eb49f98d25ca781eb04"
         },
         "extract": null,
         "rustGitDeps": null
@@ -580,7 +580,7 @@
         "rustGitDeps": {}
     },
     "lair_revision_v0_0_9": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": "./lair_revision_v0_0_9-v0.0.9/Cargo.lock",
         "name": "lair_revision_v0_0_9",
         "version": "v0.0.9",
