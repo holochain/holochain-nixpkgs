@@ -4,10 +4,10 @@ use std::{
     collections::HashMap,
     path::{Path, PathBuf},
     process::{Command, ExitStatus},
-    str::FromStr,
 };
 use structopt::StructOpt;
 use tempfile::tempdir;
+use update_holochain_versions::update_config::{GitSrc, UpdateConfigEntry};
 use url::Url;
 
 use crate::nvfetcher::NvfetcherWrapper;
@@ -29,33 +29,12 @@ struct Opt {
     #[structopt(long, default_value = "https://github.com/holochain/holochain")]
     git_repo: String,
 
-    /// Git source specifier for fetching the holochain sources.
-    /// Either: branch:<branch_name> or revision:<rev>
-    #[structopt(long)]
-    git_src: GitSrc,
-
     /// Specifier for the lair git repository
     #[structopt(long, default_value = "https://github.com/holochain/lair")]
     lair_git_repo: String,
 
-    /// Specifier for the lair version requirement
-    #[structopt(long, default_value = "*")]
-    lair_version_req: semver::VersionReq,
-
-    #[structopt(
-        long,
-        default_value = "holochain,hc,kitsune-p2p-proxy,kitsune-p2p-tx2-proxy",
-        use_delimiter = true
-    )]
-    bins_filter: Vec<String>,
-
-    // TODO: use a single source of truth for the default rust version in the repo
-    #[structopt(long, default_value = "1.58.1")]
-    rust_version: String,
-
-    /// indicates if this version is broken and will not lead to any file generation
-    #[structopt(long)]
-    broken: bool,
+    #[structopt(flatten)]
+    update_config_entry: UpdateConfigEntry,
 }
 
 /// Parse a comma separated list of key:value pairs into a map
@@ -92,53 +71,6 @@ impl<'a> BinCrateSource<'a> {
     }
 }
 
-#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
-enum GitSrc {
-    Branch(String),
-    Revision(String),
-}
-
-impl std::fmt::Display for &GitSrc {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str(&match self {
-            GitSrc::Branch(branch) => format!("branch:{}", branch),
-            GitSrc::Revision(rev) => format!("revision:{}", rev),
-        })
-    }
-}
-
-impl FromStr for GitSrc {
-    type Err = anyhow::Error;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let s = s.to_string();
-        let split = s
-            .splitn::<_>(2, ':')
-            .map(|s| s.to_lowercase())
-            .map(|s| s.trim().to_owned())
-            .map(|s| s.replace('"', ""))
-            .collect::<Vec<_>>();
-        match (split.get(0), split.get(1)) {
-            (Some(key), Some(branch)) if key == "branch" => Ok(GitSrc::Branch(branch.clone())),
-            (Some(key), Some(rev)) if key == "revision" => Ok(GitSrc::Revision(rev.clone())),
-            (_, _) => bail!("invalid git-rev provided: {}", s),
-        }
-    }
-}
-
-impl<'a> GitSrc {
-    pub(crate) fn toml_src_value(&'a self) -> ([&'a str; 2], &'a str) {
-        match &self {
-            GitSrc::Branch(branch) => (["src", "branch"], branch),
-            GitSrc::Revision(id) => (["src", "manual"], id),
-        }
-    }
-
-    pub(crate) fn is_rev(&'a self) -> bool {
-        matches!(self, GitSrc::Revision(_))
-    }
-}
-
 #[derive(serde::Serialize, serde::Deserialize, Debug, PartialEq)]
 #[serde(rename_all = "camelCase")]
 struct HolochainVersion {
@@ -147,7 +79,7 @@ struct HolochainVersion {
     sha256: String,
     cargo_lock: CargoLock,
     bins_filter: Vec<String>,
-    rust_version: String,
+    rust_version: Option<semver::Version>,
 
     lair: LairVersion,
 
@@ -202,7 +134,9 @@ static HANDLEBARS: Lazy<handlebars::Handlebars> = Lazy::new(|| {
         {{/each}}
     ];
 
+    {{#if this.rustVersion}}
     rustVersion = "{{this.rustVersion}}";
+    {{/if}}
 
     lair = {
         url = "{{this.lair.url}}";
@@ -213,7 +147,9 @@ static HANDLEBARS: Lazy<handlebars::Handlebars> = Lazy::new(|| {
             "lair-keystore"
         ];
 
+        {{#if this.rustVersion}}
         rustVersion = "{{this.rustVersion}}";
+        {{/if}}
 
         cargoLock = {
             outputHashes = {
@@ -247,7 +183,7 @@ static HANDLEBARS: Lazy<handlebars::Handlebars> = Lazy::new(|| {
 fn main() -> Fallible<()> {
     let opt = Opt::from_args();
 
-    if opt.broken {
+    if opt.update_config_entry.broken.unwrap_or_default() {
         eprintln!("skipping update as `--broken=true` was passed.");
         return Ok(());
     }
@@ -256,18 +192,18 @@ fn main() -> Fallible<()> {
         BinCrateSource {
             name: "holochain",
             git_repo: &opt.git_repo,
-            git_src: opt.git_src.clone(),
-            bins_filter: opt.bins_filter.clone(),
+            git_src: opt.update_config_entry.git_src.clone(),
+            bins_filter: opt.update_config_entry.bins_filter.clone(),
         },
         opt.nvfetcher_dir.clone(),
         None,
     )?;
 
     let holochain_version = get_holochain_version(
-        opt.rust_version.clone(),
+        opt.update_config_entry.rust_version.clone(),
         true,
         nvfetcher_holochain,
-        opt.lair_version_req,
+        opt.update_config_entry.lair_version_req,
     )?;
 
     let rendered_holochain_source = render_holochain_version(&holochain_version)?;
@@ -277,7 +213,7 @@ fn main() -> Fallible<()> {
 }
 
 fn get_holochain_version(
-    rust_version: String,
+    rust_version: Option<semver::Version>,
     update: bool,
     nvfetcher_holochain: NvfetcherWrapper,
     lair_version_req: semver::VersionReq,
@@ -508,7 +444,7 @@ mod tests {
         .unwrap();
 
         let mut holochain_version = get_holochain_version(
-            "1.58.1".to_string(),
+            semver::Version::from_str("1.58.1").ok(),
             false,
             nvfetcher_holochain,
             semver::VersionReq::from_str("*").unwrap(),
