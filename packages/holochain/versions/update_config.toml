@@ -12,13 +12,13 @@ lair-version-req = "~0.1"
 git-src = "revision:holochain-0.0.101"
 lair-version-req = "~0.0"
 # broken becasue the used a different lair dependency and can't be processed
-broken = "true"
+broken = true
 
 [v0_0_102] # broken
 git-src = "revision:holochain-0.0.102"
 lair-version-req = "~0.0"
 # broken becasue the used a different lair dependency and can't be processed
-broken = "true"
+broken = true
 
 [v0_0_103]
 git-src = "revision:holochain-0.0.103"
@@ -145,13 +145,13 @@ lair-version-req = "~0.0"
 git-src = "revision:holochain-0.0.133"
 lair-version-req = "~0.0"
 # broken becasue the required hdk wasn't published so it's not available on crates.io
-broken = "true"
+broken = true
 
 [v0_0_134]
 git-src = "revision:holochain-0.0.134"
 lair-version-req = "~0.0"
 # broken becasue the required hdk wasn't published so it's not available on crates.io
-broken = "true"
+broken = true
 
 [v0_0_135]
 git-src = "revision:holochain-0.0.135"

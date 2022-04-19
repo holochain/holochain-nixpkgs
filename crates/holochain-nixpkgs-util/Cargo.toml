@@ -17,6 +17,10 @@ gitoxide-core = { version = "0.12", features = ["async-client"] }
 git-transport = { version = "0.13.1", features = ["async-client"] }
 prodash = "16.1.3"
 regex = "1.5"
-toml_edit = "0.6"
+toml_edit = { version = "0.14.2", features = ["serde", "easy"] }
 indoc = "1.0"
 linked_hash_set = "0.1"
+linked-hash-map = "0.5"
+update-holochain-versions = { path = "../update-holochain-versions" }
+itertools = "0.10.3"
+semver = "1.0"

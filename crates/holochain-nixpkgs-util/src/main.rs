@@ -69,14 +69,18 @@ mod update_holochain_tags {
 
     use std::{
         collections::HashSet,
-        fs::OpenOptions,
+        fs::{File, OpenOptions},
         io::{Read, Seek, SeekFrom, Write},
         os::unix::prelude::FileExt,
         path::PathBuf,
     };
 
     use anyhow::bail;
+    use itertools::Itertools;
+    use linked_hash_map::LinkedHashMap;
     use linked_hash_set::LinkedHashSet;
+    use toml_edit::Document;
+    use update_holochain_versions::update_config::{GitSrc, UpdateConfigEntry};
 
     #[derive(clap::Args, Debug)]
     pub(crate) struct CmdArgs {
@@ -96,29 +100,67 @@ mod update_holochain_tags {
         holochain_git_url: String,
 
         #[clap(long, default_value = "~0.0")]
-        default_lair_version_req: String,
+        default_lair_version_req: semver::VersionReq,
     }
 
     pub(crate) async fn cmd(_cli_args: &super::CliArgs, cmd_args: &CmdArgs) -> anyhow::Result<()> {
         const TAG_GLOB_PREFIX: &str = "holochain-";
 
-        // get the holochain tags from the holochain repo
-        let tags = crate::git_helper::ls_remote_tags(
+        // gather existing state from the config file
+        let mut update_config_toml = OpenOptions::new()
+            .create(true)
+            .write(true)
+            .read(true)
+            .open(&cmd_args.update_config_toml_path)?;
+
+        let mut update_config_toml_entries = {
+            let mut buf = String::new();
+            update_config_toml.read_to_string(&mut buf)?;
+            let doc = buf.parse::<toml_edit::Document>()?;
+
+            doc.iter()
+                .map(|(key, item)| {
+                    Ok((
+                        key.to_string(),
+                        toml_edit::de::from_item::<UpdateConfigEntry>(item.clone().clone())?,
+                    ))
+                })
+                .try_collect::<_, LinkedHashMap<_, _>, anyhow::Error>()?
+        };
+
+        let mut added_entries_update_config = LinkedHashSet::new();
+
+        // process the upstream tags from the holochain repo
+        for tag in crate::git_helper::ls_remote_tags(
             &cmd_args.holochain_git_url,
             &format!("{}*", TAG_GLOB_PREFIX),
         )
         .await?
-        .into_iter()
-        .map(|tag| {
-            let compat = tag.replace(TAG_GLOB_PREFIX, "");
-            let compat = compat.replacen(".", "_", 2);
+        {
+            let entry_key = format!(
+                "v{}",
+                tag.replace(TAG_GLOB_PREFIX, "").replacen(".", "_", 2)
+            );
 
-            (tag, format!("v{}", compat))
-        })
-        .collect::<Vec<(_, _)>>();
-        println!("latest tags: {:#?}", tags);
+            update_config_toml_entries
+                .entry(entry_key.clone())
+                .or_insert_with(|| {
+                    added_entries_update_config.insert(entry_key);
 
-        // make sure the latest tags exist in the build.yml
+                    UpdateConfigEntry {
+                        lair_version_req: cmd_args.default_lair_version_req.clone(),
+                        git_src: GitSrc::Revision(tag),
+
+                        ..Default::default()
+                    }
+                });
+
+            // TODO: evaluate whether or not this tag has been published
+        }
+
+        println!("update config entries: {:#?}", update_config_toml_entries);
+
+        // make sure the latest upstream tags exist in the build.yml
         let (removed_entries, added_entries_build_yml) = {
             let mut build_yaml: serde_yaml::Value =
                 serde_yaml::from_reader(&std::fs::File::open(&cmd_args.build_yaml_path)?)?;
@@ -150,9 +192,23 @@ mod update_holochain_tags {
                 serde_yaml::Value::String(s) => !prefix_re.is_match(s),
                 other => panic!("unexpected entry in nix_attributes: {:?}", other),
             });
-            let space_left = cmd_args.keep_tags as usize - nix_attributes.len();
-            for (_, compat_tag) in tags.iter().skip(tags.len() - space_left) {
-                nix_attributes.push(serde_yaml::Value::String(compat_tag.clone()));
+            let intact_revision_entries = update_config_toml_entries
+                .iter()
+                .filter(|(_, entry)| {
+                    if entry.broken.unwrap_or_default() {
+                        false
+                    } else {
+                        entry.git_src.is_rev()
+                    }
+                })
+                .map(|(entry_key, _)| entry_key)
+                .cloned()
+                .collect::<Vec<_>>();
+
+            let skip = intact_revision_entries.len()
+                - (cmd_args.keep_tags as usize - nix_attributes.len());
+            for entry_keys in intact_revision_entries.into_iter().skip(skip) {
+                nix_attributes.push(serde_yaml::Value::String(entry_keys));
             }
 
             let entries_new =
@@ -187,46 +243,6 @@ mod update_holochain_tags {
             )
         };
 
-        // add the missing tags to the update_config.toml
-        let added_entries_update_config = {
-            let mut update_config_toml = OpenOptions::new()
-                .create(true)
-                .write(true)
-                .read(true)
-                .open(&cmd_args.update_config_toml_path)?;
-
-            let mut update_config_toml_editable = {
-                let mut buf = String::new();
-                update_config_toml.read_to_string(&mut buf)?;
-                buf.parse::<toml_edit::Document>()?
-            };
-
-            let mut added_entries = LinkedHashSet::new();
-
-            for (tag, compat) in tags {
-                // ensure nixpkgs is set
-                if update_config_toml_editable[&compat].is_none() {
-                    update_config_toml_editable[&compat] = toml_edit::table();
-                    update_config_toml_editable[&compat]["git-src"] =
-                        toml_edit::value(format!("revision:{}", tag));
-                    update_config_toml_editable[&compat]["lair-version-req"] =
-                        toml_edit::value(&cmd_args.default_lair_version_req);
-
-                    added_entries.insert(compat);
-                }
-            }
-
-            // write back to file
-            if !cmd_args.dry_run {
-                update_config_toml.seek(SeekFrom::Start(0))?;
-                update_config_toml.write_all(update_config_toml_editable.to_string().as_bytes())?;
-                update_config_toml
-                    .set_len(update_config_toml_editable.to_string().as_bytes().len() as u64)?;
-            }
-
-            added_entries
-        };
-
         if added_entries_build_yml != added_entries_update_config {
             println!(
                 "warning: symmetric difference between build.yml and update_config.toml: {:#?}",
@@ -234,8 +250,10 @@ mod update_holochain_tags {
             );
         }
 
+        rewrite_update_config(cmd_args, update_config_toml, update_config_toml_entries)?;
+
         let msg = indoc::formatdoc!(
-            r#"udpated config files with new holochain tags
+            r#"updated config files with new holochain tags
 
             removed {:#?}
 
@@ -296,9 +314,9 @@ mod update_holochain_tags {
         }
 
         // generate the version files for the newly added tags
-        for compat_tag in added_entries_update_config {
+        for entry_key in added_entries_update_config {
             let mut cmd = std::process::Command::new("hnixpkgs-update-single");
-            cmd.arg(&compat_tag);
+            cmd.arg(&entry_key);
 
             println!(
                 "{}running command: {:?}",
@@ -312,6 +330,34 @@ mod update_holochain_tags {
                     println!("running command {:#?} failed:\n{:#?}", cmd, output);
                 }
             }
+        }
+
+        Ok(())
+    }
+
+    // write back the given entries to update_config.toml
+    fn rewrite_update_config<'a>(
+        cmd_args: &CmdArgs,
+        mut update_config_toml: File,
+        update_config_toml_entries: LinkedHashMap<String, UpdateConfigEntry>,
+    ) -> anyhow::Result<()> {
+        let mut document = Document::new();
+
+        for (entry_key, entry) in update_config_toml_entries {
+            let doc = toml_edit::easy::to_document(&entry)?;
+            let table = doc.as_table();
+            let item = toml_edit::Item::Table(table.clone());
+
+            document.insert(&entry_key, item);
+        }
+
+        let update_config_toml_string = document.to_string();
+        let update_config_toml_bytes = update_config_toml_string.as_bytes();
+
+        if !cmd_args.dry_run {
+            update_config_toml.seek(SeekFrom::Start(0))?;
+            update_config_toml.write_all(&update_config_toml_bytes)?;
+            update_config_toml.set_len(update_config_toml_bytes.len() as u64)?;
         }
 
         Ok(())

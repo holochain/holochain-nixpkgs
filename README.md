@@ -119,6 +119,7 @@ The table name corresponds to the Nix expression filename.
 It must only contain valid filesystem characters and no _._ character.
 
 Each table key-value pair will be passed to the updater utility in the form of `--${key}=${value}`.
+Members of inline tables will be joined into a single string separated by a ','.
 Please see the updater utility section for a list of valid arguments.
 
 ### Adding/Changing a version configuration entry
