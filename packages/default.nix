@@ -63,7 +63,10 @@ let
   opensslStatic = openssl.override (_: {
     static = true;
   });
-  holochain = callPackage ./holochain { inherit mkRust makeRustPlatform; };
+  holochain = callPackage ./holochain {
+    inherit mkRust makeRustPlatform;
+    defaultRustVersion = pkgs.rust.packages.stable.rust.rustc.version;
+  };
   crate2nixGenerated = import ../nix/crate2nix/Cargo.nix {
     inherit pkgs;
     defaultCrateOverrides = lib.attrsets.recursiveUpdate defaultCrateOverrides {

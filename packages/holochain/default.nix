@@ -17,6 +17,7 @@
 , jq
 , mkRust
 , makeRustPlatform
+, defaultRustVersion
 }:
 
 # TODO: investigate the use-case around 'binsFilter' with end-users before further optimizations
@@ -214,13 +215,22 @@ let
       binaryPackagesResult.binariesCompatFiltered
   ;
 
-  mkHolochainAllBinariesWithDeps = { url, rev, sha256, cargoLock, binsFilter ? null, lair, rustVersion }:
+  mkHolochainAllBinariesWithDeps =
+    { url
+    , rev
+    , sha256
+    , cargoLock
+    , binsFilter ? null
+    , lair
+    , rustVersion ? defaultRustVersion
+    }:
     (mkHolochainAllBinaries {
       inherit url rev sha256 cargoLock binsFilter rustVersion;
     })
     // (lib.optionalAttrs (lair != null) {
       lair-keystore = (mkRustMultiDrv {
-        inherit (lair) url rev sha256 cargoLock binsFilter rustVersion;
+        inherit (lair) url rev sha256 cargoLock binsFilter;
+        rustVersion = lair.rustVersion or rustVersion;
       }).lair_keystore;
     })
   ;
