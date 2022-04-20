@@ -1,158 +1,195 @@
+
 [main]
+lair-version-req = "*"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "branch:main"
 
 [develop]
+lair-version-req = "*"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "branch:develop"
 
 [develop_lair_0_1]
-git-src = "branch:develop"
 lair-version-req = "~0.1"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "branch:develop"
 
 [v0_0_101]
+lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+broken = true
 git-src = "revision:holochain-0.0.101"
-lair-version-req = "~0.0"
-# broken becasue the used a different lair dependency and can't be processed
-broken = true
 
-[v0_0_102] # broken
-git-src = "revision:holochain-0.0.102"
+[v0_0_102]
 lair-version-req = "~0.0"
-# broken becasue the used a different lair dependency and can't be processed
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 broken = true
+git-src = "revision:holochain-0.0.102"
 
 [v0_0_103]
-git-src = "revision:holochain-0.0.103"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.103"
 
 [v0_0_104]
-git-src = "revision:holochain-0.0.104"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.104"
 
 [v0_0_105]
-git-src = "revision:holochain-0.0.105"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.105"
 
 [v0_0_106]
-git-src = "revision:holochain-0.0.106"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.106"
 
 [v0_0_107]
-git-src = "revision:holochain-0.0.107"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.107"
 
 [v0_0_108]
-git-src = "revision:holochain-0.0.108"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.108"
 
 [v0_0_109]
-git-src = "revision:holochain-0.0.109"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.109"
 
 [v0_0_111]
-git-src = "revision:holochain-0.0.111"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.111"
 
 [v0_0_112]
-git-src = "revision:holochain-0.0.112"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.112"
 
 [v0_0_113]
-git-src = "revision:holochain-0.0.113"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.113"
 
 [v0_0_114]
-git-src = "revision:holochain-0.0.114"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.114"
 
 [v0_0_110]
-git-src = "revision:holochain-0.0.110"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 rust-version = "1.55.0"
+git-src = "revision:holochain-0.0.110"
 
 [v0_0_115]
-git-src = "revision:holochain-0.0.115"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.115"
 
 [v0_0_116]
-git-src = "revision:holochain-0.0.116"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.116"
 
 [v0_0_117]
-git-src = "revision:holochain-0.0.117"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.117"
 
 [v0_0_118]
-git-src = "revision:holochain-0.0.118"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.118"
 
 [v0_0_119]
-git-src = "revision:holochain-0.0.119"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.119"
 
 [v0_0_120]
-git-src = "revision:holochain-0.0.120"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.120"
 
 [v0_0_121]
-git-src = "revision:holochain-0.0.121"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.121"
 
 [v0_0_122]
-git-src = "revision:holochain-0.0.122"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.122"
 
 [v0_0_123]
-git-src = "revision:holochain-0.0.123"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.123"
 
 [v0_0_124]
-git-src = "revision:holochain-0.0.124"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.124"
 
 [v0_0_125]
-git-src = "revision:holochain-0.0.125"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.125"
 
 [v0_0_126]
-git-src = "revision:holochain-0.0.126"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.126"
 
 [v0_0_127]
-git-src = "revision:holochain-0.0.127"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.127"
 
 [v0_0_128]
-git-src = "revision:holochain-0.0.128"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.128"
 
 [v0_0_129]
-git-src = "revision:holochain-0.0.129"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.129"
 
 [v0_0_130]
-git-src = "revision:holochain-0.0.130"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.130"
 
 [v0_0_131]
-git-src = "revision:holochain-0.0.131"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.131"
 
 [v0_0_132]
-git-src = "revision:holochain-0.0.132"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.132"
 
 [v0_0_133]
-git-src = "revision:holochain-0.0.133"
 lair-version-req = "~0.0"
-# broken becasue the required hdk wasn't published so it's not available on crates.io
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 broken = true
+git-src = "revision:holochain-0.0.133"
 
 [v0_0_134]
-git-src = "revision:holochain-0.0.134"
 lair-version-req = "~0.0"
-# broken becasue the required hdk wasn't published so it's not available on crates.io
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 broken = true
+git-src = "revision:holochain-0.0.134"
 
 [v0_0_135]
-git-src = "revision:holochain-0.0.135"
 lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.135"
