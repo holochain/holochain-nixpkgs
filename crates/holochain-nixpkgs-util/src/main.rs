@@ -63,6 +63,26 @@ pub(crate) mod git_helper {
 
         Ok(lines)
     }
+
+    /// wrapper around "git diff --quiet" that returns true if the given pathspec changed in the working directory.
+    pub(crate) async fn pathspec_has_diff(pathspec: &str) -> anyhow::Result<bool> {
+        let mut cmd = std::process::Command::new("git");
+        cmd.args(&["diff", "--quiet", "--", pathspec]);
+
+        let output = cmd.output()?;
+
+        match output
+            .status
+            .code()
+            .ok_or_else(|| anyhow::anyhow!("cmd exited without a status code"))?
+        {
+            0 => Ok(false),
+            1 => Ok(true),
+            _ => {
+                bail!("running {:#?} failed:\n{:#?}", cmd, output);
+            }
+        }
+    }
 }
 
 mod update_holochain_tags {
@@ -252,15 +272,30 @@ mod update_holochain_tags {
 
         rewrite_update_config(cmd_args, update_config_toml, update_config_toml_entries)?;
 
+        let update_config_toml_pathstr = cmd_args
+            .update_config_toml_path
+            .as_os_str()
+            .to_string_lossy()
+            .to_string();
+
+        let update_config_changed =
+            crate::git_helper::pathspec_has_diff(&update_config_toml_pathstr).await?;
+
         let msg = indoc::formatdoc!(
-            r#"updated config files with new holochain tags
+            r#"update {}
 
-            removed {:#?}
+            removed ({}): {:#?}
 
-            added {:#?}
+            added ({}): {:#?}
+
+            config changed: {}
             "#,
+            &update_config_toml_pathstr,
+            &removed_entries.len(),
             &removed_entries,
-            &added_entries_build_yml
+            &added_entries_build_yml.len(),
+            &added_entries_build_yml,
+            update_config_changed,
         );
 
         println!("{}", msg);
@@ -268,6 +303,7 @@ mod update_holochain_tags {
         if removed_entries.is_empty()
             && added_entries_build_yml.is_empty()
             && added_entries_update_config.is_empty()
+            && !update_config_changed
         {
             return Ok(());
         }
