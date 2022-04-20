@@ -20,6 +20,50 @@ lair-version-req = "~0.0"
 # broken becasue the used a different lair dependency and can't be processed
 broken = "true"
 
+[v0_0_103]
+git-src = "revision:holochain-0.0.103"
+lair-version-req = "~0.0"
+
+[v0_0_104]
+git-src = "revision:holochain-0.0.104"
+lair-version-req = "~0.0"
+
+[v0_0_105]
+git-src = "revision:holochain-0.0.105"
+lair-version-req = "~0.0"
+
+[v0_0_106]
+git-src = "revision:holochain-0.0.106"
+lair-version-req = "~0.0"
+
+[v0_0_107]
+git-src = "revision:holochain-0.0.107"
+lair-version-req = "~0.0"
+
+[v0_0_108]
+git-src = "revision:holochain-0.0.108"
+lair-version-req = "~0.0"
+
+[v0_0_109]
+git-src = "revision:holochain-0.0.109"
+lair-version-req = "~0.0"
+
+[v0_0_111]
+git-src = "revision:holochain-0.0.111"
+lair-version-req = "~0.0"
+
+[v0_0_112]
+git-src = "revision:holochain-0.0.112"
+lair-version-req = "~0.0"
+
+[v0_0_113]
+git-src = "revision:holochain-0.0.113"
+lair-version-req = "~0.0"
+
+[v0_0_114]
+git-src = "revision:holochain-0.0.114"
+lair-version-req = "~0.0"
+
 [v0_0_110]
 git-src = "revision:holochain-0.0.110"
 lair-version-req = "~0.0"
@@ -71,50 +115,6 @@ lair-version-req = "~0.0"
 
 [v0_0_126]
 git-src = "revision:holochain-0.0.126"
-lair-version-req = "~0.0"
-
-[v0_0_103]
-git-src = "revision:holochain-0.0.103"
-lair-version-req = "~0.0"
-
-[v0_0_104]
-git-src = "revision:holochain-0.0.104"
-lair-version-req = "~0.0"
-
-[v0_0_105]
-git-src = "revision:holochain-0.0.105"
-lair-version-req = "~0.0"
-
-[v0_0_106]
-git-src = "revision:holochain-0.0.106"
-lair-version-req = "~0.0"
-
-[v0_0_107]
-git-src = "revision:holochain-0.0.107"
-lair-version-req = "~0.0"
-
-[v0_0_108]
-git-src = "revision:holochain-0.0.108"
-lair-version-req = "~0.0"
-
-[v0_0_109]
-git-src = "revision:holochain-0.0.109"
-lair-version-req = "~0.0"
-
-[v0_0_111]
-git-src = "revision:holochain-0.0.111"
-lair-version-req = "~0.0"
-
-[v0_0_112]
-git-src = "revision:holochain-0.0.112"
-lair-version-req = "~0.0"
-
-[v0_0_113]
-git-src = "revision:holochain-0.0.113"
-lair-version-req = "~0.0"
-
-[v0_0_114]
-git-src = "revision:holochain-0.0.114"
 lair-version-req = "~0.0"
 
 [v0_0_127]
