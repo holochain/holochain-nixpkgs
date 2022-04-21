@@ -180,88 +180,8 @@ mod update_holochain_tags {
 
         println!("update config entries: {:#?}", update_config_toml_entries);
 
-        // make sure the latest upstream tags exist in the build.yml
-        let (removed_entries, added_entries_build_yml) = {
-            let mut build_yaml: serde_yaml::Value =
-                serde_yaml::from_reader(&std::fs::File::open(&cmd_args.build_yaml_path)?)?;
-
-            let mut nix_attributes = &mut build_yaml;
-            for attr in [
-                "jobs",
-                "holochain-binaries",
-                "strategy",
-                "matrix",
-                "nixAttribute",
-            ] {
-                nix_attributes = nix_attributes
-                    .get_mut(&attr)
-                    .ok_or_else(|| anyhow::anyhow!("can't access {}", attr))?;
-            }
-            let nix_attributes = nix_attributes
-                .as_sequence_mut()
-                .ok_or_else(|| anyhow::anyhow!("nix_attributes is not a sequence"))?;
-
-            let entries_orig =
-                HashSet::<serde_yaml::Value>::from_iter(nix_attributes.iter().cloned());
-
-            println!("nix_attributes: {:?}", nix_attributes);
-
-            // keep only a limited number of entries. treat the ones tarting with `v[0-9]` as replacable
-            let prefix_re = regex::Regex::new("^v[0-9]+")?;
-            nix_attributes.retain(|value| match value {
-                serde_yaml::Value::String(s) => !prefix_re.is_match(s),
-                other => panic!("unexpected entry in nix_attributes: {:?}", other),
-            });
-            let intact_revision_entries = update_config_toml_entries
-                .iter()
-                .filter(|(_, entry)| {
-                    if entry.broken.unwrap_or_default() {
-                        false
-                    } else {
-                        entry.git_src.is_rev()
-                    }
-                })
-                .map(|(entry_key, _)| entry_key)
-                .cloned()
-                .collect::<Vec<_>>();
-
-            let skip = intact_revision_entries.len()
-                - (cmd_args.keep_tags as usize - nix_attributes.len());
-            for entry_keys in intact_revision_entries.into_iter().skip(skip) {
-                nix_attributes.push(serde_yaml::Value::String(entry_keys));
-            }
-
-            let entries_new =
-                HashSet::<serde_yaml::Value>::from_iter(nix_attributes.iter().cloned());
-
-            anyhow::ensure!(cmd_args.keep_tags as usize == nix_attributes.len(),);
-
-            println!("new nix_attributes:\n{:?}", nix_attributes);
-
-            let build_yaml_content = {
-                let mut output = vec![];
-                serde_yaml::to_writer(&mut output, &build_yaml)?;
-                String::from_utf8(output)?
-            };
-
-            println!("new file content:\n{}", &build_yaml_content);
-
-            if !cmd_args.dry_run {
-                std::fs::File::create(&cmd_args.build_yaml_path)?
-                    .write_all_at(build_yaml_content.as_bytes(), 0)?;
-            }
-
-            (
-                entries_orig
-                    .difference(&entries_new)
-                    .map(|v| v.as_str().unwrap().to_string())
-                    .collect::<LinkedHashSet<_>>(),
-                entries_new
-                    .difference(&entries_orig)
-                    .map(|v| v.as_str().unwrap().to_string())
-                    .collect::<LinkedHashSet<_>>(),
-            )
-        };
+        let (removed_entries, added_entries_build_yml) =
+            update_build_yml(&cmd_args, &update_config_toml_entries)?;
 
         if added_entries_build_yml != added_entries_update_config {
             println!(
@@ -369,6 +289,90 @@ mod update_holochain_tags {
         }
 
         Ok(())
+    }
+
+    // make sure the latest upstream tags exist in the build.yml
+    fn update_build_yml(
+        cmd_args: &CmdArgs,
+        update_config_toml_entries: &LinkedHashMap<String, UpdateConfigEntry>,
+    ) -> anyhow::Result<(LinkedHashSet<String>, LinkedHashSet<String>)> {
+        let mut build_yaml: serde_yaml::Value =
+            serde_yaml::from_reader(&std::fs::File::open(&cmd_args.build_yaml_path)?)?;
+
+        let mut nix_attributes = &mut build_yaml;
+        for attr in [
+            "jobs",
+            "holochain-binaries",
+            "strategy",
+            "matrix",
+            "nixAttribute",
+        ] {
+            nix_attributes = nix_attributes
+                .get_mut(&attr)
+                .ok_or_else(|| anyhow::anyhow!("can't access {}", attr))?;
+        }
+        let nix_attributes = nix_attributes
+            .as_sequence_mut()
+            .ok_or_else(|| anyhow::anyhow!("nix_attributes is not a sequence"))?;
+
+        let entries_orig = HashSet::<serde_yaml::Value>::from_iter(nix_attributes.iter().cloned());
+
+        println!("nix_attributes: {:?}", nix_attributes);
+
+        // keep only a limited number of entries. treat the ones tarting with `v[0-9]` as replacable
+        let prefix_re = regex::Regex::new("^v[0-9]+")?;
+        nix_attributes.retain(|value| match value {
+            serde_yaml::Value::String(s) => !prefix_re.is_match(s),
+            other => panic!("unexpected entry in nix_attributes: {:?}", other),
+        });
+        let intact_revision_entries = update_config_toml_entries
+            .iter()
+            .filter(|(_, entry)| {
+                if entry.broken.unwrap_or_default() {
+                    false
+                } else {
+                    entry.git_src.is_rev()
+                }
+            })
+            .map(|(entry_key, _)| entry_key)
+            .cloned()
+            .collect::<Vec<_>>();
+
+        let skip =
+            intact_revision_entries.len() - (cmd_args.keep_tags as usize - nix_attributes.len());
+        for entry_keys in intact_revision_entries.into_iter().skip(skip) {
+            nix_attributes.push(serde_yaml::Value::String(entry_keys));
+        }
+
+        let entries_new = HashSet::<serde_yaml::Value>::from_iter(nix_attributes.iter().cloned());
+
+        anyhow::ensure!(cmd_args.keep_tags as usize == nix_attributes.len(),);
+
+        println!("new nix_attributes:\n{:?}", nix_attributes);
+
+        let build_yaml_content = {
+            let mut output = vec![];
+            serde_yaml::to_writer(&mut output, &build_yaml)?;
+            String::from_utf8(output)?
+        };
+
+        println!("new file content:\n{}", &build_yaml_content);
+
+        if !cmd_args.dry_run {
+            std::fs::File::create(&cmd_args.build_yaml_path)?
+                .write_all_at(build_yaml_content.as_bytes(), 0)?;
+        }
+
+        Ok((
+            entries_orig
+                .difference(&entries_new)
+                .map(|v| v.as_str().unwrap().to_string())
+                .collect::<LinkedHashSet<_>>(),
+            entries_new
+                .difference(&entries_orig)
+                .map(|v| v.as_str().unwrap().to_string())
+                .collect::<LinkedHashSet<_>>(),
+        ))
     }
 
     // write back the given entries to update_config.toml
