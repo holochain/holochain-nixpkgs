@@ -22,6 +22,7 @@ cargo-lock = "7.0"
 toml_edit = "0.6"
 url = "2.2"
 semver = "1.0"
+smart-default = "0.6"
 
 [dev-dependencies]
 pretty_assertions = "1.0"

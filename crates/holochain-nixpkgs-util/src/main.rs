@@ -118,9 +118,6 @@ mod update_holochain_tags {
 
         #[clap(long, default_value = "https://github.com/holochain/holochain.git")]
         holochain_git_url: String,
-
-        #[clap(long, default_value = "~0.0")]
-        default_lair_version_req: semver::VersionReq,
     }
 
     pub(crate) async fn cmd(_cli_args: &super::CliArgs, cmd_args: &CmdArgs) -> anyhow::Result<()> {
@@ -168,7 +165,6 @@ mod update_holochain_tags {
                     added_entries_update_config.insert(entry_key);
 
                     UpdateConfigEntry {
-                        lair_version_req: cmd_args.default_lair_version_req.clone(),
                         git_src: GitSrc::Revision(tag.clone()),
 
                         ..Default::default()
@@ -199,7 +195,7 @@ mod update_holochain_tags {
             }
         }
 
-        let (removed_entries, added_entries_build_yml) =
+        let (removed_entries_build_yml, added_entries_build_yml) =
             update_build_yml(&cmd_args, &update_config_toml_entries)?;
 
         if added_entries_build_yml != added_entries_update_config {
@@ -209,37 +205,54 @@ mod update_holochain_tags {
             );
         }
 
-        rewrite_update_config(cmd_args, update_config_toml, update_config_toml_entries)?;
+        rewrite_update_config(cmd_args, update_config_toml, &update_config_toml_entries)?;
 
         let update_config_toml_pathstr = cmd_args
             .update_config_toml_path
             .as_os_str()
             .to_string_lossy()
             .to_string();
-
         let update_config_changed =
             crate::git_helper::pathspec_has_diff(&update_config_toml_pathstr).await?;
 
+        let build_yml_pathstr = cmd_args
+            .build_yaml_path
+            .as_os_str()
+            .to_string_lossy()
+            .to_string();
+        let build_yml_changed =
+            crate::git_helper::pathspec_has_diff(&update_config_toml_pathstr).await?;
+
         let msg = indoc::formatdoc!(
-            r#"update {}
+            r#"update holochain tags
 
-            removed ({}): {:#?}
+            {}:
 
+            changed: {}
             added ({}): {:#?}
 
-            config changed: {}
+
+            {}:
+
+            changed: {}
+            removed ({}): {:#?}
+            added ({}): {:#?}
             "#,
             &update_config_toml_pathstr,
-            &removed_entries.len(),
-            &removed_entries,
+            update_config_changed,
+            &added_entries_update_config.len(),
+            &added_entries_update_config,
+            &build_yml_pathstr,
+            build_yml_changed,
+            &removed_entries_build_yml.len(),
+            &removed_entries_build_yml,
             &added_entries_build_yml.len(),
             &added_entries_build_yml,
-            update_config_changed,
         );
 
         println!("{}", msg);
 
-        if removed_entries.is_empty()
+        if removed_entries_build_yml.is_empty()
             && added_entries_build_yml.is_empty()
             && added_entries_update_config.is_empty()
             && !update_config_changed
@@ -285,6 +298,14 @@ mod update_holochain_tags {
                 if !output.status.success() {
                     bail!("running {:#?} failed:\n{:#?}", cmd, output);
                 }
+            } else {
+                println!(
+                    "[DRY_RUN] would add these entries to the update_config.toml:\n{:#?}",
+                    added_entries_update_config
+                        .iter()
+                        .map(|entry_key| update_config_toml_entries.get(entry_key).unwrap())
+                        .collect::<Vec<_>>()
+                );
             }
         }
 
@@ -398,7 +419,7 @@ mod update_holochain_tags {
     fn rewrite_update_config<'a>(
         cmd_args: &CmdArgs,
         mut update_config_toml: File,
-        update_config_toml_entries: LinkedHashMap<String, UpdateConfigEntry>,
+        update_config_toml_entries: &LinkedHashMap<String, UpdateConfigEntry>,
     ) -> anyhow::Result<()> {
         let mut document = Document::new();
 

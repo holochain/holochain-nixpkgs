@@ -164,9 +164,9 @@ rec {
       };
       "anyhow" = rec {
         crateName = "anyhow";
-        version = "1.0.56";
+        version = "1.0.57";
         edition = "2018";
-        sha256 = "09rar14hn9xmafjrjhfxkngmp57gk91pqpckvrq0hbhjx5di6qa3";
+        sha256 = "1p4w5a6izznpv0kxwrs6r5kz9khf5dmyck3c3mx6idycim8biy88";
         authors = [
           "David Tolnay <dtolnay@gmail.com>"
         ];
@@ -8179,6 +8179,32 @@ rec {
           "const_new" = [ "const_generics" ];
         };
       };
+      "smart-default" = rec {
+        crateName = "smart-default";
+        version = "0.6.0";
+        edition = "2015";
+        sha256 = "1xnvxz9wilj4d5b8kg4wbs0yk48wm41fnwkmn3p6wi9rafhmjdhk";
+        procMacro = true;
+        authors = [
+          "IdanArye <idanarye@gmail.com>"
+        ];
+        dependencies = [
+          {
+            name = "proc-macro2";
+            packageId = "proc-macro2";
+          }
+          {
+            name = "quote";
+            packageId = "quote";
+          }
+          {
+            name = "syn";
+            packageId = "syn";
+            features = [ "full" ];
+          }
+        ];
+
+      };
       "smartstring" = rec {
         crateName = "smartstring";
         version = "1.0.1";
@@ -9359,6 +9385,10 @@ rec {
           {
             name = "serde_json";
             packageId = "serde_json";
+          }
+          {
+            name = "smart-default";
+            packageId = "smart-default";
           }
           {
             name = "structopt";
