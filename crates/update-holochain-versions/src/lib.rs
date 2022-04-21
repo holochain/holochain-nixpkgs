@@ -71,7 +71,7 @@ pub mod update_config {
     }
 
     /// type for entries in the update_config.toml file
-    #[derive(Serialize, Deserialize, Debug, StructOpt, Default)]
+    #[derive(Serialize, Deserialize, Debug, StructOpt, smart_default::SmartDefault)]
     #[serde(rename_all = "kebab-case")]
     pub struct UpdateConfigEntry {
         /// Specifier for the lair version requirement
@@ -85,6 +85,7 @@ pub mod update_config {
             use_delimiter = true
         )]
         #[serde(default = "default_bins_filter")]
+        #[default(_code = "default_bins_filter()")]
         pub bins_filter: Vec<String>,
 
         #[structopt(long)]
