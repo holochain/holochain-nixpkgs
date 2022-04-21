@@ -37,7 +37,13 @@ let
       --nvfetcher-dir=${toplevel}/nix/nvfetcher \
       --output-file=${toplevel}/packages/holochain/versions/${configKey}.nix \
       ${builtins.concatStringsSep " " (lib.attrsets.mapAttrsToList
-        (cliKey: cliValue: ''--${cliKey}="${cliValue}"'') holochain.holochainVersionUpdateConfig."${configKey}")
+        (cliKey: cliValue: let
+          cliValueType = builtins.typeOf cliValue;
+          cliValue' =
+            if cliValueType == "list" then builtins.concatStringsSep "," cliValue
+            else builtins.toString cliValue
+            ;
+        in ''--${cliKey}="${cliValue'}"'') holochain.holochainVersionUpdateConfig."${configKey}")
       }
   '';
 
@@ -61,7 +67,7 @@ let
   hnixpkgs-update = _configKeys:
     let
       configKeys = builtins.filter
-        (configKey: (holochain.holochainVersionUpdateConfig."${configKey}".broken or "false") != "true")
+        (configKey: (holochain.holochainVersionUpdateConfig."${configKey}".broken or false) != true)
         _configKeys;
     in
     ''

@@ -20,7 +20,6 @@ self: super:
       };
 
       rustNightly = self.rust.mkRust { track = "nightly"; version = "latest"; };
-      # TODO: use a single source of truth for the default rust version in the repo
       rustStable = self.rust.mkRust { track = "stable"; version = "1.58.1"; };
 
       packages = super.rust.packages // {

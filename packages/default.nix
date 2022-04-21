@@ -22,6 +22,7 @@
 , darwin
 , xcbuild
 , libiconv
+, curl
 }:
 
 let
@@ -51,19 +52,29 @@ let
       libgit2
       libssh2
     ]
-      ++ (lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
-      AppKit
-      CoreFoundation
-      CoreServices
-      Security
-      libiconv
-    ]))
+      ++ (lib.optionals stdenv.isDarwin
+      (
+        (with darwin.apple_sdk.frameworks; [
+          AppKit
+          CoreFoundation
+          CoreServices
+          Security
+          libiconv
+        ])
+        ++ [
+          curl.dev
+        ]
+      )
+    )
     ;
   };
   opensslStatic = openssl.override (_: {
     static = true;
   });
-  holochain = callPackage ./holochain { inherit mkRust makeRustPlatform; };
+  holochain = callPackage ./holochain {
+    inherit mkRust makeRustPlatform;
+    defaultRustVersion = pkgs.rust.packages.stable.rust.rustc.version;
+  };
   crate2nixGenerated = import ../nix/crate2nix/Cargo.nix {
     inherit pkgs;
     defaultCrateOverrides = lib.attrsets.recursiveUpdate defaultCrateOverrides {

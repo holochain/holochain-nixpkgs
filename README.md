@@ -77,6 +77,7 @@ This requires that you create a `holochain_version.nix` file as well. You can au
 
 ```shell
 nix-shell --pure https://github.com/holochain/holochain-nixpkgs/archive/develop.tar.gz \
+  --arg flavors '["release"]' \
   --run "update-holochain-versions --git-src=revision:holochain-0.0.115  --lair-version-req='~0.1' --output-file=holochain_version.nix"
 ```
 
@@ -118,6 +119,7 @@ The table name corresponds to the Nix expression filename.
 It must only contain valid filesystem characters and no _._ character.
 
 Each table key-value pair will be passed to the updater utility in the form of `--${key}=${value}`.
+Members of inline tables will be joined into a single string separated by a ','.
 Please see the updater utility section for a list of valid arguments.
 
 ### Adding/Changing a version configuration entry
@@ -150,7 +152,9 @@ lair_keystore 0.1.0
 ### Holochain Version Update Utility
 
 ```shell
-nix-shell --pure --run "update-holochain-versions --help"
+nix-shell --pure \
+  --arg flavors '["release"]' \
+  --run "update-holochain-versions --help"
 ```
 
 ## Nix Caching and Continuous Integration

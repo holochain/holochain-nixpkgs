@@ -49,6 +49,136 @@ pub fn nix_to_json_partial<R: std::io::Read>(mut input: R) -> anyhow::Result<ser
     Ok(json)
 }
 
+/// types for the update_config.toml file
+pub mod update_config {
+    use std::str::FromStr;
+
+    use anyhow::bail;
+    use serde::{Deserialize, Serialize};
+    use structopt::StructOpt;
+
+    const DEFAULT_BINS_FILTER: &str = "holochain,hc,kitsune-p2p-proxy,kitsune-p2p-tx2-proxy";
+    pub fn default_bins_filter() -> Vec<String> {
+        DEFAULT_BINS_FILTER
+            .split(",")
+            .map(ToString::to_string)
+            .collect()
+    }
+
+    const DEFAULT_LAIR_VERSION_REQ: &str = "~0.0";
+    pub fn default_lair_version_req() -> semver::VersionReq {
+        semver::VersionReq::from_str(DEFAULT_LAIR_VERSION_REQ).unwrap()
+    }
+
+    /// type for entries in the update_config.toml file
+    #[derive(Serialize, Deserialize, Debug, StructOpt, Default)]
+    #[serde(rename_all = "kebab-case")]
+    pub struct UpdateConfigEntry {
+        /// Specifier for the lair version requirement
+        #[structopt(long, default_value = DEFAULT_LAIR_VERSION_REQ)]
+        #[serde(default = "default_lair_version_req")]
+        pub lair_version_req: semver::VersionReq,
+
+        #[structopt(
+            long,
+            default_value = DEFAULT_BINS_FILTER,
+            use_delimiter = true
+        )]
+        #[serde(default = "default_bins_filter")]
+        pub bins_filter: Vec<String>,
+
+        #[structopt(long)]
+        pub rust_version: Option<semver::Version>,
+
+        /// indicates if this version is broken and will not lead to any file generation
+        #[structopt(long)]
+        pub broken: Option<bool>,
+
+        /// Git source specifier for fetching the holochain sources.
+        /// Either: branch:<branch_name> or revision:<rev>
+        #[structopt(long)]
+        pub git_src: GitSrc,
+    }
+
+    #[derive(Clone, Debug)]
+    pub enum GitSrc {
+        Branch(String),
+        Revision(String),
+    }
+
+    impl<'de> Deserialize<'de> for GitSrc {
+        fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+        where
+            D: serde::Deserializer<'de>,
+        {
+            use serde::de::Error;
+
+            let s: String = Deserialize::deserialize(deserializer)?;
+
+            Self::from_str(&s).map_err(|e| -> <D as serde::Deserializer>::Error {
+                D::Error::invalid_value(serde::de::Unexpected::Str(&s), &format!("{}", e).as_str())
+            })
+        }
+    }
+
+    impl Serialize for GitSrc {
+        fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+        where
+            S: serde::Serializer,
+        {
+            let s = self.to_string();
+            serializer.serialize_str(&s)
+        }
+    }
+
+    impl Default for GitSrc {
+        fn default() -> Self {
+            Self::Branch("main".to_string())
+        }
+    }
+
+    impl std::fmt::Display for &GitSrc {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            f.write_str(&match self {
+                GitSrc::Branch(branch) => format!("branch:{}", branch),
+                GitSrc::Revision(rev) => format!("revision:{}", rev),
+            })
+        }
+    }
+
+    impl FromStr for GitSrc {
+        type Err = anyhow::Error;
+
+        fn from_str(s: &str) -> Result<Self, Self::Err> {
+            let s = s.to_string();
+            let split = s
+                .splitn::<_>(2, ':')
+                .map(|s| s.to_lowercase())
+                .map(|s| s.trim().to_owned())
+                .map(|s| s.replace('"', ""))
+                .collect::<Vec<_>>();
+            match (split.get(0), split.get(1)) {
+                (Some(key), Some(branch)) if key == "branch" => Ok(GitSrc::Branch(branch.clone())),
+                (Some(key), Some(rev)) if key == "revision" => Ok(GitSrc::Revision(rev.clone())),
+                (_, _) => bail!("invalid git-rev provided: {}", s),
+            }
+        }
+    }
+
+    impl<'a> GitSrc {
+        pub fn toml_src_value(&'a self) -> ([&'a str; 2], &'a str) {
+            match &self {
+                GitSrc::Branch(branch) => (["src", "branch"], branch),
+                GitSrc::Revision(id) => (["src", "manual"], id),
+            }
+        }
+
+        pub fn is_rev(&'a self) -> bool {
+            matches!(self, GitSrc::Revision(_))
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
