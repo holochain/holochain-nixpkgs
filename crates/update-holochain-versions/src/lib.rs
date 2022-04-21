@@ -65,13 +65,18 @@ pub mod update_config {
             .collect()
     }
 
+    const DEFAULT_LAIR_VERSION_REQ: &str = "~0.0";
+    pub fn default_lair_version_req() -> semver::VersionReq {
+        semver::VersionReq::from_str(DEFAULT_LAIR_VERSION_REQ).unwrap()
+    }
+
     /// type for entries in the update_config.toml file
     #[derive(Serialize, Deserialize, Debug, StructOpt, Default)]
     #[serde(rename_all = "kebab-case")]
     pub struct UpdateConfigEntry {
         /// Specifier for the lair version requirement
-        #[structopt(long, default_value)]
-        #[serde(default)]
+        #[structopt(long, default_value = DEFAULT_LAIR_VERSION_REQ)]
+        #[serde(default = "default_lair_version_req")]
         pub lair_version_req: semver::VersionReq,
 
         #[structopt(
