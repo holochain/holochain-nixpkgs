@@ -162,23 +162,42 @@ mod update_holochain_tags {
                 tag.replace(TAG_GLOB_PREFIX, "").replacen(".", "_", 2)
             );
 
-            update_config_toml_entries
+            let entry = update_config_toml_entries
                 .entry(entry_key.clone())
                 .or_insert_with(|| {
                     added_entries_update_config.insert(entry_key);
 
                     UpdateConfigEntry {
                         lair_version_req: cmd_args.default_lair_version_req.clone(),
-                        git_src: GitSrc::Revision(tag),
+                        git_src: GitSrc::Revision(tag.clone()),
 
                         ..Default::default()
                     }
                 });
 
-            // TODO: evaluate whether or not this tag has been published
-        }
+            // evaluate whether or not this tag has been published
+            let crates_index_helper =
+                hc_release_automation::release::crates_index_helper::index(false)?;
 
-        println!("update config entries: {:#?}", update_config_toml_entries);
+            let published = crates_index_helper
+                .lock()
+                .map_err(|_| anyhow::anyhow!("aquiring lock for crates_index_helper"))?
+                .crate_("holochain")
+                .map(|crt| {
+                    crt.versions()
+                        .iter()
+                        .any(|v| tag == format!("{}-{}", v.name(), v.version()))
+                })
+                .unwrap_or_default();
+
+            if !published {
+                println!(
+                    "warning: marking tag {} as broken as it has not been published",
+                    &tag
+                );
+                entry.broken = Some(true);
+            }
+        }
 
         let (removed_entries, added_entries_build_yml) =
             update_build_yml(&cmd_args, &update_config_toml_entries)?;
@@ -346,7 +365,7 @@ mod update_holochain_tags {
 
         let entries_new = HashSet::<serde_yaml::Value>::from_iter(nix_attributes.iter().cloned());
 
-        anyhow::ensure!(cmd_args.keep_tags as usize == nix_attributes.len(),);
+        anyhow::ensure!(cmd_args.keep_tags as usize >= nix_attributes.len());
 
         println!("new nix_attributes:\n{:?}", nix_attributes);
 

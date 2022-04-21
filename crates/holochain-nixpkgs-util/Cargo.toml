@@ -10,7 +10,6 @@ serde = { version = "1.0", features = ["derive"]}
 serde_yaml = { version = "0.8" }
 tokio = { version = "1.17", features = ["rt-multi-thread", "macros"] }
 clap = { version = "3.1", features = ["derive"] }
-git2 = "0.14"
 anyhow = "1.0"
 gitoxide-core = { version = "0.12", features = ["async-client"] }
 # git-protocol = { version = "*", features = ["async-client"] }
@@ -24,3 +23,4 @@ linked-hash-map = "0.5"
 update-holochain-versions = { path = "../update-holochain-versions" }
 itertools = "0.10.3"
 semver = "1.0"
+hc-release-automation = { package = "release-automation", git = "https://github.com/holochain/holochain", rev = "ed43054aac36767fd792d9ee1efb9bce7c674fcf" }
