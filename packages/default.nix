@@ -22,6 +22,7 @@
 , darwin
 , xcbuild
 , libiconv
+, curl
 }:
 
 let
@@ -51,13 +52,20 @@ let
       libgit2
       libssh2
     ]
-      ++ (lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
-      AppKit
-      CoreFoundation
-      CoreServices
-      Security
-      libiconv
-    ]))
+      ++ (lib.optionals stdenv.isDarwin
+      (
+        (with darwin.apple_sdk.frameworks; [
+          AppKit
+          CoreFoundation
+          CoreServices
+          Security
+          libiconv
+        ])
+        ++ [
+          curl.dev
+        ]
+      )
+    )
     ;
   };
   opensslStatic = openssl.override (_: {
