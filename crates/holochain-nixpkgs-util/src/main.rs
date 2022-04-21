@@ -209,7 +209,7 @@ mod update_holochain_tags {
             );
         }
 
-        rewrite_update_config(cmd_args, update_config_toml, update_config_toml_entries)?;
+        rewrite_update_config(cmd_args, update_config_toml, &update_config_toml_entries)?;
 
         let update_config_toml_pathstr = cmd_args
             .update_config_toml_path
@@ -302,6 +302,14 @@ mod update_holochain_tags {
                 if !output.status.success() {
                     bail!("running {:#?} failed:\n{:#?}", cmd, output);
                 }
+            } else {
+                println!(
+                    "[DRY_RUN] would add these entries to the update_config.toml:\n{:#?}",
+                    added_entries_update_config
+                        .iter()
+                        .map(|entry_key| update_config_toml_entries.get(entry_key).unwrap())
+                        .collect::<Vec<_>>()
+                );
             }
         }
 
@@ -415,7 +423,7 @@ mod update_holochain_tags {
     fn rewrite_update_config<'a>(
         cmd_args: &CmdArgs,
         mut update_config_toml: File,
-        update_config_toml_entries: LinkedHashMap<String, UpdateConfigEntry>,
+        update_config_toml_entries: &LinkedHashMap<String, UpdateConfigEntry>,
     ) -> anyhow::Result<()> {
         let mut document = Document::new();
 
