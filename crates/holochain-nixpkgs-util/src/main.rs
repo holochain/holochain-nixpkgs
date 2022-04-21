@@ -118,9 +118,6 @@ mod update_holochain_tags {
 
         #[clap(long, default_value = "https://github.com/holochain/holochain.git")]
         holochain_git_url: String,
-
-        #[clap(long, default_value = "~0.0")]
-        default_lair_version_req: semver::VersionReq,
     }
 
     pub(crate) async fn cmd(_cli_args: &super::CliArgs, cmd_args: &CmdArgs) -> anyhow::Result<()> {
@@ -168,7 +165,6 @@ mod update_holochain_tags {
                     added_entries_update_config.insert(entry_key);
 
                     UpdateConfigEntry {
-                        lair_version_req: cmd_args.default_lair_version_req.clone(),
                         git_src: GitSrc::Revision(tag.clone()),
 
                         ..Default::default()

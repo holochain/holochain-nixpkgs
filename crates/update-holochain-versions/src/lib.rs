@@ -77,6 +77,7 @@ pub mod update_config {
         /// Specifier for the lair version requirement
         #[structopt(long, default_value = DEFAULT_LAIR_VERSION_REQ)]
         #[serde(default = "default_lair_version_req")]
+        #[default(_code = "default_lair_version_req()")]
         pub lair_version_req: semver::VersionReq,
 
         #[structopt(
