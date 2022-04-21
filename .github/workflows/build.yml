@@ -44,7 +44,6 @@ jobs:
           - main
           - develop
           - develop_lair_0_1
-          - v0_0_126
           - v0_0_127
           - v0_0_128
           - v0_0_129
