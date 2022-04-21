@@ -1,11 +1,11 @@
 
 [main]
-lair-version-req = "*"
+lair-version-req = "~0.0"
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "branch:main"
 
 [develop]
-lair-version-req = "*"
+lair-version-req = "~0.0"
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "branch:develop"
 
