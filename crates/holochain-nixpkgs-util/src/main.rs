@@ -199,7 +199,7 @@ mod update_holochain_tags {
             }
         }
 
-        let (removed_entries, added_entries_build_yml) =
+        let (removed_entries_build_yml, added_entries_build_yml) =
             update_build_yml(&cmd_args, &update_config_toml_entries)?;
 
         if added_entries_build_yml != added_entries_update_config {
@@ -216,30 +216,47 @@ mod update_holochain_tags {
             .as_os_str()
             .to_string_lossy()
             .to_string();
-
         let update_config_changed =
             crate::git_helper::pathspec_has_diff(&update_config_toml_pathstr).await?;
 
+        let build_yml_pathstr = cmd_args
+            .build_yaml_path
+            .as_os_str()
+            .to_string_lossy()
+            .to_string();
+        let build_yml_changed =
+            crate::git_helper::pathspec_has_diff(&update_config_toml_pathstr).await?;
+
         let msg = indoc::formatdoc!(
-            r#"update {}
+            r#"update holochain tags
 
-            removed ({}): {:#?}
+            {}:
 
+            changed: {}
             added ({}): {:#?}
 
-            config changed: {}
+
+            {}:
+
+            changed: {}
+            removed ({}): {:#?}
+            added ({}): {:#?}
             "#,
             &update_config_toml_pathstr,
-            &removed_entries.len(),
-            &removed_entries,
+            update_config_changed,
+            &added_entries_update_config.len(),
+            &added_entries_update_config,
+            &build_yml_pathstr,
+            build_yml_changed,
+            &removed_entries_build_yml.len(),
+            &removed_entries_build_yml,
             &added_entries_build_yml.len(),
             &added_entries_build_yml,
-            update_config_changed,
         );
 
         println!("{}", msg);
 
-        if removed_entries.is_empty()
+        if removed_entries_build_yml.is_empty()
             && added_entries_build_yml.is_empty()
             && added_entries_update_config.is_empty()
             && !update_config_changed
