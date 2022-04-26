@@ -217,3 +217,8 @@ cargo_lock = "Cargo.lock"
 src.manual = "holochain-0.0.136"
 fetch.git = "https://github.com/holochain/holochain"
 cargo_lock = "Cargo.lock"
+
+[lair_revision_v0_0_10]
+src.manual = "v0.0.10"
+fetch.git = "https://github.com/holochain/lair"
+cargo_lock = "Cargo.lock"
