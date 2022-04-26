@@ -20,9 +20,9 @@
     },
     "holochain_branch_develop": {
         "pinned": true,
-        "cargoLock": "./holochain_branch_develop-4a03fce48a0f352abb2f52762fd50df9241c1053/Cargo.lock",
+        "cargoLock": "./holochain_branch_develop-e5b911700a931fe7cae61cbbb0dccb52c1bc5b24/Cargo.lock",
         "name": "holochain_branch_develop",
-        "version": "4a03fce48a0f352abb2f52762fd50df9241c1053",
+        "version": "e5b911700a931fe7cae61cbbb0dccb52c1bc5b24",
         "passthru": null,
         "src": {
             "deepClone": false,
@@ -31,8 +31,8 @@
             "fetchSubmodules": false,
             "name": null,
             "type": "git",
-            "sha256": "sha256-iSRh5ex+ArWtU5YxwNcdmgZVhgdo3APFXWfF3Hcp2KU=",
-            "rev": "4a03fce48a0f352abb2f52762fd50df9241c1053"
+            "sha256": "sha256-zILEvrBN3xfmp1cHBXNgC8eMVtCR8nYD8x7X/3BX2S8=",
+            "rev": "e5b911700a931fe7cae61cbbb0dccb52c1bc5b24"
         },
         "extract": null,
         "rustGitDeps": {}
@@ -137,6 +137,25 @@
         "rustGitDeps": {
             "cargo-test-macro-0.1.0": "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs="
         }
+    },
+    "lair_revision_v0_0_10": {
+        "pinned": false,
+        "cargoLock": "./lair_revision_v0_0_10-v0.0.10/Cargo.lock",
+        "name": "lair_revision_v0_0_10",
+        "version": "v0.0.10",
+        "passthru": null,
+        "src": {
+            "deepClone": false,
+            "url": "https://github.com/holochain/lair",
+            "leaveDotGit": false,
+            "fetchSubmodules": false,
+            "name": null,
+            "type": "git",
+            "sha256": "sha256-yBCsdtC6vYnGQL1JkLkOzECk1TD4RoFzNARdsc+J0cg=",
+            "rev": "v0.0.10"
+        },
+        "extract": null,
+        "rustGitDeps": {}
     },
     "lair_revision_v0_1_0": {
         "pinned": true,
@@ -299,7 +318,7 @@
         }
     },
     "nixpkgs": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": null,
         "name": "nixpkgs",
         "version": "c254b8c915ac912ae9ee9dc74eac555ccbf33795",
