@@ -20,9 +20,9 @@
     },
     "holochain_branch_develop": {
         "pinned": true,
-        "cargoLock": "./holochain_branch_develop-03c1ee5b6c9eb02c8be3a006cd93c1f895188195/Cargo.lock",
+        "cargoLock": "./holochain_branch_develop-d69f6469cf8b16f81f4f4366008b8f8893bfd179/Cargo.lock",
         "name": "holochain_branch_develop",
-        "version": "03c1ee5b6c9eb02c8be3a006cd93c1f895188195",
+        "version": "d69f6469cf8b16f81f4f4366008b8f8893bfd179",
         "passthru": null,
         "src": {
             "deepClone": false,
@@ -31,8 +31,8 @@
             "fetchSubmodules": false,
             "name": null,
             "type": "git",
-            "sha256": "sha256-uMUb+zgurfrym6BMYYAsaCURaR1THgfgiopBgg0qDnU=",
-            "rev": "03c1ee5b6c9eb02c8be3a006cd93c1f895188195"
+            "sha256": "sha256-0Q2avFtK1aUd8U48yy74IfrjmF/mBOIIwyp7plUQGV8=",
+            "rev": "d69f6469cf8b16f81f4f4366008b8f8893bfd179"
         },
         "extract": null,
         "rustGitDeps": {}
@@ -139,7 +139,7 @@
         }
     },
     "lair_revision_v0_0_10": {
-        "pinned": true,
+        "pinned": false,
         "cargoLock": "./lair_revision_v0_0_10-v0.0.10/Cargo.lock",
         "name": "lair_revision_v0_0_10",
         "version": "v0.0.10",
@@ -318,7 +318,7 @@
         }
     },
     "nixpkgs": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": null,
         "name": "nixpkgs",
         "version": "ca071d1224442eb0478b3bfe5f7d6b75f205bd2f",
