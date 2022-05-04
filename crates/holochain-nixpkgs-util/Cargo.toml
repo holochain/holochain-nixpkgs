@@ -23,4 +23,4 @@ linked-hash-map = "0.5"
 update-holochain-versions = { path = "../update-holochain-versions" }
 itertools = "0.10.3"
 semver = "1.0"
-hc-release-automation = { package = "release-automation", git = "https://github.com/holochain/holochain", rev = "ed43054aac36767fd792d9ee1efb9bce7c674fcf" }
+hc-release-automation = { package = "release-automation", git = "https://github.com/holochain/holochain", rev = "1500a15818e545c32db3b54c7c05ad84420eaa8a" }
