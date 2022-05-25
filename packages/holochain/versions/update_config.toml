@@ -219,3 +219,8 @@ git-src = "revision:holochain-0.0.139"
 lair-version-req = "~0.0"
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.140"
+
+[v0_0_141]
+lair-version-req = "~0.0"
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.0.141"
