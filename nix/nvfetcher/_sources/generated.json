@@ -139,7 +139,7 @@
         }
     },
     "lair_revision_v0_0_10": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": "./lair_revision_v0_0_10-v0.0.10/Cargo.lock",
         "name": "lair_revision_v0_0_10",
         "version": "v0.0.10",
@@ -318,15 +318,15 @@
         }
     },
     "nixpkgs": {
-        "pinned": true,
+        "pinned": false,
         "cargoLock": null,
         "name": "nixpkgs",
-        "version": "1c813bbdc330b45fe922c642eb610902aecd5673",
+        "version": "919f8a2d7d458f9cbf26b57e1fa7ade8e63482bd",
         "passthru": null,
         "src": {
-            "url": "https://github.com/nixos/nixpkgs/archive/1c813bbdc330b45fe922c642eb610902aecd5673.tar.gz",
+            "url": "https://github.com/nixos/nixpkgs/archive/919f8a2d7d458f9cbf26b57e1fa7ade8e63482bd.tar.gz",
             "type": "tarball",
-            "sha256": "1ldbak39rk3mb11dndp0fpdivym0rv4dashqhfbsjdz2mvvjyxv7"
+            "sha256": "1b82lg2dvhjla039ql754vb2dcr712xxg2b8zyj2dliwdx116yc2"
         },
         "extract": null,
         "rustGitDeps": null
