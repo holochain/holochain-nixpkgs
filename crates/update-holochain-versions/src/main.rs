@@ -376,19 +376,22 @@ nixpkgs.callPackage generated { }
     let lockfile = Lockfile::load(&holochain_cargo_lock_path)?;
     eprintln!("number of dependencies: {}", lockfile.packages.len());
 
-    let lair_keystore_api_dep = lockfile
+    const PACKAGE_OF_INTEREST: &str = "lair_keystore_api";
+
+    let package = lockfile
         .packages
         .iter()
-        .find(|p| p.name.as_str() == "lair_keystore_api" && version_req.matches(&p.version))
+        .find(|p| p.name.as_str() == PACKAGE_OF_INTEREST && version_req.matches(&p.version))
         .ok_or_else(|| {
             anyhow::anyhow!(
-                "couldn't find lair_keystore_api matching '{}' in {:?}",
+                "couldn't find {} matching '{}' in {:?}",
+                PACKAGE_OF_INTEREST,
                 &version_req,
                 holochain_cargo_lock_path.display(),
             )
         })?;
 
-    let lair_source = match &lair_keystore_api_dep.source {
+    let lair_source = match &package.source {
         Some(source) if source.is_git() => {
             eprintln!("lair is a git source! {:#?}", source.url());
             let mut url = source.url().clone();
@@ -404,7 +407,14 @@ nixpkgs.callPackage generated { }
         _ => None,
     };
 
-    let lair_rev = format!("v{}", lair_keystore_api_dep.version);
+    // starting with 0.1.2 we need to prefix the crate name
+    let prefix = if package.version >= cargo_lock::Version::new(0, 1, 2) {
+        format!("{}-", PACKAGE_OF_INTEREST)
+    } else {
+        Default::default()
+    };
+
+    let lair_rev = format!("{}v{}", prefix, package.version);
 
     Ok((lair_source, lair_rev))
 }
