@@ -14,17 +14,17 @@
   };
   holochain_branch_develop = {
     pname = "holochain_branch_develop";
-    version = "c1c9b3540a4b6cee6b97d479eda0f048d96b13f2";
+    version = "dcaff2906ae6776021405424327f8b2fcd9bd1ad";
     src = fetchgit {
       url = "https://github.com/holochain/holochain";
-      rev = "c1c9b3540a4b6cee6b97d479eda0f048d96b13f2";
+      rev = "dcaff2906ae6776021405424327f8b2fcd9bd1ad";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "sha256-NAdoc/0YkladR1vPe4nb3Q58uBFDluKNkk1IfqpIODQ=";
+      sha256 = "sha256-EKb+n4b5rF3mC7F2EIl8quJY1/KB6CgUezB3A1dM/+0=";
     };
     cargoLock = {
-      lockFile = ./holochain_branch_develop-c1c9b3540a4b6cee6b97d479eda0f048d96b13f2/Cargo.lock;
+      lockFile = ./holochain_branch_develop-dcaff2906ae6776021405424327f8b2fcd9bd1ad/Cargo.lock;
       outputHashes = {
         
       };
@@ -799,6 +799,24 @@
     };
     cargoLock = {
       lockFile = ./lair_revision_v0_0_10-v0.0.10/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
+  };
+  lair_revision_v0_0_11 = {
+    pname = "lair_revision_v0_0_11";
+    version = "v0.0.11";
+    src = fetchgit {
+      url = "https://github.com/holochain/lair";
+      rev = "v0.0.11";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "sha256-ZmRBVu2dlgLT/Kr/4PoVf4rD1jzexXyWU+dggrv7IrQ=";
+    };
+    cargoLock = {
+      lockFile = ./lair_revision_v0_0_11-v0.0.11/Cargo.lock;
       outputHashes = {
         
       };

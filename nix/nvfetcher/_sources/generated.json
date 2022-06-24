@@ -20,9 +20,9 @@
     },
     "holochain_branch_develop": {
         "pinned": true,
-        "cargoLock": "./holochain_branch_develop-c1c9b3540a4b6cee6b97d479eda0f048d96b13f2/Cargo.lock",
+        "cargoLock": "./holochain_branch_develop-dcaff2906ae6776021405424327f8b2fcd9bd1ad/Cargo.lock",
         "name": "holochain_branch_develop",
-        "version": "c1c9b3540a4b6cee6b97d479eda0f048d96b13f2",
+        "version": "dcaff2906ae6776021405424327f8b2fcd9bd1ad",
         "passthru": null,
         "src": {
             "deepClone": false,
@@ -31,8 +31,8 @@
             "fetchSubmodules": false,
             "name": null,
             "type": "git",
-            "sha256": "sha256-NAdoc/0YkladR1vPe4nb3Q58uBFDluKNkk1IfqpIODQ=",
-            "rev": "c1c9b3540a4b6cee6b97d479eda0f048d96b13f2"
+            "sha256": "sha256-EKb+n4b5rF3mC7F2EIl8quJY1/KB6CgUezB3A1dM/+0=",
+            "rev": "dcaff2906ae6776021405424327f8b2fcd9bd1ad"
         },
         "extract": null,
         "rustGitDeps": {}
@@ -356,7 +356,7 @@
         "rustGitDeps": {}
     },
     "nixpkgs": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": null,
         "name": "nixpkgs",
         "version": "3aad50c30c826430b0270fcf8264c8c41b005403",
@@ -428,6 +428,25 @@
         },
         "extract": null,
         "rustGitDeps": null
+    },
+    "lair_revision_v0_0_11": {
+        "pinned": false,
+        "cargoLock": "./lair_revision_v0_0_11-v0.0.11/Cargo.lock",
+        "name": "lair_revision_v0_0_11",
+        "version": "v0.0.11",
+        "passthru": null,
+        "src": {
+            "deepClone": false,
+            "url": "https://github.com/holochain/lair",
+            "leaveDotGit": false,
+            "fetchSubmodules": false,
+            "name": null,
+            "type": "git",
+            "sha256": "sha256-ZmRBVu2dlgLT/Kr/4PoVf4rD1jzexXyWU+dggrv7IrQ=",
+            "rev": "v0.0.11"
+        },
+        "extract": null,
+        "rustGitDeps": {}
     },
     "holochain_revision_holochain-0_0_109": {
         "pinned": true,
@@ -675,7 +694,7 @@
         }
     },
     "rust-overlay": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": null,
         "name": "rust-overlay",
         "version": "2182aac936971fcefbf08a1a0c5ef4c81d5e6bdb",
