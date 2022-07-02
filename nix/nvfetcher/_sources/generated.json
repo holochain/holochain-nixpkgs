@@ -356,7 +356,7 @@
         "rustGitDeps": {}
     },
     "nixpkgs": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": null,
         "name": "nixpkgs",
         "version": "399c514226ac48d7855838d0777f47f2fa59730a",
@@ -694,10 +694,10 @@
         }
     },
     "rust-overlay": {
-        "pinned": true,
+        "pinned": false,
         "cargoLock": null,
         "name": "rust-overlay",
-        "version": "8b4c5bef319198920fd03a916dd5f6600147358b",
+        "version": "be0b8a7cbf95d43f23ef0bfa781d644a43c75396",
         "passthru": null,
         "src": {
             "deepClone": false,
@@ -706,8 +706,8 @@
             "fetchSubmodules": false,
             "name": null,
             "type": "git",
-            "sha256": "sha256-xg7D9aYBdmzH08MH6DlEOJW1UR5DYaQkvvvhnuXEatc=",
-            "rev": "8b4c5bef319198920fd03a916dd5f6600147358b"
+            "sha256": "sha256-UTQm1xRDBxbwIJ5bKIj+PNHsi0YPplvWjJLG5KPt0KU=",
+            "rev": "be0b8a7cbf95d43f23ef0bfa781d644a43c75396"
         },
         "extract": null,
         "rustGitDeps": null
