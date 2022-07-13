@@ -468,7 +468,7 @@
         "rustGitDeps": null
     },
     "lair_revision_v0_0_11": {
-        "pinned": true,
+        "pinned": false,
         "cargoLock": "./lair_revision_v0_0_11-v0.0.11/Cargo.lock",
         "name": "lair_revision_v0_0_11",
         "version": "v0.0.11",
@@ -751,7 +751,7 @@
         }
     },
     "rust-overlay": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": null,
         "name": "rust-overlay",
         "version": "b4fb0f8454fe4e6ebb0a564a28a87cc88cc3cb2c",
@@ -1106,9 +1106,9 @@
     },
     "holochain_branch_main": {
         "pinned": true,
-        "cargoLock": "./holochain_branch_main-0c83eef081272e7a6bc9a4c72d3c848eb7d2f57f/Cargo.lock",
+        "cargoLock": "./holochain_branch_main-88813d781247c9db4d254063a604c22813013af5/Cargo.lock",
         "name": "holochain_branch_main",
-        "version": "0c83eef081272e7a6bc9a4c72d3c848eb7d2f57f",
+        "version": "88813d781247c9db4d254063a604c22813013af5",
         "passthru": null,
         "src": {
             "deepClone": false,
@@ -1117,8 +1117,8 @@
             "fetchSubmodules": false,
             "name": null,
             "type": "git",
-            "sha256": "sha256-kcX71XvSdxXIMm644DGFCZ06fnlQu73Tcp1MHF5GDqk=",
-            "rev": "0c83eef081272e7a6bc9a4c72d3c848eb7d2f57f"
+            "sha256": "sha256-++AK1DGQbS1s/C9SRkV1iZ8kiAdwn8ow+Fn/FWYEfNQ=",
+            "rev": "88813d781247c9db4d254063a604c22813013af5"
         },
         "extract": null,
         "rustGitDeps": {}
