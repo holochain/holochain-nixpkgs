@@ -487,7 +487,7 @@
         "rustGitDeps": null
     },
     "lair_revision_v0_0_11": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": "./lair_revision_v0_0_11-v0.0.11/Cargo.lock",
         "name": "lair_revision_v0_0_11",
         "version": "v0.0.11",
@@ -770,10 +770,10 @@
         }
     },
     "rust-overlay": {
-        "pinned": true,
+        "pinned": false,
         "cargoLock": null,
         "name": "rust-overlay",
-        "version": "eb5da5f2f030d144f405b5195c2b688aafce4c88",
+        "version": "c6264ea118f0f9f206329cf7ca4848f4162090b5",
         "passthru": null,
         "src": {
             "deepClone": false,
@@ -782,8 +782,8 @@
             "fetchSubmodules": false,
             "name": null,
             "type": "git",
-            "sha256": "sha256-BFc5cDha46LWkp3mc7mDdXgA4YuopDkiRoW0j7SgJ7E=",
-            "rev": "eb5da5f2f030d144f405b5195c2b688aafce4c88"
+            "sha256": "sha256-czG3asDAqn2PG8HdjOG+6AEqJazkT/tLuuuScYVYYaA=",
+            "rev": "c6264ea118f0f9f206329cf7ca4848f4162090b5"
         },
         "extract": null,
         "rustGitDeps": null
