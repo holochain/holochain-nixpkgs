@@ -876,6 +876,24 @@
       };
     };
   };
+  holochain_revision_holochain-0_0_151 = {
+    pname = "holochain_revision_holochain-0_0_151";
+    version = "holochain-0.0.151";
+    src = fetchgit {
+      url = "https://github.com/holochain/holochain";
+      rev = "holochain-0.0.151";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "sha256-llnVcv9zVnFI1CgzhYEoGQKWLG2uGHJIAJtMwfHPN4Y=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_151-holochain-0.0.151/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
+  };
   lair_revision_v0_0_10 = {
     pname = "lair_revision_v0_0_10";
     version = "v0.0.10";
