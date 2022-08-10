@@ -4,8 +4,8 @@
 
 {
     url = "https://github.com/holochain/holochain";
-    rev = "30f6accd88faa0c2946d63a77d0ba83f82df3a91";
-    sha256 = "sha256-mvHyZpchHqB+MoDUGtf0PfCf+CD+GA7OxvE/0QAWEk4=";
+    rev = "005c15c06404f41baa77e4533a32cef93a69ed3b";
+    sha256 = "sha256-0bdfFjPvnFLpdtvjgIFmNFcjht2xKg8CmzomGy56oqU=";
     cargoLock = {
         outputHashes = {
         };
