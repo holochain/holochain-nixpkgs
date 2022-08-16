@@ -65,7 +65,7 @@ pub mod update_config {
             .collect()
     }
 
-    const DEFAULT_LAIR_VERSION_REQ: &str = "~0.0";
+    const DEFAULT_LAIR_VERSION_REQ: &str = "~0.2";
     pub fn default_lair_version_req() -> semver::VersionReq {
         semver::VersionReq::from_str(DEFAULT_LAIR_VERSION_REQ).unwrap()
     }
