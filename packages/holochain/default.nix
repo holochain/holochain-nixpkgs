@@ -201,6 +201,7 @@ let
     , cargoLock
     , binsFilter
     , rustVersion
+    , cargoBuildFlags
     }:
     let
       binaryPackagesResult = binaryPackages { inherit url rev sha256 binsFilter rustVersion; };
@@ -209,7 +210,7 @@ let
     lib.attrsets.mapAttrs
       (_: compat:
       builtins.getAttr compat (mkRustMultiDrv {
-        inherit url rev sha256 cargoLock binaryPackagesResult rustVersion;
+        inherit url rev sha256 cargoLock binaryPackagesResult rustVersion cargoBuildFlags;
       })
       )
       binaryPackagesResult.binariesCompatFiltered
@@ -223,13 +224,15 @@ let
     , binsFilter ? null
     , lair
     , rustVersion ? defaultRustVersion
+    , cargoBuildFlags ? []
     }:
     (mkHolochainAllBinaries {
-      inherit url rev sha256 cargoLock binsFilter rustVersion;
+      inherit url rev sha256 cargoLock binsFilter rustVersion cargoBuildFlags;
     })
     // (lib.optionalAttrs (lair != null) {
       lair-keystore = (mkRustMultiDrv {
         inherit (lair) url rev sha256 cargoLock binsFilter;
+        cargoBuildFlags = lair.cargoBuildFlags or [];
         rustVersion = lair.rustVersion or rustVersion;
       }).lair_keystore;
     })
