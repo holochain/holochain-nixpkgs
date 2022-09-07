@@ -1277,9 +1277,9 @@
     },
     "holochain_branch_main": {
         "pinned": true,
-        "cargoLock": "./holochain_branch_main-0cd777c789ee13ca655f9bffbd7fe11b49e47824/Cargo.lock",
+        "cargoLock": "./holochain_branch_main-46d6a5bef9e08518b198cbbacca592ec0d99fc6e/Cargo.lock",
         "name": "holochain_branch_main",
-        "version": "0cd777c789ee13ca655f9bffbd7fe11b49e47824",
+        "version": "46d6a5bef9e08518b198cbbacca592ec0d99fc6e",
         "passthru": null,
         "src": {
             "deepClone": false,
@@ -1288,8 +1288,8 @@
             "fetchSubmodules": false,
             "name": null,
             "type": "git",
-            "sha256": "sha256-ImX88YnubUUzXRLJy7skR7gfNI5VKBGM4fkzK6v57BM=",
-            "rev": "0cd777c789ee13ca655f9bffbd7fe11b49e47824"
+            "sha256": "sha256-mpL1NbLquzwttOFY6xPfg1PPEOcMZcSbamwIXx8iIrY=",
+            "rev": "46d6a5bef9e08518b198cbbacca592ec0d99fc6e"
         },
         "extract": null,
         "rustGitDeps": {}
