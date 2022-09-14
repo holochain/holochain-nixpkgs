@@ -32,17 +32,17 @@
   };
   holochain_branch_main = {
     pname = "holochain_branch_main";
-    version = "cf8adc073596f4f5fc3dcf31c30bc8ade47a6f93";
+    version = "f0264303503df5b872de03d4f991822b34689a9b";
     src = fetchgit {
       url = "https://github.com/holochain/holochain";
-      rev = "cf8adc073596f4f5fc3dcf31c30bc8ade47a6f93";
+      rev = "f0264303503df5b872de03d4f991822b34689a9b";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "sha256-xp1DTVrhGEc1CZr6LvBZEYhoOUbUPpg3/mWOj4DDXjI=";
+      sha256 = "sha256-AMOIolR2SaKcSyanBSUuNNGCSSQsL2llSMOoiXE/3ns=";
     };
     cargoLock = {
-      lockFile = ./holochain_branch_main-cf8adc073596f4f5fc3dcf31c30bc8ade47a6f93/Cargo.lock;
+      lockFile = ./holochain_branch_main-f0264303503df5b872de03d4f991822b34689a9b/Cargo.lock;
       outputHashes = {
         
       };
@@ -1087,6 +1087,24 @@
     };
     cargoLock = {
       lockFile = ./lair_revision_lair_keystore_api-v0_2_0-lair_keystore_api-v0.2.0/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
+  };
+  lair_revision_lair_keystore_api-v0_2_1 = {
+    pname = "lair_revision_lair_keystore_api-v0_2_1";
+    version = "lair_keystore_api-v0.2.1";
+    src = fetchgit {
+      url = "https://github.com/holochain/lair";
+      rev = "lair_keystore_api-v0.2.1";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "sha256-ty5gGI9XIZJwV/kZ9DUpjbR2oneJpJVsmYgHLEnV+18=";
+    };
+    cargoLock = {
+      lockFile = ./lair_revision_lair_keystore_api-v0_2_1-lair_keystore_api-v0.2.1/Cargo.lock;
       outputHashes = {
         
       };
