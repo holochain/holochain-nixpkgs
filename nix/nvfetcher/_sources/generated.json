@@ -1019,7 +1019,7 @@
         }
     },
     "lair_revision_lair_keystore_api-v0_2_0": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": "./lair_revision_lair_keystore_api-v0_2_0-lair_keystore_api-v0.2.0/Cargo.lock",
         "name": "lair_revision_lair_keystore_api-v0_2_0",
         "version": "lair_keystore_api-v0.2.0",
@@ -1193,6 +1193,25 @@
         "extract": null,
         "rustGitDeps": {}
     },
+    "lair_revision_lair_keystore_api-v0_2_1": {
+        "pinned": false,
+        "cargoLock": "./lair_revision_lair_keystore_api-v0_2_1-lair_keystore_api-v0.2.1/Cargo.lock",
+        "name": "lair_revision_lair_keystore_api-v0_2_1",
+        "version": "lair_keystore_api-v0.2.1",
+        "passthru": null,
+        "src": {
+            "deepClone": false,
+            "url": "https://github.com/holochain/lair",
+            "leaveDotGit": false,
+            "fetchSubmodules": false,
+            "name": null,
+            "type": "git",
+            "sha256": "sha256-ty5gGI9XIZJwV/kZ9DUpjbR2oneJpJVsmYgHLEnV+18=",
+            "rev": "lair_keystore_api-v0.2.1"
+        },
+        "extract": null,
+        "rustGitDeps": {}
+    },
     "lair_revision_v0_0_8": {
         "pinned": true,
         "cargoLock": "./lair_revision_v0_0_8-v0.0.8/Cargo.lock",
@@ -1334,9 +1353,9 @@
     },
     "holochain_branch_main": {
         "pinned": true,
-        "cargoLock": "./holochain_branch_main-cf8adc073596f4f5fc3dcf31c30bc8ade47a6f93/Cargo.lock",
+        "cargoLock": "./holochain_branch_main-f0264303503df5b872de03d4f991822b34689a9b/Cargo.lock",
         "name": "holochain_branch_main",
-        "version": "cf8adc073596f4f5fc3dcf31c30bc8ade47a6f93",
+        "version": "f0264303503df5b872de03d4f991822b34689a9b",
         "passthru": null,
         "src": {
             "deepClone": false,
@@ -1345,8 +1364,8 @@
             "fetchSubmodules": false,
             "name": null,
             "type": "git",
-            "sha256": "sha256-xp1DTVrhGEc1CZr6LvBZEYhoOUbUPpg3/mWOj4DDXjI=",
-            "rev": "cf8adc073596f4f5fc3dcf31c30bc8ade47a6f93"
+            "sha256": "sha256-AMOIolR2SaKcSyanBSUuNNGCSSQsL2llSMOoiXE/3ns=",
+            "rev": "f0264303503df5b872de03d4f991822b34689a9b"
         },
         "extract": null,
         "rustGitDeps": {}
