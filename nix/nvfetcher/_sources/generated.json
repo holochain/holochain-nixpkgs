@@ -20,9 +20,9 @@
     },
     "holochain_branch_develop": {
         "pinned": true,
-        "cargoLock": "./holochain_branch_develop-d3a253bc4685f1ea58c2efcd65ed3af8d7f3a40d/Cargo.lock",
+        "cargoLock": "./holochain_branch_develop-a8a2e843c3f2f22151de81f36d2c567797774278/Cargo.lock",
         "name": "holochain_branch_develop",
-        "version": "d3a253bc4685f1ea58c2efcd65ed3af8d7f3a40d",
+        "version": "a8a2e843c3f2f22151de81f36d2c567797774278",
         "passthru": null,
         "src": {
             "deepClone": false,
@@ -31,8 +31,8 @@
             "fetchSubmodules": false,
             "name": null,
             "type": "git",
-            "sha256": "sha256-zyo6arFO6MZIuJUABM/KA1LE8f5eSz/u3UBvDeTloc0=",
-            "rev": "d3a253bc4685f1ea58c2efcd65ed3af8d7f3a40d"
+            "sha256": "sha256-AMOIolR2SaKcSyanBSUuNNGCSSQsL2llSMOoiXE/3ns=",
+            "rev": "a8a2e843c3f2f22151de81f36d2c567797774278"
         },
         "extract": null,
         "rustGitDeps": {}
@@ -1019,7 +1019,7 @@
         }
     },
     "lair_revision_lair_keystore_api-v0_2_0": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": "./lair_revision_lair_keystore_api-v0_2_0-lair_keystore_api-v0.2.0/Cargo.lock",
         "name": "lair_revision_lair_keystore_api-v0_2_0",
         "version": "lair_keystore_api-v0.2.0",
@@ -1189,6 +1189,25 @@
             "type": "git",
             "sha256": "sha256-dfRs02sFp3U2yK+FmyVMRQQqbbtBuAqgQ7FdTmN1K9I=",
             "rev": "holochain-0.0.140"
+        },
+        "extract": null,
+        "rustGitDeps": {}
+    },
+    "lair_revision_lair_keystore_api-v0_2_1": {
+        "pinned": false,
+        "cargoLock": "./lair_revision_lair_keystore_api-v0_2_1-lair_keystore_api-v0.2.1/Cargo.lock",
+        "name": "lair_revision_lair_keystore_api-v0_2_1",
+        "version": "lair_keystore_api-v0.2.1",
+        "passthru": null,
+        "src": {
+            "deepClone": false,
+            "url": "https://github.com/holochain/lair",
+            "leaveDotGit": false,
+            "fetchSubmodules": false,
+            "name": null,
+            "type": "git",
+            "sha256": "sha256-ty5gGI9XIZJwV/kZ9DUpjbR2oneJpJVsmYgHLEnV+18=",
+            "rev": "lair_keystore_api-v0.2.1"
         },
         "extract": null,
         "rustGitDeps": {}
