@@ -44,13 +44,13 @@ jobs:
           - main
           - develop
           - develop_lair_0_1
-          - v0_0_156
           - v0_0_157
           - v0_0_158
           - v0_0_159
           - v0_0_160
           - v0_0_161
           - v0_0_162
+          - v0_0_163
         nurRepo:
           - holochain-nixpkgs
         cachixName:
