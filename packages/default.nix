@@ -73,7 +73,7 @@ let
   });
   holochain = callPackage ./holochain {
     inherit mkRust makeRustPlatform;
-    defaultRustVersion = pkgs.rust.packages.stable.rust.rustc.version;
+    defaultRustVersion = pkgs.rust.packages.holochain.rust.rustc.version;
   };
   crate2nixGenerated = import ../nix/crate2nix/Cargo.nix {
     inherit pkgs;
