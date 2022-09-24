@@ -43,6 +43,7 @@ jobs:
         nixAttribute:
           - main
           - develop
+          - v0_0_156
           - v0_0_157
           - v0_0_158
           - v0_0_159
