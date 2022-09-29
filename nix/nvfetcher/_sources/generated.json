@@ -1096,6 +1096,25 @@
             "cargo-test-macro-0.1.0": "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs="
         }
     },
+    "holochain_revision_holochain-0_0_164": {
+        "pinned": true,
+        "cargoLock": "./holochain_revision_holochain-0_0_164-holochain-0.0.164/Cargo.lock",
+        "name": "holochain_revision_holochain-0_0_164",
+        "version": "holochain-0.0.164",
+        "passthru": null,
+        "src": {
+            "deepClone": false,
+            "url": "https://github.com/holochain/holochain",
+            "leaveDotGit": false,
+            "fetchSubmodules": false,
+            "name": null,
+            "type": "git",
+            "sha256": "sha256-36ZUiW4S2SDZ5psL+Vu9wCd/6CmcByUK7MyaQuHDHK8=",
+            "rev": "holochain-0.0.164"
+        },
+        "extract": null,
+        "rustGitDeps": {}
+    },
     "holochain_revision_holochain-0_0_139": {
         "pinned": true,
         "cargoLock": "./holochain_revision_holochain-0_0_139-holochain-0.0.139/Cargo.lock",
