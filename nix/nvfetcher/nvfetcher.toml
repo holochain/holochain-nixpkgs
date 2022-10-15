@@ -9,7 +9,7 @@ src.git = "https://github.com/kolloch/crate2nix"
 
 [nixpkgs]
 src.git = "https://github.com/nixos/nixpkgs"
-src.branch = "release-21.11"
+src.branch = "release-22.05"
 fetch.tarball = "https://github.com/nixos/nixpkgs/archive/$ver.tar.gz"
 
 [rust-overlay]
