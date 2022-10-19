@@ -470,15 +470,15 @@
         "rustGitDeps": {}
     },
     "nixpkgs": {
-        "pinned": true,
+        "pinned": false,
         "cargoLock": null,
         "name": "nixpkgs",
-        "version": "47edaa313fc3767ce3026037a5b62352f22f3602",
+        "version": "b29e6c7218374775626b8f08479aec6795f16d28",
         "passthru": null,
         "src": {
-            "url": "https://github.com/nixos/nixpkgs/archive/47edaa313fc3767ce3026037a5b62352f22f3602.tar.gz",
+            "url": "https://github.com/nixos/nixpkgs/archive/b29e6c7218374775626b8f08479aec6795f16d28.tar.gz",
             "type": "tarball",
-            "sha256": "020bgh1nac5yi2qqaq8avcyhya78w4hjaz9a5g6rwkmwiqhj9cbv"
+            "sha256": "13ap48k36acfnkw1ddlcqa660mw1753yldcxlppb8766wj0bfqca"
         },
         "extract": null,
         "rustGitDeps": null
@@ -922,7 +922,7 @@
         }
     },
     "rust-overlay": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": null,
         "name": "rust-overlay",
         "version": "8643439d1db65a33ca6813d0aa8956b2be4bd91d",
@@ -1289,7 +1289,7 @@
         "rustGitDeps": {}
     },
     "lair_revision_lair_keystore_api-v0_2_1": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": "./lair_revision_lair_keystore_api-v0_2_1-lair_keystore_api-v0.2.1/Cargo.lock",
         "name": "lair_revision_lair_keystore_api-v0_2_1",
         "version": "lair_keystore_api-v0.2.1",
