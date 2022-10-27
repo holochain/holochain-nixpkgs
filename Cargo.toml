@@ -1,5 +1,6 @@
 [workspace]
 members = [
   "crates/update-holochain-versions",
-  "crates/holochain-nixpkgs-util"
+  "crates/holochain-nixpkgs-util",
+  "crates/crates-index-helper",
 ]
