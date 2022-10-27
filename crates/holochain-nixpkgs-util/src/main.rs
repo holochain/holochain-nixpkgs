@@ -172,19 +172,11 @@ mod update_holochain_tags {
                 });
 
             // evaluate whether or not this tag has been published
-            let crates_index_helper =
-                hc_release_automation::release::crates_index_helper::index(false)?;
-
-            let published = crates_index_helper
-                .lock()
-                .map_err(|_| anyhow::anyhow!("aquiring lock for crates_index_helper"))?
-                .crate_("holochain")
-                .map(|crt| {
-                    crt.versions()
-                        .iter()
-                        .any(|v| tag == format!("{}-{}", v.name(), v.version()))
-                })
-                .unwrap_or_default();
+            let published = crates_index_helper::is_version_published(
+                "holochain",
+                &semver::Version::parse(&tag.replace("holochain-", ""))?,
+                false,
+            )?;
 
             if !published {
                 println!(
