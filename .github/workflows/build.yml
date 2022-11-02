@@ -43,7 +43,6 @@ jobs:
         nixAttribute:
           - main
           - develop
-          - v0_0_162
           - v0_0_163
           - v0_0_164
           - v0_0_165
@@ -51,6 +50,7 @@ jobs:
           - v0_0_167
           - v0_0_168
           - v0_0_169
+          - v0_0_170
         nurRepo:
           - holochain-nixpkgs
         cachixName:
