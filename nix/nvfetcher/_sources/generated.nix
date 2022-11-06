@@ -1436,10 +1436,10 @@
   };
   nixpkgs = {
     pname = "nixpkgs";
-    version = "5d3976195b04db1d33adf7528f7a3c8a66b9f818";
+    version = "5a24e144ff632daae93ca5da9798a9e8baf5f715";
     src = fetchTarball {
-      url = "https://github.com/nixos/nixpkgs/archive/5d3976195b04db1d33adf7528f7a3c8a66b9f818.tar.gz";
-      sha256 = "1yr4528p18lfbrdawd5f0rlniq73hmyccvvz36kknh4g5lfywxsn";
+      url = "https://github.com/nixos/nixpkgs/archive/5a24e144ff632daae93ca5da9798a9e8baf5f715.tar.gz";
+      sha256 = "0jy7h2bbi89a804424bpbn8g0ka70rfxd038fnfzn86x9fyv4lfm";
     };
   };
   nvfetcher = {
