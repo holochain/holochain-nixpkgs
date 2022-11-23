@@ -18,6 +18,25 @@
         "extract": null,
         "rustGitDeps": {}
     },
+    "holochain_revision_holochain-0_0_174": {
+        "pinned": true,
+        "cargoLock": "./holochain_revision_holochain-0_0_174-holochain-0.0.174/Cargo.lock",
+        "name": "holochain_revision_holochain-0_0_174",
+        "version": "holochain-0.0.174",
+        "passthru": null,
+        "src": {
+            "deepClone": false,
+            "url": "https://github.com/holochain/holochain",
+            "leaveDotGit": false,
+            "fetchSubmodules": false,
+            "name": null,
+            "type": "git",
+            "sha256": "sha256-CPF4wJBm9G5R5NH/+c75w3mPFzBlXFFAl/dJxKlfRJM=",
+            "rev": "holochain-0.0.174"
+        },
+        "extract": null,
+        "rustGitDeps": {}
+    },
     "holochain_branch_develop": {
         "pinned": true,
         "cargoLock": "./holochain_branch_develop-83ac87d485d941118d4f7c31cc03da56b4446cc2/Cargo.lock",
