@@ -39,9 +39,9 @@
     },
     "holochain_branch_develop": {
         "pinned": true,
-        "cargoLock": "./holochain_branch_develop-7fe365388aafaa09e9d950a4f0b6fc53e51d19fc/Cargo.lock",
+        "cargoLock": "./holochain_branch_develop-9b38b2d8405696af7b4ca739f28373bb76f7d1ae/Cargo.lock",
         "name": "holochain_branch_develop",
-        "version": "7fe365388aafaa09e9d950a4f0b6fc53e51d19fc",
+        "version": "9b38b2d8405696af7b4ca739f28373bb76f7d1ae",
         "passthru": null,
         "src": {
             "deepClone": false,
@@ -50,8 +50,8 @@
             "fetchSubmodules": false,
             "name": null,
             "type": "git",
-            "sha256": "sha256-7a5wLfjUK4F1891Y6UYuPWJoabeUFl7BHjd6f2IWPCs=",
-            "rev": "7fe365388aafaa09e9d950a4f0b6fc53e51d19fc"
+            "sha256": "sha256-giU461EsKXgXbGchyFpxH3Wu1unzlD7h7+CbEz4vmp8=",
+            "rev": "9b38b2d8405696af7b4ca739f28373bb76f7d1ae"
         },
         "extract": null,
         "rustGitDeps": {}
@@ -489,7 +489,7 @@
         "rustGitDeps": {}
     },
     "lair_revision_lair_keystore_api-v0_2_2": {
-        "pinned": true,
+        "pinned": false,
         "cargoLock": "./lair_revision_lair_keystore_api-v0_2_2-lair_keystore_api-v0.2.2/Cargo.lock",
         "name": "lair_revision_lair_keystore_api-v0_2_2",
         "version": "lair_keystore_api-v0.2.2",
@@ -998,7 +998,7 @@
         }
     },
     "rust-overlay": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": null,
         "name": "rust-overlay",
         "version": "f0bfcaebb0cfcbfa2e76d0925cca845d73b83d38",
