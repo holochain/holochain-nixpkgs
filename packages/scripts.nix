@@ -23,16 +23,7 @@ let
     ${nvfetcher}/bin/nvfetcher build $@
   '';
 
-  updateSingle = { configKey, cliFlags }: ''
-    ${update-holochain-versions}/bin/update-holochain-versions \
-      --nvfetcher-dir=${toplevel}/nix/nvfetcher \
-      --output-file=${toplevel}/packages/holochain/versions/${configKey}.nix \
-      ${builtins.concatStringsSep " " (lib.attrsets.mapAttrsToList
-        (cliKey: cliValue: ''--${cliKey}="${cliValue}"'') cliFlags)
-      }
-  '';
-
-  updateSingle' = configKey: ''
+  updateSingle = configKey: ''
     ${update-holochain-versions}/bin/update-holochain-versions \
       --nvfetcher-dir=${toplevel}/nix/nvfetcher \
       --output-file=${toplevel}/packages/holochain/versions/${configKey}.nix \
@@ -81,7 +72,7 @@ let
 
       ${builtins.concatStringsSep "\n"
         (builtins.map
-          (configKey: (updateSingle' configKey))
+          (configKey: (updateSingle configKey))
           configKeys
         )
       }
