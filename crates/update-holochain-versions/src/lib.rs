@@ -1,5 +1,7 @@
 use anyhow::Context;
 
+pub mod nvfetcher;
+
 /// performs an incomplete conversion from Nix to JSON5 code.
 pub fn nix_to_json_partial<R: std::io::Read>(mut input: R) -> anyhow::Result<serde_json::Value> {
     let mut buf = String::new();
@@ -79,6 +81,9 @@ pub mod update_config {
         #[serde(default = "default_lair_version_req")]
         #[default(_code = "default_lair_version_req()")]
         pub lair_version_req: semver::VersionReq,
+
+        #[structopt(long)]
+        pub scaffolding_version: Option<semver::Version>,
 
         #[structopt(
             long,

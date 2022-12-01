@@ -148,7 +148,7 @@ let
       })) binaryPackagesResult.binariesCompatFiltered;
 
   mkHolochainAllBinariesWithDeps = { url, rev, sha256, cargoLock
-    , binsFilter ? null, lair, rustVersion ? defaultRustVersion
+    , binsFilter ? null, lair, scaffolding, rustVersion ? defaultRustVersion
     , cargoBuildFlags ? [ ] }:
     (mkHolochainAllBinaries {
       inherit url rev sha256 cargoLock binsFilter rustVersion cargoBuildFlags;
@@ -158,7 +158,15 @@ let
         cargoBuildFlags = lair.cargoBuildFlags or [ ];
         rustVersion = lair.rustVersion or rustVersion;
       }).lair_keystore;
-    });
+    })
+    // (lib.optionalAttrs (scaffolding != null) {
+      scaffolding = (mkRustMultiDrv {
+        inherit (scaffolding) url rev sha256 cargoLock binsFilter;
+        cargoBuildFlags = scaffolding.cargoBuildFlags or [];
+        rustVersion = scaffolding.rustVersion or rustVersion;
+      }).hc_scaffold;
+    })
+  ;
 
   holochainVersions = lib.attrsets.mapAttrs' (name': value': {
     name = lib.strings.replaceStrings [ ".nix" ] [ "" ] name';

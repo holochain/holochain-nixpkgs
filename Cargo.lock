@@ -417,6 +417,7 @@ name = "holochain-nixpkgs-util"
 version = "0.0.1"
 dependencies = [
  "anyhow",
+ "cargo-lock",
  "clap 3.2.23",
  "crates-index-helper",
  "indoc",
