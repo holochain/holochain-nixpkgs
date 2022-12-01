@@ -7,12 +7,11 @@ use std::{
 };
 use structopt::StructOpt;
 use tempfile::tempdir;
-use update_holochain_versions::update_config::{GitSrc, UpdateConfigEntry};
+use update_holochain_versions::{
+    nvfetcher::{BinCrateSource, NvfetcherWrapper},
+    update_config::{GitSrc, UpdateConfigEntry},
+};
 use url::Url;
-
-use crate::nvfetcher::NvfetcherWrapper;
-
-mod nvfetcher;
 
 type Fallible<T> = anyhow::Result<T>;
 
@@ -50,27 +49,6 @@ pub fn parse_hashmap(src: &str) -> HashMap<String, String> {
         .collect()
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
-struct BinCrateSource<'a> {
-    name: &'a str,
-    git_repo: &'a str,
-    git_src: GitSrc,
-    bins_filter: Vec<String>,
-}
-
-impl<'a> BinCrateSource<'a> {
-    fn crate_toml_key(&self) -> String {
-        format!(
-            "{}_{}",
-            self.name,
-            (&self.git_src)
-                .to_string()
-                .replace(":", "_")
-                .replace(".", "_")
-        )
-    }
-}
-
 #[derive(serde::Serialize, serde::Deserialize, Debug, PartialEq)]
 #[serde(rename_all = "camelCase")]
 struct HolochainVersion {
@@ -82,6 +60,7 @@ struct HolochainVersion {
     rust_version: Option<semver::Version>,
 
     lair: LairVersion,
+    scaffolding: Option<ToolingVersion>,
 
     // these are only used to inform the template comment
     #[serde(skip_serializing_if = "Vec::is_empty", default = "Default::default")]
@@ -91,6 +70,15 @@ struct HolochainVersion {
 #[derive(serde::Serialize, serde::Deserialize, Debug, PartialEq)]
 #[serde(rename_all = "camelCase")]
 struct LairVersion {
+    url: String,
+    rev: String,
+    sha256: String,
+    cargo_lock: CargoLock,
+}
+
+#[derive(serde::Serialize, serde::Deserialize, Debug, PartialEq)]
+#[serde(rename_all = "camelCase")]
+struct ToolingVersion {
     url: String,
     rev: String,
     sha256: String,
@@ -159,6 +147,30 @@ static HANDLEBARS: Lazy<handlebars::Handlebars> = Lazy::new(|| {
             };
         };
     };
+
+{{#if this.scaffolding}}
+    scaffolding = {
+        url = "{{this.scaffolding.url}}";
+        rev = "{{this.scaffolding.rev}}";
+        sha256 = "{{{this.scaffolding.sha256}}}";
+
+        binsFilter = [
+            "hc-scaffold"
+        ];
+
+        {{#if this.rustVersion}}
+        rustVersion = "{{this.rustVersion}}";
+        {{/if}}
+
+        cargoLock = {
+            outputHashes = {
+                {{#each this.scaffolding.cargoLock.outputHashes}}
+                "{{@key}}" = "{{{@this}}}";
+                {{/each}}
+            };
+        };
+    };
+{{/if}}
 }
 "#,
         )
@@ -204,6 +216,7 @@ fn main() -> Fallible<()> {
         true,
         nvfetcher_holochain,
         opt.update_config_entry.lair_version_req,
+        opt.update_config_entry.scaffolding_version,
     )?;
 
     let rendered_holochain_source = render_holochain_version(&holochain_version)?;
@@ -217,6 +230,7 @@ fn get_holochain_version(
     update: bool,
     nvfetcher_holochain: NvfetcherWrapper,
     lair_version_req: semver::VersionReq,
+    scaffolding_version: Option<semver::Version>,
 ) -> Fallible<HolochainVersion> {
     let holochain_crate_srcinfo = nvfetcher_holochain
         .get_crate_srcinfo(update)
@@ -239,7 +253,7 @@ fn get_holochain_version(
             git_src: GitSrc::Revision(lair_rev),
             bins_filter: Default::default(),
         },
-        Some(nvfetcher_holochain.nvfetcher_dir),
+        Some(nvfetcher_holochain.nvfetcher_dir.clone()),
         None,
     )
     .context("create nvfetchwrapper for lair")?;
@@ -247,6 +261,29 @@ fn get_holochain_version(
     let lair_crate_srcinfo = nvfetcher_lair
         .get_crate_srcinfo(update)
         .context("get lair crate srcinfo")?;
+
+    let scaffolding_crate_srcinfo = match scaffolding_version {
+        None => None,
+        Some(v) => {
+            let nvfetcher_scaffolding = NvfetcherWrapper::new(
+                BinCrateSource {
+                    name: "scaffolding",
+                    git_repo: "https://github.com/holochain/scaffolding",
+                    git_src: GitSrc::Revision(format!("v{}", v)),
+                    bins_filter: Default::default(),
+                },
+                Some(nvfetcher_holochain.nvfetcher_dir),
+                None,
+            )
+            .context("create nvfetchwrapper for scaffolding")?;
+
+            Some(
+                nvfetcher_scaffolding
+                    .get_crate_srcinfo(update)
+                    .context("get scaffolding crate srcinfo")?,
+            )
+        }
+    };
 
     let mut args = std::env::args()
         .into_iter()
@@ -295,6 +332,17 @@ fn get_holochain_version(
                 output_hashes: lair_crate_srcinfo.rust_git_deps,
             },
         },
+
+        scaffolding: scaffolding_crate_srcinfo.map(|info| ToolingVersion {
+            url: info.src.url,
+            rev: info.src.rev,
+            sha256: info.src.sha256,
+            cargo_lock: CargoLock {
+                // TODO: get the store path for the lockfile
+                lock_file: None,
+                output_hashes: info.rust_git_deps,
+            },
+        }),
 
         args,
     })
@@ -424,11 +472,10 @@ mod tests {
     use std::str::FromStr;
 
     use pretty_assertions::assert_eq;
-    use update_holochain_versions::nix_to_json_partial;
+    use update_holochain_versions::{nix_to_json_partial, nvfetcher::NvfetcherWrapper};
 
     use crate::{
-        get_holochain_version, nvfetcher::NvfetcherWrapper, render_holochain_version,
-        BinCrateSource, GitSrc, HolochainVersion,
+        get_holochain_version, render_holochain_version, BinCrateSource, GitSrc, HolochainVersion,
     };
 
     #[test]
@@ -458,6 +505,7 @@ mod tests {
             false,
             nvfetcher_holochain,
             semver::VersionReq::from_str("*").unwrap(),
+            None,
         )
         .unwrap();
 
