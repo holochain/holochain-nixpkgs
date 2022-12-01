@@ -9,30 +9,51 @@ use std::{
 use tempfile::tempdir;
 use toml_edit::Document;
 
-type Fallible<T> = anyhow::Result<T>;
-use crate::BinCrateSource;
+use crate::update_config::GitSrc;
 
-pub(crate) struct NvfetcherWrapper<'a> {
-    pub(crate) src: BinCrateSource<'a>,
-    pub(crate) nvfetcher_dir: PathBuf,
-    pub(crate) crate_toml_key: String,
+type Fallible<T> = anyhow::Result<T>;
+
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct BinCrateSource<'a> {
+    pub name: &'a str,
+    pub git_repo: &'a str,
+    pub git_src: GitSrc,
+    pub bins_filter: Vec<String>,
+}
+
+impl<'a> BinCrateSource<'a> {
+    pub fn crate_toml_key(&self) -> String {
+        format!(
+            "{}_{}",
+            self.name,
+            (&self.git_src)
+                .to_string()
+                .replace(":", "_")
+                .replace(".", "_")
+        )
+    }
+}
+pub struct NvfetcherWrapper<'a> {
+    pub src: BinCrateSource<'a>,
+    pub nvfetcher_dir: PathBuf,
+    pub crate_toml_key: String,
 }
 
 #[derive(Debug, serde::Deserialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
-pub(crate) struct NvfetcherCrateSrcEntry {
-    pub(crate) name: String,
-    pub(crate) version: String,
-    pub(crate) src: FetchgitSrcPartial,
-    pub(crate) cargo_lock: String,
-    pub(crate) rust_git_deps: HashMap<String, String>,
+pub struct NvfetcherCrateSrcEntry {
+    pub name: String,
+    pub version: String,
+    pub src: FetchgitSrcPartial,
+    pub cargo_lock: String,
+    pub rust_git_deps: HashMap<String, String>,
 }
 
 #[derive(Debug, serde::Deserialize, PartialEq)]
-pub(crate) struct FetchgitSrcPartial {
-    pub(crate) url: String,
-    pub(crate) rev: String,
-    pub(crate) sha256: String,
+pub struct FetchgitSrcPartial {
+    pub url: String,
+    pub rev: String,
+    pub sha256: String,
 }
 
 macro_rules! ctx {
@@ -42,7 +63,7 @@ macro_rules! ctx {
 }
 
 impl<'a> NvfetcherWrapper<'a> {
-    pub(crate) fn new(
+    pub fn new(
         src: BinCrateSource<'a>,
         nvfetcher_dir: Option<PathBuf>,
         override_crate_toml_key: Option<String>,
@@ -74,7 +95,7 @@ impl<'a> NvfetcherWrapper<'a> {
     }
 
     /// This will fetch all the sources that are specified via the _nvfetcher.toml_ file and update the generated nix file.
-    pub(crate) fn fetch_and_regen_srcinfo(&self) -> Fallible<()> {
+    pub fn fetch_and_regen_srcinfo(&self) -> Fallible<()> {
         ctx!(std::fs::create_dir_all(&self.nvfetcher_dir))?;
 
         let mut nvfetcher_build_filters = vec![self.crate_toml_key.as_str()];
@@ -193,7 +214,7 @@ impl<'a> NvfetcherWrapper<'a> {
         Ok(())
     }
 
-    pub(crate) fn get_crate_srcinfo(&'a self, update: bool) -> Fallible<NvfetcherCrateSrcEntry> {
+    pub fn get_crate_srcinfo(&'a self, update: bool) -> Fallible<NvfetcherCrateSrcEntry> {
         if update {
             self.fetch_and_regen_srcinfo()?;
         }

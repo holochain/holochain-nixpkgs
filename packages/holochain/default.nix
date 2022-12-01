@@ -223,6 +223,7 @@ let
     , cargoLock
     , binsFilter ? null
     , lair
+    , scaffolding
     , rustVersion ? defaultRustVersion
     , cargoBuildFlags ? []
     }:
@@ -235,6 +236,13 @@ let
         cargoBuildFlags = lair.cargoBuildFlags or [];
         rustVersion = lair.rustVersion or rustVersion;
       }).lair_keystore;
+    })
+    // (lib.optionalAttrs (scaffolding != null) {
+      scaffolding = (mkRustMultiDrv {
+        inherit (scaffolding) url rev sha256 cargoLock binsFilter;
+        cargoBuildFlags = scaffolding.cargoBuildFlags or [];
+        rustVersion = scaffolding.rustVersion or rustVersion;
+      }).hc_scaffold;
     })
   ;
 
