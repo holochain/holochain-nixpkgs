@@ -549,12 +549,12 @@
         "pinned": false,
         "cargoLock": null,
         "name": "nixpkgs",
-        "version": "ef3b3fbc6edee3f94e0f7120975fa463714ed734",
+        "version": "fc3dcc9c900c14df41df74c9756c70e9022a334d",
         "passthru": null,
         "src": {
-            "url": "https://github.com/nixos/nixpkgs/archive/ef3b3fbc6edee3f94e0f7120975fa463714ed734.tar.gz",
+            "url": "https://github.com/nixos/nixpkgs/archive/fc3dcc9c900c14df41df74c9756c70e9022a334d.tar.gz",
             "type": "tarball",
-            "sha256": "1qn1iby4njixq8xbn15f53m40sy4garm0n2fify2w19bf9gkbgfb"
+            "sha256": "0pdii40gfrgv3i568czbgnqj8zk6w811whyrz6w4r3x64yh79n1c"
         },
         "extract": null,
         "rustGitDeps": null
@@ -1017,7 +1017,7 @@
         }
     },
     "rust-overlay": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": null,
         "name": "rust-overlay",
         "version": "fc98242f5f49d39b8fd3a611c146741a35dc012d",
