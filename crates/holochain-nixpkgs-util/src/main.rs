@@ -107,7 +107,8 @@ mod update_holochain_tags {
         #[clap(long)]
         dry_run: bool,
 
-        #[clap(long, default_value_t = 10)]
+        /// number of tags to build on CI runs. must be >= 3
+        #[clap(long, default_value_t = 10, value_parser = clap::value_parser!(u8).range(3..))]
         keep_tags: u8,
 
         #[clap(long, default_value = ".github/workflows/build.yml")]
@@ -350,6 +351,11 @@ mod update_holochain_tags {
         let entries_orig = HashSet::<serde_yaml::Value>::from_iter(nix_attributes.iter().cloned());
 
         println!("nix_attributes: {:?}", nix_attributes);
+
+        /* TODO: implement the following eviction scheme
+           - keep at least one of the most recent 3 major versions
+           - for each major, keep the most recent 5, 3, 2 minor versions respectively
+        */
 
         // keep only a limited number of entries. treat the ones tarting with `v[0-9]` as replacable
         let prefix_re = regex::Regex::new("^v[0-9]+")?;
