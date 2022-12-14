@@ -8,12 +8,16 @@ use std::{
 use structopt::StructOpt;
 use tempfile::tempdir;
 use update_holochain_versions::{
-    nvfetcher::{BinCrateSource, NvfetcherWrapper},
-    update_config::{GitSrc, UpdateConfigEntry},
+    nvfetcher::{BinCrateSource, NvfetcherCrateSrcEntry, NvfetcherWrapper},
+    update_config::{GitSrc, ToolingCompatibilitySpecV1, UpdateConfigEntry},
 };
 use url::Url;
 
 type Fallible<T> = anyhow::Result<T>;
+
+pub const DEFAULT_LAIR_GIT_REPO: &str = "https://github.com/holochain/lair";
+pub const DEFAULT_SCAFFOLDING_GIT_REPO: &str = "https://github.com/holochain/scaffolding";
+pub const DEFAULT_LAUNCHER_GIT_REPO: &str = "https://github.com/holochain/launcher";
 
 /// This utility will write Nix code to `output_file`, that is tailored to be used as a specifier for which holochain repository to use, and which binaries to install from it.
 #[derive(Debug, StructOpt)]
@@ -29,8 +33,16 @@ struct Opt {
     git_repo: String,
 
     /// Specifier for the lair git repository
-    #[structopt(long, default_value = "https://github.com/holochain/lair")]
+    #[structopt(long, default_value = DEFAULT_LAIR_GIT_REPO)]
     lair_git_repo: String,
+
+    /// Specifier for the scaffolding git repository
+    #[structopt(long, default_value = DEFAULT_SCAFFOLDING_GIT_REPO)]
+    scaffolding_git_repo: String,
+
+    /// Specifier for the launcher git repository
+    #[structopt(long, default_value = DEFAULT_LAUNCHER_GIT_REPO)]
+    launcher_git_repo: String,
 
     #[structopt(flatten)]
     update_config_entry: UpdateConfigEntry,
@@ -59,21 +71,13 @@ struct HolochainVersion {
     bins_filter: Vec<String>,
     rust_version: Option<semver::Version>,
 
-    lair: LairVersion,
+    lair: ToolingVersion,
     scaffolding: Option<ToolingVersion>,
+    launcher: Option<ToolingVersion>,
 
     // these are only used to inform the template comment
     #[serde(skip_serializing_if = "Vec::is_empty", default = "Default::default")]
     args: Vec<String>,
-}
-
-#[derive(serde::Serialize, serde::Deserialize, Debug, PartialEq)]
-#[serde(rename_all = "camelCase")]
-struct LairVersion {
-    url: String,
-    rev: String,
-    sha256: String,
-    cargo_lock: CargoLock,
 }
 
 #[derive(serde::Serialize, serde::Deserialize, Debug, PartialEq)]
@@ -148,7 +152,7 @@ static HANDLEBARS: Lazy<handlebars::Handlebars> = Lazy::new(|| {
         };
     };
 
-{{#if this.scaffolding}}
+    {{#if this.scaffolding}}
     scaffolding = {
         url = "{{this.scaffolding.url}}";
         rev = "{{this.scaffolding.rev}}";
@@ -170,7 +174,31 @@ static HANDLEBARS: Lazy<handlebars::Handlebars> = Lazy::new(|| {
             };
         };
     };
-{{/if}}
+    {{/if}}
+
+    {{#if this.launcher}}
+    launcher = {
+        url = "{{this.launcher.url}}";
+        rev = "{{this.launcher.rev}}";
+        sha256 = "{{{this.launcher.sha256}}}";
+
+        binsFilter = [
+            "hc-launch"
+        ];
+
+        {{#if this.rustVersion}}
+        rustVersion = "{{this.rustVersion}}";
+        {{/if}}
+
+        cargoLock = {
+            outputHashes = {
+                {{#each this.launcher.cargoLock.outputHashes}}
+                "{{@key}}" = "{{{@this}}}";
+                {{/each}}
+            };
+        };
+    };
+    {{/if}}
 }
 "#,
         )
@@ -216,7 +244,11 @@ fn main() -> Fallible<()> {
         true,
         nvfetcher_holochain,
         opt.update_config_entry.lair_version_req,
-        opt.update_config_entry.scaffolding_version,
+        opt.lair_git_repo,
+        opt.update_config_entry
+            .scaffolding_holochain_compatibility_version_req,
+        opt.update_config_entry
+            .launcher_holochain_compatibility_version_req,
     )?;
 
     let rendered_holochain_source = render_holochain_version(&holochain_version)?;
@@ -230,24 +262,28 @@ fn get_holochain_version(
     update: bool,
     nvfetcher_holochain: NvfetcherWrapper,
     lair_version_req: semver::VersionReq,
-    scaffolding_version: Option<semver::Version>,
+    lair_git_repo: String,
+    scaffolding_compatibility: ToolingCompatibilitySpecV1,
+    launcher_compatibility: ToolingCompatibilitySpecV1,
 ) -> Fallible<HolochainVersion> {
     let holochain_crate_srcinfo = nvfetcher_holochain
         .get_crate_srcinfo(update)
         .context("get holochain crate srcinfo")?;
+    let holochain_semver = holochain_crate_srcinfo.semver()?;
 
     let (lair_repo, lair_rev) =
         read_lair_revision(&nvfetcher_holochain, &lair_version_req).map(|(repo, rev)| {
             (
                 // TODO: test this case and make the fallback configurable
                 repo.map(|url| url.to_string())
-                    .unwrap_or_else(|| "https://github.com/holochain/lair".to_string()),
+                    .unwrap_or_else(|| lair_git_repo),
                 rev,
             )
         })?;
 
     let nvfetcher_lair = NvfetcherWrapper::new(
         BinCrateSource {
+            // TODO: make this variable
             name: "lair",
             git_repo: &lair_repo,
             git_src: GitSrc::Revision(lair_rev),
@@ -262,27 +298,49 @@ fn get_holochain_version(
         .get_crate_srcinfo(update)
         .context("get lair crate srcinfo")?;
 
-    let scaffolding_crate_srcinfo = match scaffolding_version {
-        None => None,
-        Some(v) => {
-            let nvfetcher_scaffolding = NvfetcherWrapper::new(
-                BinCrateSource {
-                    name: "scaffolding",
-                    git_repo: "https://github.com/holochain/scaffolding",
-                    git_src: GitSrc::Revision(format!("v{}", v)),
-                    bins_filter: Default::default(),
-                },
-                Some(nvfetcher_holochain.nvfetcher_dir),
-                None,
-            )
-            .context("create nvfetchwrapper for scaffolding")?;
+    let scaffolding_crate_srcinfo: Option<NvfetcherCrateSrcEntry> = if scaffolding_compatibility
+        .holochain_version_req
+        .matches(&holochain_semver)
+    {
+        todo!("");
+        // TODO: loop to find the correct scaffolding
+        /*
+        let scaffolding_crate_srcinfo = match scaffolding_version_req {
+            None => None,
+            Some(v) => {
+                // TODO: evaluate scaffolding version
+                let nvfetcher_scaffolding = NvfetcherWrapper::new(
+                    BinCrateSource {
+                        name: "scaffolding",
+                        git_repo: "https://github.com/holochain/scaffolding",
+                        git_src: GitSrc::Revision(format!("v{}", v)),
+                        bins_filter: Default::default(),
+                    },
+                    Some(nvfetcher_holochain.nvfetcher_dir),
+                    None,
+                )
+                .context("create nvfetchwrapper for scaffolding")?;
 
-            Some(
-                nvfetcher_scaffolding
-                    .get_crate_srcinfo(update)
-                    .context("get scaffolding crate srcinfo")?,
-            )
-        }
+                Some(
+                    nvfetcher_scaffolding
+                        .get_crate_srcinfo(update)
+                        .context("get scaffolding crate srcinfo")?,
+                )
+            }
+        };
+         */
+    } else {
+        None
+    };
+
+    let launcher_crate_srcinfo: Option<NvfetcherCrateSrcEntry> = if launcher_compatibility
+        .holochain_version_req
+        .matches(&holochain_semver)
+    {
+        todo!("")
+        // TODO: loop to find the correct launcher
+    } else {
+        None
     };
 
     let mut args = std::env::args()
@@ -322,7 +380,7 @@ fn get_holochain_version(
             output_hashes: holochain_crate_srcinfo.rust_git_deps,
         },
 
-        lair: LairVersion {
+        lair: ToolingVersion {
             url: lair_crate_srcinfo.src.url,
             rev: lair_crate_srcinfo.src.rev,
             sha256: lair_crate_srcinfo.src.sha256,
@@ -334,6 +392,17 @@ fn get_holochain_version(
         },
 
         scaffolding: scaffolding_crate_srcinfo.map(|info| ToolingVersion {
+            url: info.src.url,
+            rev: info.src.rev,
+            sha256: info.src.sha256,
+            cargo_lock: CargoLock {
+                // TODO: get the store path for the lockfile
+                lock_file: None,
+                output_hashes: info.rust_git_deps,
+            },
+        }),
+
+        launcher: launcher_crate_srcinfo.map(|info| ToolingVersion {
             url: info.src.url,
             rev: info.src.rev,
             sha256: info.src.sha256,
@@ -472,10 +541,13 @@ mod tests {
     use std::str::FromStr;
 
     use pretty_assertions::assert_eq;
-    use update_holochain_versions::{nix_to_json_partial, nvfetcher::NvfetcherWrapper};
+    use update_holochain_versions::{
+        nix_to_json_partial, nvfetcher::NvfetcherWrapper, update_config::ToolingCompatibilitySpecV1,
+    };
 
     use crate::{
         get_holochain_version, render_holochain_version, BinCrateSource, GitSrc, HolochainVersion,
+        DEFAULT_LAIR_GIT_REPO, DEFAULT_SCAFFOLDING_GIT_REPO,
     };
 
     #[test]
@@ -505,7 +577,9 @@ mod tests {
             false,
             nvfetcher_holochain,
             semver::VersionReq::from_str("*").unwrap(),
-            None,
+            DEFAULT_LAIR_GIT_REPO.to_string(),
+            update_holochain_versions::update_config::default_scaffolding_holochain_compatibility_version_req(),
+            update_holochain_versions::update_config::default_launcher_holochain_compatibility_version_req(),
         )
         .unwrap();
 

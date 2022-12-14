@@ -148,7 +148,7 @@ let
       })) binaryPackagesResult.binariesCompatFiltered;
 
   mkHolochainAllBinariesWithDeps = { url, rev, sha256, cargoLock
-    , binsFilter ? null, lair, scaffolding, rustVersion ? defaultRustVersion
+    , binsFilter ? null, lair, scaffolding ? null, rustVersion ? defaultRustVersion
     , cargoBuildFlags ? [ ] }:
     (mkHolochainAllBinaries {
       inherit url rev sha256 cargoLock binsFilter rustVersion cargoBuildFlags;
