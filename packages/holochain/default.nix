@@ -223,7 +223,8 @@ let
     , cargoLock
     , binsFilter ? null
     , lair
-    , scaffolding
+    , scaffolding ? null
+    , launcher ? null
     , rustVersion ? defaultRustVersion
     , cargoBuildFlags ? []
     }:
