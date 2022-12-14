@@ -49,6 +49,17 @@ pub struct NvfetcherCrateSrcEntry {
     pub rust_git_deps: HashMap<String, String>,
 }
 
+impl NvfetcherCrateSrcEntry {
+    pub fn semver(&self) -> Fallible<semver::Version> {
+        let split = self
+            .version
+            .split_once("-")
+            .map(|split| split.1)
+            .ok_or_else(|| anyhow::anyhow!("could not parse {}", self.version))?;
+        Ok(semver::Version::parse(&split).context(format!("parsing {} to a SemVer", split))?)
+    }
+}
+
 #[derive(Debug, serde::Deserialize, PartialEq)]
 pub struct FetchgitSrcPartial {
     pub url: String,
