@@ -58,6 +58,7 @@ in {
       rustPlatform.rust.rustc
       rustPlatform.rust.cargo
       pkgs.nixpkgs-fmt
+      pkgs.nixfmt
 
       pkgs.crate2nix
       packages.scripts.nixpkgs-regen-crate-expressions
