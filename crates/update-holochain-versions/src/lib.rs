@@ -95,7 +95,7 @@ pub mod update_config {
         });
     pub fn default_scaffolding_holochain_compatibility_version_req() -> ToolingCompatibilitySpecV1 {
         ToolingCompatibilitySpecV1 {
-            holochain_version_req: semver::VersionReq::from_str(">=0.0.175, <2")
+            holochain_version_req: semver::VersionReq::from_str(">0.1.0-alpha, <2")
                 .expect("default should parse"),
             tool_version_req: semver::VersionReq::STAR,
         }
@@ -109,7 +109,7 @@ pub mod update_config {
 
     pub fn default_launcher_holochain_compatibility_version_req() -> ToolingCompatibilitySpecV1 {
         ToolingCompatibilitySpecV1 {
-            holochain_version_req: semver::VersionReq::from_str(">=0.0.175, <2")
+            holochain_version_req: semver::VersionReq::from_str(">0.1.0-alpha, <2")
                 .expect("default should parse"),
             tool_version_req: semver::VersionReq::STAR,
         }
@@ -130,6 +130,7 @@ pub mod update_config {
         #[structopt(long, default_value = &DEFAULT_SCAFFOLDING_HOLOCHAIN_COMPATIBILITY_VERSION_REQ)]
         #[serde(default = "default_scaffolding_holochain_compatibility_version_req")]
         #[default(_code = "default_scaffolding_holochain_compatibility_version_req()")]
+        #[serde(skip_serializing)]
         pub scaffolding_holochain_compatibility_version_req: ToolingCompatibilitySpecV1,
 
         /// specifies a map that will be used for which holochain versions it will be attempted to find a matching launcher version.
@@ -137,6 +138,7 @@ pub mod update_config {
         #[structopt(long, default_value = &DEFAULT_LAUNCHER_HOLOCHAIN_COMPATIBILITY_VERSION_REQ)]
         #[serde(default = "default_launcher_holochain_compatibility_version_req")]
         #[default(_code = "default_launcher_holochain_compatibility_version_req()")]
+        #[serde(skip_serializing)]
         pub launcher_holochain_compatibility_version_req: ToolingCompatibilitySpecV1,
 
         #[structopt(

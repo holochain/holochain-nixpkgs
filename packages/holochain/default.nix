@@ -1,7 +1,13 @@
 { stdenv, fetchgit, perl, xcbuild, darwin, libsodium, openssl, pkg-config, lib
 , callPackage, libiconv, sqlcipher
 , opensslStatic ? openssl.override (_: { static = true; }), runCommand, jq
-, mkRust, makeRustPlatform, defaultRustVersion }:
+, mkRust, makeRustPlatform, defaultRustVersion
+
+# added for the launcher
+, dbus, glibc, glib, cairo, gobject-introspection, atk, pango, libsoup
+, gdk-pixbuf, gtk3, gtk4, libappindicator, libclang, clang, llvmPackages
+# for javascriptcoregtk-4.0.pc which is in dev
+, webkitgtk }:
 
 # TODO: investigate the use-case around 'binsFilter' with end-users before further optimizations
 
@@ -114,14 +120,35 @@ let
       nativeBuildInputs = [ perl pkg-config ]
         ++ lib.optionals stdenv.isDarwin [ xcbuild ];
 
-      buildInputs = [ openssl opensslStatic sqlcipher ]
-        ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
-          AppKit
-          CoreFoundation
-          CoreServices
-          Security
-          libiconv
-        ]);
+      # added for the launcher
+      LIBCLANG_PATH = "${libclang.lib}/lib";
+
+      buildInputs = [
+        openssl
+        opensslStatic
+        sqlcipher
+
+        # added for the launcher
+        dbus
+        glibc
+        glib
+        cairo
+        gobject-introspection
+        atk
+        pango
+        libsoup
+        gdk-pixbuf
+        gtk3
+        libappindicator
+        clang
+        webkitgtk.dev
+      ] ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
+        AppKit
+        CoreFoundation
+        CoreServices
+        Security
+        libiconv
+      ]);
 
       RUST_SODIUM_LIB_DIR = "${libsodium}/lib";
       RUST_SODIUM_SHARED = "1";
@@ -148,8 +175,8 @@ let
       })) binaryPackagesResult.binariesCompatFiltered;
 
   mkHolochainAllBinariesWithDeps = { url, rev, sha256, cargoLock
-    , binsFilter ? null, lair, scaffolding ? null, rustVersion ? defaultRustVersion
-    , cargoBuildFlags ? [ ] }:
+    , binsFilter ? null, lair, scaffolding ? null, launcher ? null
+    , rustVersion ? defaultRustVersion, cargoBuildFlags ? [ ] }:
     (mkHolochainAllBinaries {
       inherit url rev sha256 cargoLock binsFilter rustVersion cargoBuildFlags;
     }) // (lib.optionalAttrs (lair != null) {
@@ -158,15 +185,19 @@ let
         cargoBuildFlags = lair.cargoBuildFlags or [ ];
         rustVersion = lair.rustVersion or rustVersion;
       }).lair_keystore;
-    })
-    // (lib.optionalAttrs (scaffolding != null) {
+    }) // (lib.optionalAttrs (scaffolding != null) {
       scaffolding = (mkRustMultiDrv {
         inherit (scaffolding) url rev sha256 cargoLock binsFilter;
-        cargoBuildFlags = scaffolding.cargoBuildFlags or [];
+        cargoBuildFlags = scaffolding.cargoBuildFlags or [ ];
         rustVersion = scaffolding.rustVersion or rustVersion;
       }).hc_scaffold;
-    })
-  ;
+    }) // (lib.optionalAttrs (launcher != null) {
+      launcher = (mkRustMultiDrv {
+        inherit (launcher) url rev sha256 cargoLock binsFilter;
+        cargoBuildFlags = launcher.cargoBuildFlags or [ ];
+        rustVersion = launcher.rustVersion or rustVersion;
+      }).hc_launch;
+    });
 
   holochainVersions = lib.attrsets.mapAttrs' (name': value': {
     name = lib.strings.replaceStrings [ ".nix" ] [ "" ] name';

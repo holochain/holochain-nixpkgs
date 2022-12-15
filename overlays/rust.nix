@@ -13,10 +13,10 @@ self: super:
     ];
 
     mkRust = { track, version }:
-      self.rust-bin."${track}"."${version}".default.override {
+      (self.rust-bin."${track}"."${version}".default.override {
         extensions = self.rust.defaultExtensions;
         targets = self.rust.defaultTargets;
-      };
+      }).overrideAttrs (_: { passthru = { inherit (self) llvmPackages; }; });
 
     rustNightly = self.rust.mkRust {
       track = "nightly";
