@@ -20,7 +20,7 @@ self: super:
     };
 
     rustNightly = self.rust.mkRust { track = "nightly"; version = "latest"; };
-    rustStable = self.rust.mkRust { track = "stable"; version = "1.60.0"; };
+    rustStable = self.rust.mkRust { track = "stable"; version = "1.64.0"; };
     rustHolochain = self.rust.mkRust { track = "stable"; version = "1.64.0"; };
 
     packages = super.rust.packages // {
