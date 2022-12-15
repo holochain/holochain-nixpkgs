@@ -394,7 +394,7 @@ async fn get_holochain_version<'a>(
             sha256: info.src.sha256,
             cargo_lock: CargoLock {
                 // TODO: get the store path for the lockfile
-                lock_file: None,
+                lock_file: Some(info.cargo_lock),
                 output_hashes: info.rust_git_deps,
             },
         }),
