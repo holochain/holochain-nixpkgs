@@ -171,13 +171,15 @@ let
       }).lair_keystore;
     }) // (lib.optionalAttrs (scaffolding != null) {
       scaffolding = (mkRustMultiDrv {
-        inherit (scaffolding) url rev sha256 cargoHash cargoLock binsFilter;
+        inherit (scaffolding) url rev sha256 cargoLock binsFilter;
+        cargoHash = scaffolding.cargoHash or null;
         cargoBuildFlags = scaffolding.cargoBuildFlags or [ ];
         rustVersion = scaffolding.rustVersion or rustVersion;
       }).hc_scaffold;
     }) // (lib.optionalAttrs (launcher != null) {
       launcher = (mkRustMultiDrv {
-        inherit (launcher) url rev sha256 cargoHash cargoLock binsFilter;
+        inherit (launcher) url rev sha256 cargoLock binsFilter;
+        cargoHash = launcher.cargoHash or null;
         cargoBuildFlags = launcher.cargoBuildFlags or [ ];
         rustVersion = launcher.rustVersion or rustVersion;
       }).hc_launch;
