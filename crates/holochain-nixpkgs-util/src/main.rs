@@ -39,7 +39,7 @@ mod update_holochain_tags {
     };
 
     use anyhow::bail;
-    use holochain_nixpkgs_util::git_helper;
+    use common::git_helper;
     use itertools::Itertools;
     use linked_hash_map::LinkedHashMap;
     use linked_hash_set::LinkedHashSet;

@@ -1,8 +1,9 @@
+/// Git helper that requires the `git` shell command.
 pub mod git_helper {
+    use anyhow::bail;
     use std::io::BufRead;
 
-    use anyhow::bail;
-
+    /// wrapper around "git ls-remote --tags --refs <glob>" that returns remote tags that pass through given glob filter pattern.
     pub async fn ls_remote_tags(url: &str, glob_filter: &str) -> anyhow::Result<Vec<String>> {
         let mut cmd = std::process::Command::new("git");
         cmd.args(&["ls-remote", "--tags", "--refs", url, glob_filter]);
