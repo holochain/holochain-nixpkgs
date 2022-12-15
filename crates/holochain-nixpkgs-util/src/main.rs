@@ -154,10 +154,7 @@ mod update_holochain_tags {
         )
         .await?
         {
-            let entry_key = format!(
-                "v{}",
-                tag.replace(TAG_GLOB_PREFIX, "").replacen(".", "_", 2)
-            );
+            let entry_key = format!("v{}", tag.replace(TAG_GLOB_PREFIX, "").replace(".", "_"));
 
             let entry = update_config_toml_entries
                 .entry(entry_key.clone())
