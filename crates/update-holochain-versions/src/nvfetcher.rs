@@ -1,10 +1,11 @@
-use anyhow::Context;
+use anyhow::{bail, Context};
 use std::{
     collections::HashMap,
-    fs::OpenOptions,
+    fs::{File, OpenOptions},
     io::{Read, Seek, SeekFrom, Write},
-    path::PathBuf,
-    process::Command,
+    path::{Path, PathBuf},
+    process::{Command, ExitStatus},
+    sync::atomic::{AtomicBool, Ordering},
 };
 use tempfile::tempdir;
 use toml_edit::Document;
@@ -34,6 +35,7 @@ impl<'a> BinCrateSource<'a> {
     }
 }
 pub struct NvfetcherWrapper<'a> {
+    initialized: AtomicBool,
     pub src: BinCrateSource<'a>,
     pub nvfetcher_dir: PathBuf,
     pub crate_toml_key: String,
@@ -98,11 +100,74 @@ impl<'a> NvfetcherWrapper<'a> {
             src.crate_toml_key()
         };
 
+        let initialized = std::env::var_os("NVFETCHER_FORCE_OFFLINE")
+            .map(|s| s.to_str().map(ToString::to_string))
+            .flatten()
+            .map(|s| -> Option<bool> { s.parse().ok() })
+            .flatten()
+            .map(|b| AtomicBool::new(b))
+            .unwrap_or_default();
+
         Ok(Self {
+            initialized,
             src,
             nvfetcher_dir,
             crate_toml_key,
         })
+    }
+
+    /// returns the canonicalized source path.
+    /// it uses the `nix` shell command with a nix function written to a
+    /// tempfile, in order to call the generated.nix that is produced by
+    /// nvfetcher.
+    pub fn get_src_path(&self) -> Fallible<PathBuf> {
+        if !self.initialized.load(Ordering::Relaxed) {
+            self.fetch_and_regen_srcinfo()?;
+        }
+
+        const IMPORT_FN: &str = r#"
+{ generated ? ./_sources/generated.nix }:
+let
+  _nixpkgs = (import ./_sources/generated.nix {
+    fetchgit = null;
+    fetchurl = null;
+    fetchFromGitHub = null;
+  }).nixpkgs.src;
+  nixpkgs = import _nixpkgs { };
+in
+nixpkgs.callPackage generated { }
+"#;
+        let sources_fn_path = self.nvfetcher_dir.join("sources.nix");
+        std::fs::write(&sources_fn_path, IMPORT_FN)?;
+
+        let tmpdir = tempdir()?;
+        let generated_nix_path = self.nvfetcher_dir.join("_sources/generated.nix");
+        let src_path = tmpdir.path().join("src_path");
+
+        let mut src_path_cmd = Command::new("nix");
+
+        src_path_cmd.args(&[
+            "build",
+            "-f",
+            &sources_fn_path.to_string_lossy(),
+            "--argstr",
+            "generated",
+            &generated_nix_path.to_string_lossy(),
+            "-o",
+            &src_path.to_string_lossy(),
+            // the name of the derivation. this is the same as the crate's toml key in the nvfetcher.toml
+            &self.src.crate_toml_key(),
+        ]);
+
+        eprintln!("running {:#?}", &src_path_cmd);
+
+        let child = src_path_cmd.spawn()?;
+        let output = child.wait_with_output()?;
+        if !ExitStatus::success(&output.status) {
+            bail!("{:?}", output);
+        }
+
+        Ok(src_path.canonicalize()?)
     }
 
     /// This will fetch all the sources that are specified via the _nvfetcher.toml_ file and update the generated nix file.
@@ -216,17 +281,19 @@ impl<'a> NvfetcherWrapper<'a> {
 
             ctx!(match cmd.output() {
                 Ok(output) if output.status.success() => Ok(()),
-                Ok(details) => Err(anyhow::anyhow!("{:#?}", details)),
+                Ok(details) => Err(anyhow::anyhow!("non-zero exit code: {:#?}", details)),
                 Err(err) => Err(anyhow::Error::from(err)),
             }
             .context(format!("{:#?} failed", cmd)))?;
         }
 
+        self.initialized.store(true, Ordering::Relaxed);
+
         Ok(())
     }
 
     pub fn get_crate_srcinfo(&'a self, update: bool) -> Fallible<NvfetcherCrateSrcEntry> {
-        if update {
+        if update || !self.initialized.load(Ordering::Relaxed) {
             self.fetch_and_regen_srcinfo()?;
         }
 
@@ -247,6 +314,21 @@ impl<'a> NvfetcherWrapper<'a> {
             "error parsing\n{}",
             serde_json::to_string_pretty(json_crate_only).unwrap_or_default()
         ))
+    }
+
+    /// reads a file relative to the source path that is wrapped.
+    pub fn get_src_file<T>(&self, path: T) -> Fallible<(PathBuf, File)>
+    where
+        T: core::fmt::Debug + AsRef<Path>,
+    {
+        if !self.initialized.load(Ordering::Relaxed) {
+            self.fetch_and_regen_srcinfo()?;
+        };
+
+        let file_path = self.get_src_path()?.join(path);
+        let file = File::open(&file_path)?;
+
+        Ok((file_path, file))
     }
 }
 
