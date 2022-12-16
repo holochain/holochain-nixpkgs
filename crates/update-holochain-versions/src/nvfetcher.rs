@@ -100,16 +100,16 @@ impl<'a> NvfetcherWrapper<'a> {
             src.crate_toml_key()
         };
 
-        let initialized = std::env::var_os("NVFETCHER_FORCE_OFFLINE")
-            .map(|s| s.to_str().map(ToString::to_string))
-            .flatten()
-            .map(|s| -> Option<bool> { s.parse().ok() })
-            .flatten()
-            .map(|b| AtomicBool::new(b))
-            .unwrap_or_default();
+        // let initialized = std::env::var_os("NVFETCHER_FORCE_OFFLINE")
+        //     .map(|s| s.to_str().map(ToString::to_string))
+        //     .flatten()
+        //     .map(|s| -> Option<bool> { s.parse().ok() })
+        //     .flatten()
+        //     .map(|b| AtomicBool::new(b))
+        //     .unwrap_or_default();
 
         Ok(Self {
-            initialized,
+            initialized: Default::default(),
             src,
             nvfetcher_dir,
             crate_toml_key,

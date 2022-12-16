@@ -2,6 +2,7 @@ use anyhow::{bail, Context};
 use cargo::core::dependency::DepKind;
 use common::git_helper;
 use once_cell::sync::Lazy;
+use semver::{Version, VersionReq};
 use std::{
     collections::HashMap,
     path::{Path, PathBuf},
@@ -438,7 +439,17 @@ fn read_lair_revision(
     let package = lockfile
         .packages
         .iter()
-        .find(|p| p.name.as_str() == PACKAGE_OF_INTEREST && version_req.matches(&p.version))
+        .find(|p| {
+            p.name.as_str() == PACKAGE_OF_INTEREST && {
+                let is_semver_match = version_req.matches(&p.version);
+                eprintln!(
+                    "[DEBUG]] {} ~ {} => {}",
+                    version_req, &p.version, is_semver_match
+                );
+
+                is_semver_match
+            }
+        })
         .ok_or_else(|| {
             anyhow::anyhow!(
                 "couldn't find {} matching '{}' in {:?}",
@@ -528,23 +539,36 @@ async fn maybe_get_tooling_crate_srcinfo<'a>(
                         src_path
                     )
                 })?;
-
             let tooling_semver = crt.version();
 
-            if
-            // '*' doesn't match 0.0.Z-<pre> versions, so we'll handle it this way
-            tooling_compatibility.tool_version_req != semver::VersionReq::STAR
-                && !tooling_compatibility
-                    .tool_version_req
-                    .matches(&tooling_semver)
+            fn is_star_or_matches<F>(
+                version: &Version,
+                version_req: &VersionReq,
+                debug: F,
+            ) -> Fallible<bool>
+            where
+                F: FnOnce((&Version, &VersionReq, bool, bool, bool)) -> (),
             {
-                eprintln!(
-                    "DEBUG: skipping {}-{} at tag {} as it's incompatible with {}",
-                    crt.name(),
-                    crt.version(),
-                    tag,
-                    tooling_compatibility.tool_version_req
-                );
+                let is_star = version_req == &semver::VersionReq::STAR;
+                let is_specific_match = version_req.matches(&version);
+                let result = is_star || is_specific_match;
+
+                debug((version, version_req, is_star, is_specific_match, result));
+
+                Ok(result)
+            }
+
+            if !is_star_or_matches(
+                &tooling_semver,
+                &tooling_compatibility.tool_version_req,
+                |(version, version_req, is_star, is_specific_match, result)| {
+                    let name = &format!("{}-{}", crt.name(), crt.version());
+                    eprintln!(
+                        "[DEBUG]: is_star {}, is_specific_match: ({} ~ {}) {}. skip {} at tag {}? {}",
+                        is_star, version_req, version, is_specific_match, name, tag, !result
+                    );
+                },
+            )? {
                 continue;
             }
 
@@ -565,7 +589,11 @@ async fn maybe_get_tooling_crate_srcinfo<'a>(
                 })
                 .ok_or_else(|| anyhow::anyhow!("holochain is not a dependency of {:?}", crt))?;
 
-            if holochain_version_reqs.matches(&holochain_semver) {
+            if is_star_or_matches(
+                holochain_semver,
+                &VersionReq::parse(&holochain_version_reqs.to_string())?,
+                |_| {},
+            )? {
                 nvfetcher_wrapper_final = match nvfetcher_wrapper_final {
                     Some((existing_version, existing_wrapper))
                         if tooling_semver < &existing_version =>
@@ -580,6 +608,12 @@ async fn maybe_get_tooling_crate_srcinfo<'a>(
             .map(|(_, nvfetcher_wrapper)| nvfetcher_wrapper.get_crate_srcinfo(false))
             .transpose()
     } else {
+        eprintln!(
+            "[DEBUG]: tooling_compatibility.holochain_version_req {} doesn't match holochain_semver {}",
+            tooling_compatibility.holochain_version_req.to_string(),
+            holochain_semver.to_string()
+        );
+
         Ok(None)
     }
 }

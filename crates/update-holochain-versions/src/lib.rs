@@ -95,7 +95,7 @@ pub mod update_config {
         });
     pub fn default_scaffolding_holochain_compatibility_version_req() -> ToolingCompatibilitySpecV1 {
         ToolingCompatibilitySpecV1 {
-            holochain_version_req: semver::VersionReq::from_str(">=0.0.175, <2")
+            holochain_version_req: semver::VersionReq::from_str(">0.1.0-alpha, <2")
                 .expect("default should parse"),
             tool_version_req: semver::VersionReq::STAR,
         }
@@ -109,7 +109,7 @@ pub mod update_config {
 
     pub fn default_launcher_holochain_compatibility_version_req() -> ToolingCompatibilitySpecV1 {
         ToolingCompatibilitySpecV1 {
-            holochain_version_req: semver::VersionReq::from_str(">=0.0.175, <2")
+            holochain_version_req: semver::VersionReq::from_str(">0.1.0-alpha, <2")
                 .expect("default should parse"),
             tool_version_req: semver::VersionReq::STAR,
         }
