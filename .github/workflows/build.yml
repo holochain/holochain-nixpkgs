@@ -22,7 +22,7 @@ jobs:
       - name: Install nix
         uses: cachix/install-nix-action@v18
       - name: Setup cachix
-        uses: cachix/cachix-action@v11
+        uses: cachix/cachix-action@v12
         if: "${{ matrix.cachixName != '<YOUR_CACHIX_NAME>' }}"
         with:
           name: "${{ matrix.cachixName }}"
@@ -66,7 +66,7 @@ jobs:
       - name: Show nixpkgs version
         run: "nix-instantiate --eval -E '(import (import ./nix/nvfetcher/sources.nix {}).nixpkgs.src {}).lib.version'"
       - name: Setup cachix
-        uses: cachix/cachix-action@v11
+        uses: cachix/cachix-action@v12
         if: "${{ matrix.cachixName != '<YOUR_CACHIX_NAME>' }}"
         with:
           name: "${{ matrix.cachixName }}"
@@ -97,7 +97,7 @@ jobs:
       - name: Show nixpkgs version
         run: "nix-instantiate --eval -E '(import (import ./nix/nvfetcher/sources.nix {}).nixpkgs.src {}).lib.version'"
       - name: Setup cachix
-        uses: cachix/cachix-action@v11
+        uses: cachix/cachix-action@v12
         if: "${{ matrix.cachixName != '<YOUR_CACHIX_NAME>' }}"
         with:
           name: "${{ matrix.cachixName }}"
