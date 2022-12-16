@@ -109,7 +109,7 @@ impl<'a> NvfetcherWrapper<'a> {
             .unwrap_or_default();
 
         Ok(Self {
-            initialized,
+            initialized: Default::default(),
             src,
             nvfetcher_dir,
             crate_toml_key,
