@@ -1,7 +1,8 @@
 { stdenv, fetchgit, perl, xcbuild, darwin, libsodium, openssl, pkg-config, lib
 , callPackage, libiconv, sqlcipher
 , opensslStatic ? openssl.override (_: { static = true; }), runCommand, jq
-, mkRust, makeRustPlatform, defaultRustVersion }:
+, mkRust, makeRustPlatform, defaultRustVersion
+, llvmPackages_14 }:
 
 # TODO: investigate the use-case around 'binsFilter' with end-users before further optimizations
 
@@ -84,6 +85,8 @@ let
 
     in rustPlatform.buildRustPackage {
       inherit src name;
+
+      stdenv = llvmPackages_14;
 
       cargoDepsName = "deps";
 
