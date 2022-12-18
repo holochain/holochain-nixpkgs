@@ -17,6 +17,7 @@
     holochainPackages = self.callPackage ../packages {
       inherit (self) makeRustPlatform;
       mkRust = self.rust.mkRust;
+      stdenv = super.llvmPackages_14.stdenv;
     };
   };
 }

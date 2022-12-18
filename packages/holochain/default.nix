@@ -86,8 +86,6 @@ let
     in rustPlatform.buildRustPackage {
       inherit src name;
 
-      stdenv = llvmPackages_14;
-
       cargoDepsName = "deps";
 
       cargoLock = cargoLock // { lockFile = "${src}/Cargo.lock"; };
