@@ -7,24 +7,18 @@
 #     nix-build -A mypackage
 
 { sources ? import ./nix/nvfetcher/sources.nix { }
-, system ? builtins.currentSystem
-, crossSystem ? null
+, system ? builtins.currentSystem, crossSystem ? null
 , overlays ? builtins.attrValues (import ./overlays)
 
-, pkgs ? import sources.nixpkgs.src {
-    inherit system crossSystem overlays;
-  }
+, pkgs ? import sources.nixpkgs.src { inherit system crossSystem overlays; }
 
 , rustPlatformSelector ? "stable"
 , rustPlatform ? pkgs.rust.packages."${rustPlatformSelector}".rustPlatform
 
-, flavors ? [ "dev" ]
-}:
+, flavors ? [ "dev" ] }:
 
-let
-  packages = pkgs.holochainPackages;
-in
-{
+let packages = pkgs.holochainPackages;
+in {
   # The `lib`, `modules`, and `overlay` names are special
   lib = import ./lib { inherit pkgs; }; # functions
   modules = import ./modules; # NixOS modules
@@ -46,9 +40,8 @@ in
     NIX_PATH = "nixpkgs=${sources.nixpkgs.src}";
     NIX_CONFIG = "extra-experimental-features = nix-command";
 
-    inputsFrom = pkgs.lib.optionals (builtins.elem "dev" flavors) [
-      (packages.rustInputAttrs { attrs = { }; })
-    ];
+    inputsFrom = pkgs.lib.optionals (builtins.elem "dev" flavors)
+      [ (packages.rustInputAttrs { attrs = { }; }) ];
 
     packages = [
       # for nix-shell --pure
@@ -76,7 +69,6 @@ in
 
       packages.scripts.hnixpkgs-update-single
       packages.scripts.hnixpkgs-update-all
-    ]
-    ;
+    ];
   };
 }

@@ -1,29 +1,9 @@
-{ pkgs
-, lib
-, stdenv
-, callPackage
-, symlinkJoin
-, nixUnstable
-, makeWrapper
-, rsync
+{ pkgs, lib, stdenv, callPackage, symlinkJoin, nixUnstable, makeWrapper, rsync
 
-, nvfetcher
-, mkRust
-, makeRustPlatform
-, defaultCrateOverrides
+, nvfetcher, mkRust, makeRustPlatform, defaultCrateOverrides
 
-, perl
-, pkg-config
-, openssl
-, zlib
-, libgit2
-, libssh2
-, libsodium
-, darwin
-, xcbuild
-, libiconv
-, curl
-}:
+, perl, pkg-config, openssl, zlib, libgit2, libssh2, libsodium, darwin, xcbuild
+, libiconv, curl }:
 
 let
   rustInputAttrs = attrs: {
@@ -34,43 +14,20 @@ let
     OPENSSL_LIB_DIR = "${opensslStatic.out}/lib";
     OPENSSL_INCLUDE_DIR = "${opensslStatic.dev}/include";
 
-    nativeBuildInputs = (attrs.nativeBuildInputs or [ ])
-      ++ [
-      perl
-      pkg-config
-    ]
-      ++ (lib.optionals stdenv.isDarwin [
-      xcbuild
-    ])
-    ;
+    nativeBuildInputs = (attrs.nativeBuildInputs or [ ]) ++ [ perl pkg-config ]
+      ++ (lib.optionals stdenv.isDarwin [ xcbuild ]);
 
     buildInputs = (attrs.buildInputs or [ ])
-      ++ [
-      openssl
-      zlib
-      opensslStatic
-      libgit2
-      libssh2
-    ]
-      ++ (lib.optionals stdenv.isDarwin
-      (
-        (with darwin.apple_sdk.frameworks; [
-          AppKit
-          CoreFoundation
-          CoreServices
-          Security
-          libiconv
-        ])
-        ++ [
-          curl.dev
-        ]
-      )
-    )
-    ;
+      ++ [ openssl zlib opensslStatic libgit2 libssh2 ]
+      ++ (lib.optionals stdenv.isDarwin ((with darwin.apple_sdk.frameworks; [
+        AppKit
+        CoreFoundation
+        CoreServices
+        Security
+        libiconv
+      ]) ++ [ curl.dev ]));
   };
-  opensslStatic = openssl.override (_: {
-    static = true;
-  });
+  opensslStatic = openssl.override (_: { static = true; });
   holochain = callPackage ./holochain {
     inherit mkRust makeRustPlatform;
     defaultRustVersion = pkgs.rust.packages.holochain.rust.rustc.version;
@@ -84,21 +41,22 @@ let
       libssh2-sys = rustInputAttrs;
     };
   };
-  update-holochain-versions-raw = crate2nixGenerated.workspaceMembers.update-holochain-versions.build.override {
-    # TODO: tests run nix which currently fails within a nix build.
-    runTests = false;
-    testPreRun = ''
-      mv test test.bkp
-      mkdir test
-      ${rsync}/bin/rsync -rLv test.bkp/ test/
-      find test/
-      chmod -R +w test
+  update-holochain-versions-raw =
+    crate2nixGenerated.workspaceMembers.update-holochain-versions.build.override {
+      # TODO: tests run nix which currently fails within a nix build.
+      runTests = false;
+      testPreRun = ''
+        mv test test.bkp
+        mkdir test
+        ${rsync}/bin/rsync -rLv test.bkp/ test/
+        find test/
+        chmod -R +w test
 
-      # mkdir nix-store
-      export NIX_PATH=nixpkgs=${pkgs.path}
-    '';
-    testInputs = [ nixUnstable ];
-  };
+        # mkdir nix-store
+        export NIX_PATH=nixpkgs=${pkgs.path}
+      '';
+      testInputs = [ nixUnstable ];
+    };
   update-holochain-versions = symlinkJoin {
     inherit (update-holochain-versions-raw) name;
     paths = [ update-holochain-versions-raw ];
@@ -108,36 +66,26 @@ let
             --suffix PATH ":" ${lib.makeBinPath [ nixUnstable nvfetcher ]}
     '';
   };
-  holochain-nixpkgs-util-raw = crate2nixGenerated.workspaceMembers.holochain-nixpkgs-util.build;
+  holochain-nixpkgs-util-raw =
+    crate2nixGenerated.workspaceMembers.holochain-nixpkgs-util.build;
   holochain-nixpkgs-util = symlinkJoin {
     name = holochain-nixpkgs-util-raw.name;
     paths = [ holochain-nixpkgs-util-raw ];
     buildInputs = [ makeWrapper ];
     postBuild = ''
       wrapProgram $out/bin/holochain-nixpkgs-util \
-            --suffix PATH ":" ${lib.makeBinPath [ scripts.hnixpkgs-update-single ]}
+            --suffix PATH ":" ${
+              lib.makeBinPath [ scripts.hnixpkgs-update-single ]
+            }
     '';
   };
 
-  scripts = callPackage ./scripts.nix {
-    inherit
-      holochain
-      update-holochain-versions
-      ;
-  };
-in
-{
-  inherit
-    scripts
-    holochain
-    update-holochain-versions
-    holochain-nixpkgs-util
-    rustInputAttrs
-    ;
+  scripts =
+    callPackage ./scripts.nix { inherit holochain update-holochain-versions; };
+in {
+  inherit scripts holochain update-holochain-versions holochain-nixpkgs-util
+    rustInputAttrs;
 
-
-  inherit
-    nvfetcher
-    ;
+  inherit nvfetcher;
 
 }
