@@ -14,11 +14,12 @@
   rust = import ./rust.nix;
 
   packages = self: super: {
+    darwin = super.darwin // { apple_sdk = super.darwin.apple_sdk_11_0; };
+
     holochainPackages = self.callPackage ../packages {
+      stdenv = self.clang13Stdenv;
       inherit (self) makeRustPlatform;
       mkRust = self.rust.mkRust;
-      stdenv = super.llvmPackages_14.stdenv;
-      darwin = super.darwin // { apple_sdk = super.darwin.apple_sdk_11_0; };
     };
   };
 }
