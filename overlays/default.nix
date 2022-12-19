@@ -18,6 +18,7 @@
       inherit (self) makeRustPlatform;
       mkRust = self.rust.mkRust;
       stdenv = super.llvmPackages_14.stdenv;
+      darwin = super.darwin // { apple_sdk = super.darwin.apple_sdk_11_0; };
     };
   };
 }
