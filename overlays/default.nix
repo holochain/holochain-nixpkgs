@@ -16,6 +16,8 @@
   packages = self: super: {
     darwin = super.darwin // { apple_sdk = super.darwin.apple_sdk_11_0; };
 
+    clang = super.clang_14;
+
     holochainPackages = self.callPackage ../packages {
       stdenv = self.clang13Stdenv;
       inherit (self) makeRustPlatform;
