@@ -2,7 +2,9 @@
 , callPackage, libiconv, sqlcipher
 , opensslStatic ? openssl.override (_: { static = true; }), runCommand, jq
 , mkRust, makeRustPlatform, defaultRustVersion
-, clang13Stdenv }:
+, clang13Stdenv
+, llvmPackages_13
+}:
 
 # TODO: investigate the use-case around 'binsFilter' with end-users before further optimizations
 
@@ -83,12 +85,10 @@ let
 
       inherit (rustHelper rustVersion) rust rustPlatform;
 
-    in rustPlatform.buildRustPackage {
+    in (rustPlatform.buildRustPackage.override({ stdenv = clang13Stdenv; })) {
       inherit src name;
 
       cargoDepsName = "deps";
-
-      stdenv = clang13Stdenv;
 
       cargoLock = cargoLock // { lockFile = "${src}/Cargo.lock"; };
 
@@ -114,11 +114,16 @@ let
         (orig: compat: "mv \${tmpDir}/${orig} \${${compat}}/bin/")
         binariesCompatFiltered);
 
-      nativeBuildInputs = [ perl pkg-config ]
+      nativeBuildInputs = [ perl pkg-config
+        llvmPackages_13.libclang.lib
+        llvmPackages_13.clang
+      ]
         ++ lib.optionals stdenv.isDarwin [ xcbuild ];
 
+      LIBCLANG_PATH = "${llvmPackages_13.libclang.lib}/lib";
+
       buildInputs = [ openssl opensslStatic sqlcipher ]
-        ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
+        ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk_11_0.frameworks; [
           AppKit
           CoreFoundation
           CoreServices

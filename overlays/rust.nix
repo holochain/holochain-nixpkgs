@@ -17,6 +17,7 @@ self: super:
         extensions = self.rust.defaultExtensions;
         targets = self.rust.defaultTargets;
       }).overrideAttrs (_prevAttrs: {
+        stdenv = self.stdenv13Stdenv;
         propagatedBuildInputs = [];
         depsHostHostPropagated = [];
         depsTargetTargetPropagated = [];
@@ -49,6 +50,7 @@ self: super:
         rustPlatform = self.makeRustPlatform {
           rustc = self.rust.rustStable;
           cargo = self.rust.rustStable;
+          stdenv = self.stdenv13Stdenv;
         };
 
         inherit (self.rust.packages.stable.rustPlatform) rust;
@@ -58,6 +60,7 @@ self: super:
         rustPlatform = self.makeRustPlatform {
           rustc = self.rust.rustHolochain;
           cargo = self.rust.rustHolochain;
+          stdenv = self.stdenv13Stdenv;
         };
 
         inherit (self.rust.packages.holochain.rustPlatform) rust;

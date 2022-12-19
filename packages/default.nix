@@ -31,6 +31,7 @@ let
   holochain = callPackage ./holochain {
     inherit mkRust makeRustPlatform;
     defaultRustVersion = pkgs.rust.packages.holochain.rust.rustc.version;
+    stdenv = pkgs.clang13Stdenv;
   };
   crate2nixGenerated = import ../nix/crate2nix/Cargo.nix {
     inherit pkgs;
