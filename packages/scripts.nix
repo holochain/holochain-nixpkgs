@@ -25,6 +25,8 @@ let
               cliValueType = builtins.typeOf cliValue;
               cliValue' = if cliValueType == "list" then
                 builtins.concatStringsSep "," cliValue
+              else if cliValueType == "set" then
+                "" " + (builtins.toJSON cliValue) + " ""
               else
                 builtins.toString cliValue;
             in ''--${cliKey}="${cliValue'}"'')
