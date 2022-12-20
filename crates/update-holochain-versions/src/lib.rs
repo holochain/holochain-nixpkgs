@@ -130,6 +130,7 @@ pub mod update_config {
         #[structopt(long, default_value = &DEFAULT_SCAFFOLDING_HOLOCHAIN_COMPATIBILITY_VERSION_REQ)]
         #[serde(default = "default_scaffolding_holochain_compatibility_version_req")]
         #[default(_code = "default_scaffolding_holochain_compatibility_version_req()")]
+        #[serde(skip_serializing)]
         pub scaffolding_holochain_compatibility_version_req: ToolingCompatibilitySpecV1,
 
         /// specifies a map that will be used for which holochain versions it will be attempted to find a matching launcher version.
@@ -137,6 +138,7 @@ pub mod update_config {
         #[structopt(long, default_value = &DEFAULT_LAUNCHER_HOLOCHAIN_COMPATIBILITY_VERSION_REQ)]
         #[serde(default = "default_launcher_holochain_compatibility_version_req")]
         #[default(_code = "default_launcher_holochain_compatibility_version_req()")]
+        #[serde(skip_serializing)]
         pub launcher_holochain_compatibility_version_req: ToolingCompatibilitySpecV1,
 
         #[structopt(
