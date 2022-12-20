@@ -1,396 +1,559 @@
 
 [main]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "branch:main"
 
 [develop]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "branch:develop"
 
 [v0_0_101]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 broken = true
 git-src = "revision:holochain-0.0.101"
 
 [v0_0_102]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 broken = true
 git-src = "revision:holochain-0.0.102"
 
 [v0_0_103]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.103"
 
 [v0_0_104]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.104"
 
 [v0_0_105]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 broken = true
 git-src = "revision:holochain-0.0.105"
 
 [v0_0_106]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.106"
 
 [v0_0_107]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.107"
 
 [v0_0_108]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.108"
 
 [v0_0_109]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.109"
 
 [v0_0_111]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.111"
 
 [v0_0_112]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.112"
 
 [v0_0_113]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.113"
 
 [v0_0_114]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.114"
 
 [v0_0_110]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 rust-version = "1.55.0"
 git-src = "revision:holochain-0.0.110"
 
 [v0_0_115]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.115"
 
 [v0_0_116]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.116"
 
 [v0_0_117]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.117"
 
 [v0_0_118]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.118"
 
 [v0_0_119]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.119"
 
 [v0_0_120]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.120"
 
 [v0_0_121]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.121"
 
 [v0_0_122]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.122"
 
 [v0_0_123]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.123"
 
 [v0_0_124]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.124"
 
 [v0_0_125]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.125"
 
 [v0_0_126]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.126"
 
 [v0_0_127]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.127"
 
 [v0_0_128]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.128"
 
 [v0_0_129]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.129"
 
 [v0_0_130]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.130"
 
 [v0_0_131]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.131"
 
 [v0_0_132]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.132"
 
 [v0_0_133]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 broken = true
 git-src = "revision:holochain-0.0.133"
 
 [v0_0_134]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 broken = true
 git-src = "revision:holochain-0.0.134"
 
 [v0_0_135]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.135"
 
 [v0_0_136]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.136"
 
 [v0_0_137]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.137"
 
 [v0_0_138]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.138"
 
 [v0_0_139]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.139"
 
 [v0_0_140]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.140"
 
 [v0_0_141]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.141"
 
 [v0_0_142]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.142"
 
 [v0_0_143]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.143"
 
 [v0_0_144]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.144"
 
 [v0_0_145]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.145"
 
 [v0_0_146]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.146"
 
 [v0_0_147]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.147"
 
 [v0_0_148]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.148"
 
 [v0_0_149]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.149"
 
 [v0_0_150]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.150"
 
 [v0_0_151]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.151"
 
 [v0_0_152]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.152"
 
 [v0_0_153]
 lair-version-req = "~0.0"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.153"
 
 [v0_0_154]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.154"
 
 [v0_0_155]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.155"
 
 [v0_0_156]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.156"
 
 [v0_0_157]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.157"
 
 [v0_0_158]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.158"
 
 [v0_0_159]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.159"
 
 [v0_0_160]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.160"
 
 [v0_0_161]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.161"
 
 [v0_0_162]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.162"
 
 [v0_0_163]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.163"
 
 [v0_0_164]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.164"
 
 [v0_0_165]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.165"
 
 [v0_0_166]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.166"
 
 [v0_0_167]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.167"
 
 [v0_0_168]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.168"
 
 [v0_0_169]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.169"
 
 [v0_0_170]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.170"
 
 [v0_0_171]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.171"
 
 [v0_0_172]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.172"
 
 [v0_0_173]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.173"
 
 [v0_0_174]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.174"
 
 [v0_0_175]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.0.175"
 
-["v0_1_0-beta-rc_0"]
+[v0_1_0-beta-rc_0]
 lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
 bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
 git-src = "revision:holochain-0.1.0-beta-rc.0"
+
+[v0_1_0-beta-rc_1]
+lair-version-req = "~0.2"
+scaffolding-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+launcher-holochain-compatibility-version-req = { holochain_version_req = ">0.1.0-alpha, <2", tool_version_req = "*" }
+bins-filter = ["holochain", "hc", "kitsune-p2p-proxy", "kitsune-p2p-tx2-proxy"]
+git-src = "revision:holochain-0.1.0-beta-rc.1"

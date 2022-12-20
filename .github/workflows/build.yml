@@ -32,7 +32,7 @@ jobs:
         if: "${{ matrix.platform == 'macos-latest' }}"
         run: "echo NIX_PATH=nixpkgs=$(nix eval --impure --raw --expr '(import ./nix/nvfetcher/sources.nix {}).nixpkgs.src') >> $GITHUB_ENV"
       - name: Run cargo tests
-        run: 'nix-shell --pure --run "cargo test"'
+        run: "nix-shell --pure --run \"cargo test\""
   holochain-binaries:
     strategy:
       fail-fast: false
@@ -50,6 +50,7 @@ jobs:
           - v0_0_174
           - v0_0_175
           - v0_1_0-beta-rc_0
+          - v0_1_0-beta-rc_1
         nurRepo:
           - holochain-nixpkgs
         cachixName:
@@ -75,7 +76,7 @@ jobs:
         continue-on-error: "${{ matrix.platform == 'macos-latest' }}"
         env:
           nix_attribute: "${{ matrix.nixAttribute }}"
-        run: 'nix build -f . "packages.holochain.holochainAllBinariesWithDeps.${nix_attribute}" --extra-experimental-features nix-command'
+        run: "nix build -f . \"packages.holochain.holochainAllBinariesWithDeps.${nix_attribute}\" --extra-experimental-features nix-command"
   packages:
     strategy:
       fail-fast: false
@@ -107,7 +108,7 @@ jobs:
         continue-on-error: "${{ matrix.platform == 'macos-latest' }}"
         env:
           nix_attribute: "${{ matrix.nixAttribute }}"
-        run: 'nix build -f . "packages.${nix_attribute}" --extra-experimental-features nix-command'
+        run: "nix build -f . \"packages.${nix_attribute}\" --extra-experimental-features nix-command"
   all-jobs-succeed:
     runs-on: ubuntu-latest
     if: always()
