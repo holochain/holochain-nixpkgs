@@ -349,25 +349,6 @@
             "cargo-test-macro-0.1.0": "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs="
         }
     },
-    "holochain_revision_holochain-0_1_0-beta-rc_1": {
-        "pinned": true,
-        "cargoLock": "./holochain_revision_holochain-0_1_0-beta-rc_1-holochain-0.1.0-beta-rc.1/Cargo.lock",
-        "name": "holochain_revision_holochain-0_1_0-beta-rc_1",
-        "version": "holochain-0.1.0-beta-rc.1",
-        "passthru": null,
-        "src": {
-            "deepClone": false,
-            "url": "https://github.com/holochain/holochain",
-            "leaveDotGit": false,
-            "fetchSubmodules": false,
-            "name": null,
-            "type": "git",
-            "sha256": "sha256-H6kJeYP2DcMQcb5tBQpt/XtCqfr+P9XLgNMWzG1Nwaw=",
-            "rev": "holochain-0.1.0-beta-rc.1"
-        },
-        "extract": null,
-        "rustGitDeps": {}
-    },
     "holochain_revision_holochain-0_0_131": {
         "pinned": true,
         "cargoLock": "./holochain_revision_holochain-0_0_131-holochain-0.0.131/Cargo.lock",
@@ -568,12 +549,12 @@
         "pinned": false,
         "cargoLock": null,
         "name": "nixpkgs",
-        "version": "09e8ac77744dd036e58ab2284e6f5c03a6d6ed41",
+        "version": "0e8bf3a1cdabe9f32e53c7ac20faa8e81553a1f4",
         "passthru": null,
         "src": {
-            "url": "https://github.com/nixos/nixpkgs/archive/09e8ac77744dd036e58ab2284e6f5c03a6d6ed41.tar.gz",
+            "url": "https://github.com/nixos/nixpkgs/archive/0e8bf3a1cdabe9f32e53c7ac20faa8e81553a1f4.tar.gz",
             "type": "tarball",
-            "sha256": "06fvx6vxc2rlykhsrny63xaam8y8i0wcr20vfncy72vzwck1pjsv"
+            "sha256": "1m03ih02qra7s0wm89s6psv831b1wk0v2nm4s5y3cbb01kjw83q6"
         },
         "extract": null,
         "rustGitDeps": null
@@ -875,7 +856,7 @@
         "rustGitDeps": {}
     },
     "lair_revision_lair_keystore_api-v0_2_3": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": "./lair_revision_lair_keystore_api-v0_2_3-lair_keystore_api-v0.2.3/Cargo.lock",
         "name": "lair_revision_lair_keystore_api-v0_2_3",
         "version": "lair_keystore_api-v0.2.3",
@@ -1074,7 +1055,7 @@
         }
     },
     "rust-overlay": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": null,
         "name": "rust-overlay",
         "version": "fbaaff24f375ac25ec64268b0a0d63f91e474b7d",
