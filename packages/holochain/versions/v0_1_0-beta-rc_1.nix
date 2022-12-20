@@ -34,4 +34,22 @@
             };
         };
     };
+
+
+    launcher = {
+        url = "https://github.com/holochain/launcher";
+        rev = "holochain_cli_launch-0.0.3-alpha.1";
+        sha256 = "sha256-LHINn5TJJ2ttHGUp2PjSA/qqR0rV8cBf5zYiK8RcIdA=";
+
+        binsFilter = [
+            "hc-launch"
+        ];
+
+
+        cargoLock = {
+            outputHashes = {
+                "holochain_client-0.2.0" = "sha256-zJGc2H+dGFz5/yd9ryG6q94qBhsLdrJBjuBahcRWtGE=";
+            };
+        };
+    };
 }
