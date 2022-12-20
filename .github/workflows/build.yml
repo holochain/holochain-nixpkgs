@@ -43,13 +43,7 @@ jobs:
         nixAttribute:
           - main
           - develop
-          - v0_0_170
-          - v0_0_171
-          - v0_0_172
-          - v0_0_173
-          - v0_0_174
           - v0_0_175
-          - v0_1_0-beta-rc_0
           - v0_1_0-beta-rc_1
         nurRepo:
           - holochain-nixpkgs
