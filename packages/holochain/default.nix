@@ -74,7 +74,7 @@ let
   mkRustMultiDrv = { rev, url, sha256, cargoLock, cargoBuildFlags ? [ ]
     , binsFilter ? null, binaryPackagesResult ?
       binaryPackages { inherit url rev sha256 binsFilter rustVersion; }
-    , rustVersion }:
+    , rustVersion, isLauncher ? false, isScaffolding ? false }:
     let
       binariesCompatFiltered = binaryPackagesResult.binariesCompatFiltered;
       name = builtins.concatStringsSep "_"
@@ -127,28 +127,29 @@ let
         openssl
         opensslStatic
         sqlcipher
+      ]
 
-        # added for the launcher
-        dbus
-        glibc
-        glib
-        cairo
-        gobject-introspection
-        atk
-        pango
-        libsoup
-        gdk-pixbuf
-        gtk3
-        libappindicator
-        clang
-        webkitgtk.dev
-      ] ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
-        AppKit
-        CoreFoundation
-        CoreServices
-        Security
-        libiconv
-      ]);
+      # added for the launcher
+        ++ lib.optionals (isLauncher) [
+          dbus
+          cairo
+          gobject-introspection
+          atk
+          pango
+          libsoup
+          gdk-pixbuf
+          gtk3
+          libappindicator
+          clang
+          webkitgtk.dev
+        ] ++ lib.optionals (isLauncher && !stdenv.isDarwin) [ glibc glib ]
+        ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
+          AppKit
+          CoreFoundation
+          CoreServices
+          Security
+          libiconv
+        ]);
 
       RUST_SODIUM_LIB_DIR = "${libsodium}/lib";
       RUST_SODIUM_SHARED = "1";
@@ -190,12 +191,14 @@ let
         inherit (scaffolding) url rev sha256 cargoLock binsFilter;
         cargoBuildFlags = scaffolding.cargoBuildFlags or [ ];
         rustVersion = scaffolding.rustVersion or rustVersion;
+        isScaffolding = true;
       }).hc_scaffold;
     }) // (lib.optionalAttrs (launcher != null) {
       launcher = (mkRustMultiDrv {
         inherit (launcher) url rev sha256 cargoLock binsFilter;
         cargoBuildFlags = launcher.cargoBuildFlags or [ ];
         rustVersion = launcher.rustVersion or rustVersion;
+        isLauncher = true;
       }).hc_launch;
     });
 
