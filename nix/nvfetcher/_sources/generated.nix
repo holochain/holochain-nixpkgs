@@ -1344,24 +1344,6 @@
       };
     };
   };
-  holochain_revision_holochain-0_1_0-beta-rc_1 = {
-    pname = "holochain_revision_holochain-0_1_0-beta-rc_1";
-    version = "holochain-0.1.0-beta-rc.1";
-    src = fetchgit {
-      url = "https://github.com/holochain/holochain";
-      rev = "holochain-0.1.0-beta-rc.1";
-      fetchSubmodules = false;
-      deepClone = false;
-      leaveDotGit = false;
-      sha256 = "sha256-H6kJeYP2DcMQcb5tBQpt/XtCqfr+P9XLgNMWzG1Nwaw=";
-    };
-    cargoLock = {
-      lockFile = ./holochain_revision_holochain-0_1_0-beta-rc_1-holochain-0.1.0-beta-rc.1/Cargo.lock;
-      outputHashes = {
-        
-      };
-    };
-  };
   lair_revision_lair_keystore_api-v0_2_0 = {
     pname = "lair_revision_lair_keystore_api-v0_2_0";
     version = "lair_keystore_api-v0.2.0";
@@ -1599,14 +1581,14 @@
   };
   rust-overlay = {
     pname = "rust-overlay";
-    version = "fbaaff24f375ac25ec64268b0a0d63f91e474b7d";
+    version = "e4e129cf743b49b663d99abe81142d6bd213ac91";
     src = fetchgit {
       url = "https://github.com/oxalica/rust-overlay";
-      rev = "fbaaff24f375ac25ec64268b0a0d63f91e474b7d";
+      rev = "e4e129cf743b49b663d99abe81142d6bd213ac91";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "sha256-kpSH1Jrxfk2qd0pRPJn1eQdIOseGv5JuE+YaOrqU9s4=";
+      sha256 = "sha256-PJdh3q1zzzaMzk3M6yZHUVqQSBPiF46EVfMh7L+jtEI=";
     };
   };
 }

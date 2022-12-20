@@ -349,25 +349,6 @@
             "cargo-test-macro-0.1.0": "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs="
         }
     },
-    "holochain_revision_holochain-0_1_0-beta-rc_1": {
-        "pinned": true,
-        "cargoLock": "./holochain_revision_holochain-0_1_0-beta-rc_1-holochain-0.1.0-beta-rc.1/Cargo.lock",
-        "name": "holochain_revision_holochain-0_1_0-beta-rc_1",
-        "version": "holochain-0.1.0-beta-rc.1",
-        "passthru": null,
-        "src": {
-            "deepClone": false,
-            "url": "https://github.com/holochain/holochain",
-            "leaveDotGit": false,
-            "fetchSubmodules": false,
-            "name": null,
-            "type": "git",
-            "sha256": "sha256-H6kJeYP2DcMQcb5tBQpt/XtCqfr+P9XLgNMWzG1Nwaw=",
-            "rev": "holochain-0.1.0-beta-rc.1"
-        },
-        "extract": null,
-        "rustGitDeps": {}
-    },
     "holochain_revision_holochain-0_0_131": {
         "pinned": true,
         "cargoLock": "./holochain_revision_holochain-0_0_131-holochain-0.0.131/Cargo.lock",
@@ -565,7 +546,7 @@
         "rustGitDeps": {}
     },
     "nixpkgs": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": null,
         "name": "nixpkgs",
         "version": "09e8ac77744dd036e58ab2284e6f5c03a6d6ed41",
@@ -875,7 +856,7 @@
         "rustGitDeps": {}
     },
     "lair_revision_lair_keystore_api-v0_2_3": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": "./lair_revision_lair_keystore_api-v0_2_3-lair_keystore_api-v0.2.3/Cargo.lock",
         "name": "lair_revision_lair_keystore_api-v0_2_3",
         "version": "lair_keystore_api-v0.2.3",
@@ -1077,7 +1058,7 @@
         "pinned": false,
         "cargoLock": null,
         "name": "rust-overlay",
-        "version": "fbaaff24f375ac25ec64268b0a0d63f91e474b7d",
+        "version": "e4e129cf743b49b663d99abe81142d6bd213ac91",
         "passthru": null,
         "src": {
             "deepClone": false,
@@ -1086,8 +1067,8 @@
             "fetchSubmodules": false,
             "name": null,
             "type": "git",
-            "sha256": "sha256-kpSH1Jrxfk2qd0pRPJn1eQdIOseGv5JuE+YaOrqU9s4=",
-            "rev": "fbaaff24f375ac25ec64268b0a0d63f91e474b7d"
+            "sha256": "sha256-PJdh3q1zzzaMzk3M6yZHUVqQSBPiF46EVfMh7L+jtEI=",
+            "rev": "e4e129cf743b49b663d99abe81142d6bd213ac91"
         },
         "extract": null,
         "rustGitDeps": null
