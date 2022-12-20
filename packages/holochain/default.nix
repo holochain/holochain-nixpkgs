@@ -1,7 +1,13 @@
 { stdenv, fetchgit, perl, xcbuild, darwin, libsodium, openssl, pkg-config, lib
 , callPackage, libiconv, sqlcipher
 , opensslStatic ? openssl.override (_: { static = true; }), runCommand, jq
-, mkRust, makeRustPlatform, defaultRustVersion }:
+, mkRust, makeRustPlatform, defaultRustVersion
+
+# added for the launcher
+, dbus, glibc, glib, cairo, gobject-introspection, atk, pango, libsoup
+, gdk-pixbuf, gtk3, gtk4, libappindicator, libclang, clang, llvmPackages
+# for javascriptcoregtk-4.0.pc which is in dev
+, webkitgtk }:
 
 # TODO: investigate the use-case around 'binsFilter' with end-users before further optimizations
 
@@ -125,14 +131,35 @@ let
       nativeBuildInputs = [ perl pkg-config ]
         ++ lib.optionals stdenv.isDarwin [ xcbuild ];
 
-      buildInputs = [ openssl opensslStatic sqlcipher ]
-        ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
-          AppKit
-          CoreFoundation
-          CoreServices
-          Security
-          libiconv
-        ]);
+      # added for the launcher
+      LIBCLANG_PATH = "${libclang.lib}/lib";
+
+      buildInputs = [
+        openssl
+        opensslStatic
+        sqlcipher
+
+        # added for the launcher
+        dbus
+        glibc
+        glib
+        cairo
+        gobject-introspection
+        atk
+        pango
+        libsoup
+        gdk-pixbuf
+        gtk3
+        libappindicator
+        clang
+        webkitgtk.dev
+      ] ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
+        AppKit
+        CoreFoundation
+        CoreServices
+        Security
+        libiconv
+      ]);
 
       RUST_SODIUM_LIB_DIR = "${libsodium}/lib";
       RUST_SODIUM_SHARED = "1";
