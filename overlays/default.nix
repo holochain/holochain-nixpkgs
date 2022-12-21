@@ -8,6 +8,8 @@
     nvfetcher =
       (import self.localSources.nvfetcher.src).defaultPackage."${self.system}";
     crate2nix = (import self.localSources.crate2nix.src { });
+
+    pkgsPure = import self.localSources.nixpkgs.src { inherit (self) system; };
   };
 
   rust-overlay = import ./rust-overlay.nix;
