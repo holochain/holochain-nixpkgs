@@ -10,6 +10,9 @@
     crate2nix = (import self.localSources.crate2nix.src { });
 
     pkgsPure = import self.localSources.nixpkgs.src { inherit (self) system; };
+
+    # FIXME: for some reason nix wants to rebuild this if taken from the overlay
+    inherit (self.pkgsPure) webkitgtk;
   };
 
   rust-overlay = import ./rust-overlay.nix;
