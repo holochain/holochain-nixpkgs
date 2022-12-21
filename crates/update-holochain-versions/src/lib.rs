@@ -1,5 +1,7 @@
 use anyhow::Context;
 
+pub mod nvfetcher;
+
 /// performs an incomplete conversion from Nix to JSON5 code.
 pub fn nix_to_json_partial<R: std::io::Read>(mut input: R) -> anyhow::Result<serde_json::Value> {
     let mut buf = String::new();
@@ -54,6 +56,8 @@ pub mod update_config {
     use std::str::FromStr;
 
     use anyhow::bail;
+    use once_cell::sync::Lazy;
+    use semver::VersionReq;
     use serde::{Deserialize, Serialize};
     use structopt::StructOpt;
 
@@ -70,6 +74,47 @@ pub mod update_config {
         semver::VersionReq::from_str(DEFAULT_LAIR_VERSION_REQ).unwrap()
     }
 
+    #[derive(Debug, Serialize, Deserialize, smart_default::SmartDefault)]
+    pub struct ToolingCompatibilitySpecV1 {
+        pub holochain_version_req: VersionReq,
+        pub tool_version_req: VersionReq,
+    }
+
+    impl FromStr for ToolingCompatibilitySpecV1 {
+        type Err = serde_json::Error;
+
+        fn from_str(s: &str) -> Result<Self, Self::Err> {
+            serde_json::from_str(s)
+        }
+    }
+
+    pub static DEFAULT_SCAFFOLDING_HOLOCHAIN_COMPATIBILITY_VERSION_REQ: Lazy<String> =
+        Lazy::new(|| {
+            serde_json::to_string(&default_launcher_holochain_compatibility_version_req())
+                .expect("JSON should deserialize")
+        });
+    pub fn default_scaffolding_holochain_compatibility_version_req() -> ToolingCompatibilitySpecV1 {
+        ToolingCompatibilitySpecV1 {
+            holochain_version_req: semver::VersionReq::from_str(">0.1.0-alpha, <2")
+                .expect("default should parse"),
+            tool_version_req: semver::VersionReq::STAR,
+        }
+    }
+
+    pub static DEFAULT_LAUNCHER_HOLOCHAIN_COMPATIBILITY_VERSION_REQ: Lazy<String> =
+        Lazy::new(|| {
+            serde_json::to_string(&default_launcher_holochain_compatibility_version_req())
+                .expect("JSON should deserialize")
+        });
+
+    pub fn default_launcher_holochain_compatibility_version_req() -> ToolingCompatibilitySpecV1 {
+        ToolingCompatibilitySpecV1 {
+            holochain_version_req: semver::VersionReq::from_str(">0.1.0-alpha, <2")
+                .expect("default should parse"),
+            tool_version_req: semver::VersionReq::STAR,
+        }
+    }
+
     /// type for entries in the update_config.toml file
     #[derive(Serialize, Deserialize, Debug, StructOpt, smart_default::SmartDefault)]
     #[serde(rename_all = "kebab-case")]
@@ -79,6 +124,22 @@ pub mod update_config {
         #[serde(default = "default_lair_version_req")]
         #[default(_code = "default_lair_version_req()")]
         pub lair_version_req: semver::VersionReq,
+
+        /// specifies a map that will be used for which holochain versions it will be attempted to find a matching scaffolding version.
+        /// we can't generally assume that a matching scaffolding is available for any given version,
+        #[structopt(long, default_value = &DEFAULT_SCAFFOLDING_HOLOCHAIN_COMPATIBILITY_VERSION_REQ)]
+        #[serde(default = "default_scaffolding_holochain_compatibility_version_req")]
+        #[default(_code = "default_scaffolding_holochain_compatibility_version_req()")]
+        #[serde(skip_serializing)]
+        pub scaffolding_holochain_compatibility_version_req: ToolingCompatibilitySpecV1,
+
+        /// specifies a map that will be used for which holochain versions it will be attempted to find a matching launcher version.
+        /// we can't generally assume that a matching launcher is available for any given version,
+        #[structopt(long, default_value = &DEFAULT_LAUNCHER_HOLOCHAIN_COMPATIBILITY_VERSION_REQ)]
+        #[serde(default = "default_launcher_holochain_compatibility_version_req")]
+        #[default(_code = "default_launcher_holochain_compatibility_version_req()")]
+        #[serde(skip_serializing)]
+        pub launcher_holochain_compatibility_version_req: ToolingCompatibilitySpecV1,
 
         #[structopt(
             long,

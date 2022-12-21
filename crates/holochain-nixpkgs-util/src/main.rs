@@ -1,6 +1,6 @@
 use clap::{Parser, Subcommand};
 
-/// Simple program to greet a person
+/// utility for managing holochain-nixpkgs
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
 struct CliArgs {
@@ -28,63 +28,6 @@ async fn main() {
     .unwrap()
 }
 
-pub(crate) mod git_helper {
-    use std::io::BufRead;
-
-    use anyhow::bail;
-
-    pub(crate) async fn ls_remote_tags(
-        url: &str,
-        glob_filter: &str,
-    ) -> anyhow::Result<Vec<String>> {
-        let mut cmd = std::process::Command::new("git");
-        cmd.args(&["ls-remote", "--tags", "--refs", url, glob_filter]);
-
-        let output = cmd.output()?;
-
-        if !output.status.success() {
-            bail!("running {:#?} failed:\n{:#?}", cmd, output);
-        }
-
-        // looks something like this
-        // 6535292238dc1fbd2b60433a2054f7787e4f060e	refs/tags/holochain-0.0.102
-        // (...)
-        // c77901e614e653adaa17e80b41db67f8a4fa5b88	refs/tags/holochain-0.0.127
-        let lines = output
-            .stdout
-            .lines()
-            .filter_map(|l| l.ok())
-            .filter_map(|l| -> Option<String> {
-                l.split("\t")
-                    .last()
-                    .map(|s| s.replace("refs/tags/", "").to_string())
-            })
-            .collect();
-
-        Ok(lines)
-    }
-
-    /// wrapper around "git diff --quiet" that returns true if the given pathspec changed in the working directory.
-    pub(crate) async fn pathspec_has_diff(pathspec: &str) -> anyhow::Result<bool> {
-        let mut cmd = std::process::Command::new("git");
-        cmd.args(&["diff", "--quiet", "--", pathspec]);
-
-        let output = cmd.output()?;
-
-        match output
-            .status
-            .code()
-            .ok_or_else(|| anyhow::anyhow!("cmd exited without a status code"))?
-        {
-            0 => Ok(false),
-            1 => Ok(true),
-            _ => {
-                bail!("running {:#?} failed:\n{:#?}", cmd, output);
-            }
-        }
-    }
-}
-
 mod update_holochain_tags {
 
     use std::{
@@ -96,6 +39,7 @@ mod update_holochain_tags {
     };
 
     use anyhow::bail;
+    use common::git_helper;
     use itertools::Itertools;
     use linked_hash_map::LinkedHashMap;
     use linked_hash_set::LinkedHashSet;
@@ -148,7 +92,7 @@ mod update_holochain_tags {
         let mut added_entries_update_config = LinkedHashSet::new();
 
         // process the upstream tags from the holochain repo
-        for tag in crate::git_helper::ls_remote_tags(
+        for tag in git_helper::ls_remote_tags(
             &cmd_args.holochain_git_url,
             &format!("{}*", TAG_GLOB_PREFIX),
         )
@@ -194,6 +138,8 @@ mod update_holochain_tags {
             );
         }
 
+        // add_scaffolding_versions(&mut update_config_toml_entries).await?;
+
         rewrite_update_config(cmd_args, update_config_toml, &update_config_toml_entries)?;
 
         let update_config_toml_pathstr = cmd_args
@@ -202,15 +148,14 @@ mod update_holochain_tags {
             .to_string_lossy()
             .to_string();
         let update_config_changed =
-            crate::git_helper::pathspec_has_diff(&update_config_toml_pathstr).await?;
+            git_helper::pathspec_has_diff(&update_config_toml_pathstr).await?;
 
         let build_yml_pathstr = cmd_args
             .build_yaml_path
             .as_os_str()
             .to_string_lossy()
             .to_string();
-        let build_yml_changed =
-            crate::git_helper::pathspec_has_diff(&update_config_toml_pathstr).await?;
+        let build_yml_changed = git_helper::pathspec_has_diff(&update_config_toml_pathstr).await?;
 
         let msg = indoc::formatdoc!(
             r#"update holochain tags
