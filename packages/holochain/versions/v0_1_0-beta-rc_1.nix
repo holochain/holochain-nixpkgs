@@ -35,6 +35,21 @@
         };
     };
 
+    scaffolding = {
+        url = "https://github.com/holochain/scaffolding";
+        rev = "holochain_scaffolding_cli-v0.0.5-alpha.0";
+        sha256 = "sha256-A0hdrgP2xeL8yr2BGYouHKPuhEvBNNgOQGR3oLK2mn4=";
+
+        binsFilter = [
+            "hc-scaffold"
+        ];
+
+
+        cargoLock = {
+            outputHashes = {
+            };
+        };
+    };
 
     launcher = {
         url = "https://github.com/holochain/launcher";
