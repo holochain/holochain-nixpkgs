@@ -565,15 +565,15 @@
         "rustGitDeps": {}
     },
     "nixpkgs": {
-        "pinned": true,
+        "pinned": false,
         "cargoLock": null,
         "name": "nixpkgs",
-        "version": "aef2968b378a83f46c0bf7f01eb3762ba9258e9c",
+        "version": "f4eddbd6a88c51e9a4693e2887cf4543917aa279",
         "passthru": null,
         "src": {
-            "url": "https://github.com/nixos/nixpkgs/archive/aef2968b378a83f46c0bf7f01eb3762ba9258e9c.tar.gz",
+            "url": "https://github.com/nixos/nixpkgs/archive/f4eddbd6a88c51e9a4693e2887cf4543917aa279.tar.gz",
             "type": "tarball",
-            "sha256": "16nygb0c7hlrbrcrjbiw55arpwn085c8kzd050viblhh5v9n18ar"
+            "sha256": "0nkgmgnx8yjw5h4ll0lddqybj81figl6g5y8rq6p8yllmkbixb3c"
         },
         "extract": null,
         "rustGitDeps": null
@@ -814,7 +814,7 @@
         }
     },
     "holochain_cli_launch_revision_holochain_cli_launch-0_0_3-alpha_2": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": "./holochain_cli_launch_revision_holochain_cli_launch-0_0_3-alpha_2-holochain_cli_launch-0.0.3-alpha.2/Cargo.lock",
         "name": "holochain_cli_launch_revision_holochain_cli_launch-0_0_3-alpha_2",
         "version": "holochain_cli_launch-0.0.3-alpha.2",
