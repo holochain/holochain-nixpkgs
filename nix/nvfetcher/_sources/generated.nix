@@ -103,6 +103,24 @@
       };
     };
   };
+  holochain_cli_launch_revision_holochain_cli_launch-0_0_4-alpha_0 = {
+    pname = "holochain_cli_launch_revision_holochain_cli_launch-0_0_4-alpha_0";
+    version = "holochain_cli_launch-0.0.4-alpha.0";
+    src = fetchgit {
+      url = "https://github.com/holochain/launcher";
+      rev = "holochain_cli_launch-0.0.4-alpha.0";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "sha256-UxMnwNFJTFyJvDP39OZZ3T1ZSkOc9fidHuXyAKu7mhA=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_cli_launch_revision_holochain_cli_launch-0_0_4-alpha_0-holochain_cli_launch-0.0.4-alpha.0/Cargo.lock;
+      outputHashes = {
+        "holochain_client-0.2.0" = "sha256-zJGc2H+dGFz5/yd9ryG6q94qBhsLdrJBjuBahcRWtGE=";
+      };
+    };
+  };
   holochain_revision_holochain-0_0_103 = {
     pname = "holochain_revision_holochain-0_0_103";
     version = "holochain-0.0.103";
@@ -1430,6 +1448,24 @@
     };
     cargoLock = {
       lockFile = ./holochain_revision_holochain-0_1_0-beta-rc_2-holochain-0.1.0-beta-rc.2/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
+  };
+  holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_5 = {
+    pname = "holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_5";
+    version = "holochain_scaffolding_cli-v0.0.5";
+    src = fetchgit {
+      url = "https://github.com/holochain/scaffolding";
+      rev = "holochain_scaffolding_cli-v0.0.5";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "sha256-l/P+Cn0mTp+vg5fn3Cc8yTm87eaMyqCvFXGfwX3BB8o=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_5-holochain_scaffolding_cli-v0.0.5/Cargo.lock;
       outputHashes = {
         
       };
