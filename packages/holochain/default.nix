@@ -1,5 +1,5 @@
 { stdenv, fetchgit, perl, xcbuild, darwin, libsodium, openssl, pkg-config, lib
-, callPackage, libiconv, sqlcipher
+, makeBinaryWrapper, callPackage, libiconv, sqlcipher
 , opensslStatic ? openssl.override (_: { static = true; }), runCommand, jq
 , mkRust, makeRustPlatform, defaultRustVersion
 
@@ -76,7 +76,7 @@ let
   mkRustMultiDrv = { rev, url, sha256, cargoLock, cargoBuildFlags ? [ ]
     , binsFilter ? null, binaryPackagesResult ?
       binaryPackages { inherit url rev sha256 binsFilter rustVersion; }
-    , rustVersion, isLauncher ? false, isScaffolding ? false }:
+    , rustVersion, isLauncher ? false, isScaffolding ? false, postFixup ? "" }:
     let
       binariesCompatFiltered = binaryPackagesResult.binariesCompatFiltered;
       name = builtins.concatStringsSep "_"
@@ -91,7 +91,7 @@ let
       inherit (rustHelper rustVersion) rust rustPlatform;
 
     in rustPlatform.buildRustPackage {
-      inherit src name;
+      inherit src name postFixup;
 
       cargoDepsName = "deps";
 
@@ -119,7 +119,7 @@ let
         (orig: compat: "mv \${tmpDir}/${orig} \${${compat}}/bin/")
         binariesCompatFiltered);
 
-      nativeBuildInputs = [ perl pkg-config ]
+      nativeBuildInputs = [ perl pkg-config makeBinaryWrapper ]
         ++ lib.optionals stdenv.isDarwin [ xcbuild ];
 
       # added for the launcher
@@ -152,9 +152,6 @@ let
           Security
           libiconv
         ]);
-
-      GIO_MODULE_DIR =
-        lib.optionalString isLauncher "${glib-networking}/lib/gio/modules/";
 
       RUST_SODIUM_LIB_DIR = "${libsodium}/lib";
       RUST_SODIUM_SHARED = "1";
@@ -204,6 +201,9 @@ let
         cargoBuildFlags = launcher.cargoBuildFlags or [ ];
         rustVersion = launcher.rustVersion or rustVersion;
         isLauncher = true;
+        postFixup = ''
+          wrapProgram $out/bin/hc-launch --set GIO_MODULE_DIR "${glib-networking}/lib/gio/modules/";
+        '';
       }).hc_launch;
     });
 
