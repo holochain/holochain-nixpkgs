@@ -991,7 +991,7 @@
         "rustGitDeps": {}
     },
     "holochain_cli_launch_revision_holochain_cli_launch-0_0_4-alpha_0": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": "./holochain_cli_launch_revision_holochain_cli_launch-0_0_4-alpha_0-holochain_cli_launch-0.0.4-alpha.0/Cargo.lock",
         "name": "holochain_cli_launch_revision_holochain_cli_launch-0_0_4-alpha_0",
         "version": "holochain_cli_launch-0.0.4-alpha.0",
@@ -1116,10 +1116,10 @@
         }
     },
     "rust-overlay": {
-        "pinned": true,
+        "pinned": false,
         "cargoLock": null,
         "name": "rust-overlay",
-        "version": "03ec5d9bff7dda3fba01fb8ab4b6381e57543ad2",
+        "version": "631e692192eeeea85cdfb2a9dccbbfce543478b1",
         "passthru": null,
         "src": {
             "deepClone": false,
@@ -1128,8 +1128,8 @@
             "fetchSubmodules": false,
             "name": null,
             "type": "git",
-            "sha256": "sha256-NvxGQbX58qYL20EEPMaulId8HKFZnsaaFbZLtF+zOYw=",
-            "rev": "03ec5d9bff7dda3fba01fb8ab4b6381e57543ad2"
+            "sha256": "sha256-KuNCxEZgzTmO3YpHvjNh9i+DUO6wSp6f1/3Qsczs5cw=",
+            "rev": "631e692192eeeea85cdfb2a9dccbbfce543478b1"
         },
         "extract": null,
         "rustGitDeps": null
