@@ -202,7 +202,10 @@ let
         rustVersion = launcher.rustVersion or rustVersion;
         isLauncher = true;
         postFixup = ''
-          wrapProgram $out/bin/hc-launch --set GIO_MODULE_DIR "${glib-networking}/lib/gio/modules/";
+          wrapProgram $out/bin/hc-launch \
+            --set GIO_MODULE_DIR "${glib-networking}/lib/gio/modules/" \
+            --set WEBKIT_DISABLE_COMPOSITING_MODE 1 \
+            ;
         '';
       }).hc_launch;
     });
