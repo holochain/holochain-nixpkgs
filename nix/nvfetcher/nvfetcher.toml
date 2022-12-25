@@ -492,3 +492,8 @@ cargo_lock = "Cargo.lock"
 src.manual = "holochain_scaffolding_cli-v0.0.5"
 fetch.git = "https://github.com/holochain/scaffolding"
 cargo_lock = "Cargo.lock"
+
+[holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_6]
+src.manual = "holochain_scaffolding_cli-v0.0.6"
+fetch.git = "https://github.com/holochain/scaffolding"
+cargo_lock = "Cargo.lock"

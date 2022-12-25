@@ -1507,6 +1507,24 @@
       };
     };
   };
+  holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_6 = {
+    pname = "holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_6";
+    version = "holochain_scaffolding_cli-v0.0.6";
+    src = fetchgit {
+      url = "https://github.com/holochain/scaffolding";
+      rev = "holochain_scaffolding_cli-v0.0.6";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "sha256-IlQ1OnsJP7T4Tc3JxoRuKKDQLlg11U9DzSAezO0pZ7c=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_6-holochain_scaffolding_cli-v0.0.6/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
+  };
   lair_revision_lair_keystore_api-v0_2_0 = {
     pname = "lair_revision_lair_keystore_api-v0_2_0";
     version = "lair_keystore_api-v0.2.0";
