@@ -594,6 +594,16 @@ async fn maybe_get_tooling_crate_srcinfo<'a>(
                 &VersionReq::parse(&holochain_version_reqs.to_string())?,
                 |_| {},
             )? {
+                eprint!(
+                    "[DEBUG] deciding between candidate {} ({:?}) and {:?} ({:?}) => ",
+                    tooling_semver.to_string(),
+                    &tooling_semver,
+                    nvfetcher_wrapper_final
+                        .as_ref()
+                        .map(|(a, b)| (a.to_string(), b)),
+                    &nvfetcher_wrapper_final,
+                );
+
                 nvfetcher_wrapper_final = match nvfetcher_wrapper_final {
                     Some((existing_version, existing_wrapper))
                         if tooling_semver < &existing_version =>
@@ -601,7 +611,8 @@ async fn maybe_get_tooling_crate_srcinfo<'a>(
                         Some((existing_version, existing_wrapper))
                     }
                     _ => Some((tooling_semver.clone(), scaffolding_nvfetcher_wrapper)),
-                }
+                };
+                eprintln!("{:?}", &nvfetcher_wrapper_final);
             }
         }
         nvfetcher_wrapper_final

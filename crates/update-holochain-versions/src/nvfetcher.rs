@@ -14,7 +14,7 @@ use crate::update_config::GitSrc;
 
 type Fallible<T> = anyhow::Result<T>;
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct BinCrateSource<'a> {
     pub name: &'a str,
     pub git_repo: &'a str,
@@ -34,6 +34,8 @@ impl<'a> BinCrateSource<'a> {
         )
     }
 }
+
+#[derive(Debug)]
 pub struct NvfetcherWrapper<'a> {
     initialized: AtomicBool,
     pub src: BinCrateSource<'a>,
