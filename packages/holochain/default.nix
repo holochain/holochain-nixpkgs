@@ -202,12 +202,6 @@ let
         cargoBuildFlags = launcher.cargoBuildFlags or [ ];
         rustVersion = launcher.rustVersion or rustVersion;
         isLauncher = true;
-        postFixup = ''
-          wrapProgram $out/bin/hc-launch \
-            --set GIO_MODULE_DIR "${glib-networking}/lib/gio/modules/" \
-            --set WEBKIT_DISABLE_COMPOSITING_MODE 1 \
-            ;
-        '';
       }).hc_launch;
     });
 
@@ -220,6 +214,10 @@ let
       (name: value: (lib.strings.hasSuffix ".nix" name) && (value == "regular"))
       (builtins.readDir ./versions));
 
+  holochainAllBinariesWithDeps' = builtins.mapAttrs
+    (_: versionValue: mkHolochainAllBinariesWithDeps versionValue)
+    holochainVersions;
+
 in {
   inherit mkHolochainAllBinaries mkHolochainAllBinariesWithDeps
     holochainVersions;
@@ -227,8 +225,17 @@ in {
   holochainVersionUpdateConfig =
     lib.trivial.importTOML ./versions/update_config.toml;
 
-  holochainAllBinariesWithDeps = builtins.mapAttrs
-    (_: versionValue: mkHolochainAllBinariesWithDeps versionValue)
-    holochainVersions;
-
+  holochainAllBinariesWithDeps = holochainAllBinariesWithDeps' // {
+    v0_1_0-beta-rc_2 = holochainAllBinariesWithDeps'.v0_1_0-beta-rc_2 // {
+      launcher = runCommand "hc-launch-wrapper" {
+        nativeBuildInputs = [ makeBinaryWrapper ];
+      } ''
+        mkdir -p $out/bin
+        cp -a ${holochainAllBinariesWithDeps'.v0_1_0-beta-rc_2.launcher}/bin/hc-launch $out/bin/
+        wrapProgram $out/bin/hc-launch \
+             --set GIO_MODULE_DIR "${glib-networking}/lib/gio/modules/" \
+             --set WEBKIT_DISABLE_COMPOSITING_MODE 1
+      '';
+    };
+  };
 }
