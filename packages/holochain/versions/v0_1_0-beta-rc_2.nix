@@ -53,8 +53,8 @@
 
     launcher = {
         url = "https://github.com/holochain/launcher";
-        rev = "holochain_cli_launch-0.0.4-alpha.0";
-        sha256 = "sha256-UxMnwNFJTFyJvDP39OZZ3T1ZSkOc9fidHuXyAKu7mhA=";
+        rev = "holochain_cli_launch-0.0.4-alpha.1";
+        sha256 = "sha256-JoNQagflNiHBnA2g9iVWNjCtlC2x2sYMlNO7jhETprI=";
 
         binsFilter = [
             "hc-launch"
