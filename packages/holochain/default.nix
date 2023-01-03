@@ -1,5 +1,5 @@
 { stdenv, fetchgit, perl, xcbuild, darwin, libsodium, openssl, pkg-config, lib
-, makeBinaryWrapper, callPackage, libiconv, sqlcipher
+, callPackage, libiconv, sqlcipher, makeWrapper
 , opensslStatic ? openssl.override (_: { static = true; }), runCommand, jq
 , mkRust, makeRustPlatform, defaultRustVersion
 
@@ -76,7 +76,7 @@ let
   mkRustMultiDrv = { rev, url, sha256, cargoLock, cargoBuildFlags ? [ ]
     , binsFilter ? null, binaryPackagesResult ?
       binaryPackages { inherit url rev sha256 binsFilter rustVersion; }
-    , rustVersion, isLauncher ? false, isScaffolding ? false, postFixup ? "" }:
+    , rustVersion, isLauncher ? false, isScaffolding ? false }:
     let
       binariesCompatFiltered = binaryPackagesResult.binariesCompatFiltered;
       name = builtins.concatStringsSep "_"
@@ -90,8 +90,8 @@ let
 
       inherit (rustHelper rustVersion) rust rustPlatform;
 
-    in rustPlatform.buildRustPackage {
-      inherit src name postFixup;
+    in rustPlatform.buildRustPackage ({
+      inherit src name;
 
       cargoDepsName = "deps";
 
@@ -116,10 +116,14 @@ let
           mkdir -p ''${!d}/bin
         done
       '' + builtins.concatStringsSep "\n" (lib.attrsets.mapAttrsToList
-        (orig: compat: "mv \${tmpDir}/${orig} \${${compat}}/bin/")
-        binariesCompatFiltered);
+        (orig: compat:
+          builtins.concatStringsSep "\n" [
+            "mv --verbose \${tmpDir}/${orig} \${${compat}}/bin/"
+            (lib.strings.optionalString isLauncher
+              "wrapProgram \${${compat}}/bin/${orig} --set WEBKIT_DISABLE_COMPOSITING_MODE 1 --set GIO_MODULE_DIR ${glib-networking}/lib/gio/modules --prefix GIO_EXTRA_MODULES : ${glib-networking}/lib/gio/modules")
+          ]) binariesCompatFiltered);
 
-      nativeBuildInputs = [ perl pkg-config makeBinaryWrapper ]
+      nativeBuildInputs = [ perl pkg-config makeWrapper ]
         ++ lib.optionals stdenv.isDarwin [ xcbuild ];
 
       # added for the launcher
@@ -164,7 +168,7 @@ let
       doCheck = false;
 
       meta.platforms = [ "aarch64-linux" "x86_64-linux" "x86_64-darwin" ];
-    };
+    });
 
   mkHolochainAllBinaries =
     { url, rev, sha256, cargoLock, binsFilter, rustVersion, cargoBuildFlags }:
@@ -202,11 +206,6 @@ let
         cargoBuildFlags = launcher.cargoBuildFlags or [ ];
         rustVersion = launcher.rustVersion or rustVersion;
         isLauncher = true;
-        postFixup = ''
-          wrapProgram $out/bin/hc-launch \
-            --set GIO_MODULE_DIR "${glib-networking}/lib/gio/modules/" \
-            --set WEBKIT_DISABLE_COMPOSITING_MODE 1
-        '';
       }).hc_launch;
     });
 
