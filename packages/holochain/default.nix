@@ -144,6 +144,7 @@ let
           # libappindicator
           # clang
           webkitgtk.dev
+          glib-networking
         ] ++ lib.optionals (isLauncher && !stdenv.isDarwin) [ glibc glib ]
         ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
           AppKit
