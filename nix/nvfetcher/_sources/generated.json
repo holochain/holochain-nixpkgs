@@ -1444,6 +1444,27 @@
         "extract": null,
         "rustGitDeps": {}
     },
+    "holochain_cli_launch_revision_holochain_cli_launch-0_0_4-alpha_1": {
+        "pinned": false,
+        "cargoLock": "./holochain_cli_launch_revision_holochain_cli_launch-0_0_4-alpha_1-holochain_cli_launch-0.0.4-alpha.1/Cargo.lock",
+        "name": "holochain_cli_launch_revision_holochain_cli_launch-0_0_4-alpha_1",
+        "version": "holochain_cli_launch-0.0.4-alpha.1",
+        "passthru": null,
+        "src": {
+            "deepClone": false,
+            "url": "https://github.com/holochain/launcher",
+            "leaveDotGit": false,
+            "fetchSubmodules": false,
+            "name": null,
+            "type": "git",
+            "sha256": "sha256-JoNQagflNiHBnA2g9iVWNjCtlC2x2sYMlNO7jhETprI=",
+            "rev": "holochain_cli_launch-0.0.4-alpha.1"
+        },
+        "extract": null,
+        "rustGitDeps": {
+            "holochain_client-0.2.0": "sha256-zJGc2H+dGFz5/yd9ryG6q94qBhsLdrJBjuBahcRWtGE="
+        }
+    },
     "lair_revision_v0_0_3": {
         "pinned": true,
         "cargoLock": "./lair_revision_v0_0_3-v0.0.3/Cargo.lock",
