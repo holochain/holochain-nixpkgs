@@ -59,16 +59,6 @@ rec {
       # File a bug if you depend on any for non-debug work!
       debug = internal.debugCrate { inherit packageId; };
     };
-    "holochain-nixpkgs-util" = rec {
-      packageId = "holochain-nixpkgs-util";
-      build = internal.buildRustCrateWithFeatures {
-        packageId = "holochain-nixpkgs-util";
-      };
-
-      # Debug support which might change between releases.
-      # File a bug if you depend on any for non-debug work!
-      debug = internal.debugCrate { inherit packageId; };
-    };
     "update-holochain-versions" = rec {
       packageId = "update-holochain-versions";
       build = internal.buildRustCrateWithFeatures {
@@ -843,22 +833,12 @@ rec {
             packageId = "bitflags";
           }
           {
-            name = "clap_derive";
-            packageId = "clap_derive";
-            optional = true;
-          }
-          {
             name = "clap_lex";
             packageId = "clap_lex";
           }
           {
             name = "indexmap";
             packageId = "indexmap";
-          }
-          {
-            name = "once_cell";
-            packageId = "once_cell";
-            optional = true;
           }
           {
             name = "strsim";
@@ -901,42 +881,7 @@ rec {
           "yaml" = [ "yaml-rust" ];
           "yaml-rust" = [ "dep:yaml-rust" ];
         };
-        resolvedDefaultFeatures = [ "atty" "clap_derive" "color" "default" "derive" "once_cell" "std" "strsim" "suggestions" "termcolor" ];
-      };
-      "clap_derive" = rec {
-        crateName = "clap_derive";
-        version = "3.2.18";
-        edition = "2021";
-        sha256 = "0r9az0cl33xx0i9g18l56l3vd5ayjvcflvza2gdf8jwcab78n37a";
-        procMacro = true;
-        dependencies = [
-          {
-            name = "heck";
-            packageId = "heck 0.4.0";
-          }
-          {
-            name = "proc-macro-error";
-            packageId = "proc-macro-error";
-          }
-          {
-            name = "proc-macro2";
-            packageId = "proc-macro2";
-          }
-          {
-            name = "quote";
-            packageId = "quote";
-          }
-          {
-            name = "syn";
-            packageId = "syn";
-            features = [ "full" ];
-          }
-        ];
-        features = {
-          "raw-deprecated" = [ "deprecated" ];
-          "unstable-v4" = [ "deprecated" ];
-        };
-        resolvedDefaultFeatures = [ "default" ];
+        resolvedDefaultFeatures = [ "atty" "color" "default" "std" "strsim" "suggestions" "termcolor" ];
       };
       "clap_lex" = rec {
         crateName = "clap_lex";
@@ -1624,42 +1569,6 @@ rec {
         };
         resolvedDefaultFeatures = [ "default" "http2" "libnghttp2-sys" "openssl-sys" "ssl" ];
       };
-      "dashmap" = rec {
-        crateName = "dashmap";
-        version = "5.4.0";
-        edition = "2018";
-        sha256 = "1p2f5kr5hy7h4w3y2abprnxsaq36r685zfx1s8v0nfw2vbgpcw4h";
-        authors = [
-          "Acrimon <joel.wejdenstal@gmail.com>"
-        ];
-        dependencies = [
-          {
-            name = "cfg-if";
-            packageId = "cfg-if";
-          }
-          {
-            name = "hashbrown";
-            packageId = "hashbrown 0.12.3";
-            usesDefaultFeatures = false;
-          }
-          {
-            name = "lock_api";
-            packageId = "lock_api";
-          }
-          {
-            name = "once_cell";
-            packageId = "once_cell";
-          }
-          {
-            name = "parking_lot_core";
-            packageId = "parking_lot_core 0.9.5";
-          }
-        ];
-        features = {
-          "rayon" = [ "dep:rayon" ];
-          "serde" = [ "dep:serde" ];
-        };
-      };
       "diff" = rec {
         crateName = "diff";
         version = "0.1.13";
@@ -2200,7 +2109,7 @@ rec {
         };
         resolvedDefaultFeatures = [ "inline-more" ];
       };
-      "heck 0.3.3" = rec {
+      "heck" = rec {
         crateName = "heck";
         version = "0.3.3";
         edition = "2018";
@@ -2215,20 +2124,6 @@ rec {
           }
         ];
 
-      };
-      "heck 0.4.0" = rec {
-        crateName = "heck";
-        version = "0.4.0";
-        edition = "2018";
-        sha256 = "1ygphsnfwl2xpa211vbqkz1db6ri1kvkg8p8sqybi37wclg7fh15";
-        authors = [
-          "Without Boats <woboats@gmail.com>"
-        ];
-        features = {
-          "unicode" = [ "unicode-segmentation" ];
-          "unicode-segmentation" = [ "dep:unicode-segmentation" ];
-        };
-        resolvedDefaultFeatures = [ "default" ];
       };
       "hermit-abi 0.1.19" = rec {
         crateName = "hermit-abi";
@@ -2315,90 +2210,6 @@ rec {
           "std" = [ "alloc" ];
         };
         resolvedDefaultFeatures = [ "alloc" "default" "serde" "std" ];
-      };
-      "holochain-nixpkgs-util" = rec {
-        crateName = "holochain-nixpkgs-util";
-        version = "0.0.1";
-        edition = "2021";
-        crateBin = [
-          { name = "holochain-nixpkgs-util"; path = "src/main.rs"; }
-        ];
-        src = lib.cleanSourceWith { filter = sourceFilter;  src = ../../crates/holochain-nixpkgs-util; };
-        dependencies = [
-          {
-            name = "anyhow";
-            packageId = "anyhow";
-          }
-          {
-            name = "cargo-lock";
-            packageId = "cargo-lock";
-          }
-          {
-            name = "clap";
-            packageId = "clap 3.2.23";
-            features = [ "derive" ];
-          }
-          {
-            name = "common";
-            packageId = "common";
-          }
-          {
-            name = "crates-index-helper";
-            packageId = "crates-index-helper";
-          }
-          {
-            name = "indoc";
-            packageId = "indoc";
-          }
-          {
-            name = "itertools";
-            packageId = "itertools";
-          }
-          {
-            name = "linked-hash-map";
-            packageId = "linked-hash-map";
-          }
-          {
-            name = "linked_hash_set";
-            packageId = "linked_hash_set";
-          }
-          {
-            name = "prodash";
-            packageId = "prodash";
-          }
-          {
-            name = "regex";
-            packageId = "regex";
-          }
-          {
-            name = "semver";
-            packageId = "semver";
-          }
-          {
-            name = "serde";
-            packageId = "serde";
-            features = [ "derive" ];
-          }
-          {
-            name = "serde_yaml";
-            packageId = "serde_yaml";
-          }
-          {
-            name = "tokio";
-            packageId = "tokio";
-            features = [ "rt-multi-thread" "macros" ];
-          }
-          {
-            name = "toml_edit";
-            packageId = "toml_edit 0.14.4";
-            features = [ "serde" "easy" ];
-          }
-          {
-            name = "update-holochain-versions";
-            packageId = "update-holochain-versions";
-          }
-        ];
-
       };
       "home" = rec {
         crateName = "home";
@@ -2577,17 +2388,6 @@ rec {
           "serde-1" = [ "serde" ];
         };
         resolvedDefaultFeatures = [ "std" ];
-      };
-      "indoc" = rec {
-        crateName = "indoc";
-        version = "1.0.8";
-        edition = "2018";
-        sha256 = "10670ygqqsahaf2v160igzg8zkbvnvgjbviyqmv7x7gazwinybfs";
-        procMacro = true;
-        authors = [
-          "David Tolnay <dtolnay@gmail.com>"
-        ];
-
       };
       "instant" = rec {
         crateName = "instant";
@@ -2943,66 +2743,6 @@ rec {
           "zlib-ng" = [ "libc" "cmake" ];
         };
         resolvedDefaultFeatures = [ "libc" ];
-      };
-      "linked-hash-map" = rec {
-        crateName = "linked-hash-map";
-        version = "0.5.6";
-        edition = "2015";
-        sha256 = "03vpgw7x507g524nx5i1jf5dl8k3kv0fzg8v3ip6qqwbpkqww5q7";
-        authors = [
-          "Stepan Koltsov <stepan.koltsov@gmail.com>"
-          "Andrew Paseltiner <apaseltiner@gmail.com>"
-        ];
-        features = {
-          "heapsize" = [ "dep:heapsize" ];
-          "heapsize_impl" = [ "heapsize" ];
-          "serde" = [ "dep:serde" ];
-          "serde_impl" = [ "serde" ];
-        };
-      };
-      "linked_hash_set" = rec {
-        crateName = "linked_hash_set";
-        version = "0.1.4";
-        edition = "2018";
-        sha256 = "124m7wiz9ah7ah58ckai413mzfglh3y1nz64qy1s676qlinnq627";
-        authors = [
-          "Alex Butler <alexheretic@gmail.com>"
-        ];
-        dependencies = [
-          {
-            name = "linked-hash-map";
-            packageId = "linked-hash-map";
-          }
-        ];
-        features = {
-          "serde" = [ "dep:serde" ];
-        };
-      };
-      "lock_api" = rec {
-        crateName = "lock_api";
-        version = "0.4.9";
-        edition = "2018";
-        sha256 = "1py41vk243hwk345nhkn5nw0bd4m03gzjmprdjqq6rg5dwv12l23";
-        authors = [
-          "Amanieu d'Antras <amanieu@gmail.com>"
-        ];
-        dependencies = [
-          {
-            name = "scopeguard";
-            packageId = "scopeguard";
-            usesDefaultFeatures = false;
-          }
-        ];
-        buildDependencies = [
-          {
-            name = "autocfg";
-            packageId = "autocfg";
-          }
-        ];
-        features = {
-          "owning_ref" = [ "dep:owning_ref" ];
-          "serde" = [ "dep:serde" ];
-        };
       };
       "log" = rec {
         crateName = "log";
@@ -3411,124 +3151,6 @@ rec {
         ];
 
       };
-      "parking_lot" = rec {
-        crateName = "parking_lot";
-        version = "0.11.2";
-        edition = "2018";
-        sha256 = "16gzf41bxmm10x82bla8d6wfppy9ym3fxsmdjyvn61m66s0bf5vx";
-        authors = [
-          "Amanieu d'Antras <amanieu@gmail.com>"
-        ];
-        dependencies = [
-          {
-            name = "instant";
-            packageId = "instant";
-          }
-          {
-            name = "lock_api";
-            packageId = "lock_api";
-          }
-          {
-            name = "parking_lot_core";
-            packageId = "parking_lot_core 0.8.6";
-          }
-        ];
-        features = {
-          "arc_lock" = [ "lock_api/arc_lock" ];
-          "deadlock_detection" = [ "parking_lot_core/deadlock_detection" ];
-          "nightly" = [ "parking_lot_core/nightly" "lock_api/nightly" ];
-          "owning_ref" = [ "lock_api/owning_ref" ];
-          "serde" = [ "lock_api/serde" ];
-          "stdweb" = [ "instant/stdweb" ];
-          "wasm-bindgen" = [ "instant/wasm-bindgen" ];
-        };
-      };
-      "parking_lot_core 0.8.6" = rec {
-        crateName = "parking_lot_core";
-        version = "0.8.6";
-        edition = "2018";
-        sha256 = "1p2nfcbr0b9lm9rglgm28k6mwyjwgm4knipsmqbgqaxdy3kcz8k0";
-        authors = [
-          "Amanieu d'Antras <amanieu@gmail.com>"
-        ];
-        dependencies = [
-          {
-            name = "cfg-if";
-            packageId = "cfg-if";
-          }
-          {
-            name = "instant";
-            packageId = "instant";
-          }
-          {
-            name = "libc";
-            packageId = "libc";
-            target = { target, features }: (target."unix" or false);
-          }
-          {
-            name = "redox_syscall";
-            packageId = "redox_syscall";
-            target = { target, features }: (target."os" == "redox");
-          }
-          {
-            name = "smallvec";
-            packageId = "smallvec";
-          }
-          {
-            name = "winapi";
-            packageId = "winapi";
-            target = { target, features }: (target."windows" or false);
-            features = [ "winnt" "ntstatus" "minwindef" "winerror" "winbase" "errhandlingapi" "handleapi" ];
-          }
-        ];
-        features = {
-          "backtrace" = [ "dep:backtrace" ];
-          "deadlock_detection" = [ "petgraph" "thread-id" "backtrace" ];
-          "petgraph" = [ "dep:petgraph" ];
-          "thread-id" = [ "dep:thread-id" ];
-        };
-      };
-      "parking_lot_core 0.9.5" = rec {
-        crateName = "parking_lot_core";
-        version = "0.9.5";
-        edition = "2018";
-        sha256 = "1fnr5rdb2zr4w8cmd8lmfhnzg3xk9ijysdamjk2kx2lnygzg7ybz";
-        authors = [
-          "Amanieu d'Antras <amanieu@gmail.com>"
-        ];
-        dependencies = [
-          {
-            name = "cfg-if";
-            packageId = "cfg-if";
-          }
-          {
-            name = "libc";
-            packageId = "libc";
-            target = { target, features }: (target."unix" or false);
-          }
-          {
-            name = "redox_syscall";
-            packageId = "redox_syscall";
-            target = { target, features }: (target."os" == "redox");
-          }
-          {
-            name = "smallvec";
-            packageId = "smallvec";
-          }
-          {
-            name = "windows-sys";
-            packageId = "windows-sys 0.42.0";
-            target = { target, features }: (target."windows" or false);
-            features = [ "Win32_Foundation" "Win32_System_LibraryLoader" "Win32_System_SystemServices" "Win32_System_WindowsProgramming" ];
-          }
-        ];
-        features = {
-          "backtrace" = [ "dep:backtrace" ];
-          "deadlock_detection" = [ "petgraph" "thread-id" "backtrace" ];
-          "petgraph" = [ "dep:petgraph" ];
-          "thread-id" = [ "dep:thread-id" ];
-        };
-      };
       "pathdiff" = rec {
         crateName = "pathdiff";
         version = "0.2.1";
@@ -3817,71 +3439,6 @@ rec {
           "default" = [ "proc-macro" ];
         };
         resolvedDefaultFeatures = [ "default" "proc-macro" ];
-      };
-      "prodash" = rec {
-        crateName = "prodash";
-        version = "16.1.3";
-        edition = "2018";
-        sha256 = "05s374p9zfgicnp8iljv414wasy1fd5kyg2p2bh635q35fw2if3r";
-        authors = [
-          "Sebastian Thiel <sebastian.thiel@icloud.com>"
-        ];
-        dependencies = [
-          {
-            name = "dashmap";
-            packageId = "dashmap";
-            optional = true;
-            usesDefaultFeatures = false;
-          }
-          {
-            name = "log";
-            packageId = "log";
-            optional = true;
-          }
-          {
-            name = "parking_lot";
-            packageId = "parking_lot";
-            optional = true;
-            usesDefaultFeatures = false;
-          }
-        ];
-        features = {
-          "async-io" = [ "dep:async-io" ];
-          "atty" = [ "dep:atty" ];
-          "bytesize" = [ "dep:bytesize" ];
-          "compound_duration" = [ "dep:compound_duration" ];
-          "crosstermion" = [ "dep:crosstermion" ];
-          "ctrlc" = [ "dep:ctrlc" ];
-          "dashmap" = [ "dep:dashmap" ];
-          "default" = [ "progress-tree" "progress-tree-log" ];
-          "futures-core" = [ "dep:futures-core" ];
-          "futures-lite" = [ "dep:futures-lite" ];
-          "human_format" = [ "dep:human_format" ];
-          "humantime" = [ "dep:humantime" ];
-          "local-time" = [ "time" ];
-          "log" = [ "dep:log" ];
-          "parking_lot" = [ "dep:parking_lot" ];
-          "progress-log" = [ "log" ];
-          "progress-tree" = [ "dashmap" "parking_lot" ];
-          "progress-tree-log" = [ "log" ];
-          "render-line" = [ "crosstermion/color" "humantime" "unicode-width" ];
-          "render-line-autoconfigure" = [ "atty" ];
-          "render-line-crossterm" = [ "crosstermion/crossterm" ];
-          "render-line-termion" = [ "crosstermion/termion" ];
-          "render-tui" = [ "tui" "unicode-segmentation" "unicode-width" "crosstermion/input-async" "tui-react" "futures-lite" "futures-core" "async-io" "humantime" ];
-          "render-tui-crossterm" = [ "crosstermion/tui-react-crossterm" "crosstermion/input-async-crossterm" ];
-          "render-tui-termion" = [ "crosstermion/tui-react-termion" ];
-          "signal-hook" = [ "dep:signal-hook" ];
-          "time" = [ "dep:time" ];
-          "tui" = [ "dep:tui" ];
-          "tui-react" = [ "dep:tui-react" ];
-          "unicode-segmentation" = [ "dep:unicode-segmentation" ];
-          "unicode-width" = [ "dep:unicode-width" ];
-          "unit-bytes" = [ "bytesize" ];
-          "unit-duration" = [ "compound_duration" ];
-          "unit-human" = [ "human_format" ];
-        };
-        resolvedDefaultFeatures = [ "dashmap" "default" "log" "parking_lot" "progress-tree" "progress-tree-log" ];
       };
       "quote" = rec {
         crateName = "quote";
@@ -4426,35 +3983,6 @@ rec {
         };
         resolvedDefaultFeatures = [ "default" "raw_value" "std" ];
       };
-      "serde_yaml" = rec {
-        crateName = "serde_yaml";
-        version = "0.8.26";
-        edition = "2021";
-        sha256 = "06y7gxy312mink8nsnmci9cw0ykpgsdcxmayg0snmdbnnwrp92jp";
-        authors = [
-          "David Tolnay <dtolnay@gmail.com>"
-        ];
-        dependencies = [
-          {
-            name = "indexmap";
-            packageId = "indexmap";
-            features = [ "std" ];
-          }
-          {
-            name = "ryu";
-            packageId = "ryu";
-          }
-          {
-            name = "serde";
-            packageId = "serde";
-          }
-          {
-            name = "yaml-rust";
-            packageId = "yaml-rust";
-          }
-        ];
-
-      };
       "sha1" = rec {
         crateName = "sha1";
         version = "0.10.5";
@@ -4529,20 +4057,6 @@ rec {
           "ringbuffer" = [ "array-ops" ];
         };
         resolvedDefaultFeatures = [ "default" "std" ];
-      };
-      "smallvec" = rec {
-        crateName = "smallvec";
-        version = "1.10.0";
-        edition = "2018";
-        sha256 = "1q2k15fzxgwjpcdv3f323w24rbbfyv711ayz85ila12lg7zbw1x5";
-        authors = [
-          "The Servo Project Developers"
-        ];
-        features = {
-          "arbitrary" = [ "dep:arbitrary" ];
-          "const_new" = [ "const_generics" ];
-          "serde" = [ "dep:serde" ];
-        };
       };
       "smart-default" = rec {
         crateName = "smart-default";
@@ -4762,7 +4276,7 @@ rec {
         dependencies = [
           {
             name = "heck";
-            packageId = "heck 0.3.3";
+            packageId = "heck";
           }
           {
             name = "proc-macro-error";
@@ -6825,7 +6339,7 @@ rec {
           "Win32_UI_Xaml" = [ "Win32_UI" ];
           "Win32_UI_Xaml_Diagnostics" = [ "Win32_UI_Xaml" ];
         };
-        resolvedDefaultFeatures = [ "Win32" "Win32_Foundation" "Win32_Security" "Win32_Security_Authorization" "Win32_Storage" "Win32_Storage_FileSystem" "Win32_System" "Win32_System_LibraryLoader" "Win32_System_SystemServices" "Win32_System_WindowsProgramming" "default" ];
+        resolvedDefaultFeatures = [ "Win32" "Win32_Foundation" "Win32_Security" "Win32_Security_Authorization" "Win32_Storage" "Win32_Storage_FileSystem" "default" ];
       };
       "windows_aarch64_gnullvm" = rec {
         crateName = "windows_aarch64_gnullvm";
@@ -6944,22 +6458,6 @@ rec {
         sha256 = "1xdnvhg8yj4fgjy0vkrahq5cbgfpcd7ak2bdv8s5lwjrazc0j07l";
         authors = [
           "Microsoft"
-        ];
-
-      };
-      "yaml-rust" = rec {
-        crateName = "yaml-rust";
-        version = "0.4.5";
-        edition = "2018";
-        sha256 = "118wbqrr4n6wgk5rjjnlrdlahawlxc1bdsx146mwk8f79in97han";
-        authors = [
-          "Yuheng Chen <yuhengchen@sensetime.com>"
-        ];
-        dependencies = [
-          {
-            name = "linked-hash-map";
-            packageId = "linked-hash-map";
-          }
         ];
 
       };
@@ -7522,14 +7020,15 @@ rec {
       dependencies;
 
   /* Returns whether the given feature should enable the given dependency. */
-  doesFeatureEnableDependency = dependency: feature:
+  doesFeatureEnableDependency = { name, rename ? null, ... }: feature:
     let
-      name = dependency.rename or dependency.name;
       prefix = "${name}/";
       len = builtins.stringLength prefix;
       startsWithPrefix = builtins.substring 0 len feature == prefix;
     in
-    feature == name || startsWithPrefix;
+    (rename == null && feature == name)
+    || (rename != null && rename == feature)
+    || startsWithPrefix;
 
   /* Returns the expanded features for the given inputFeatures by applying the
     rules in featureMap.
@@ -7564,9 +7063,7 @@ rec {
             let
               enabled = builtins.any (doesFeatureEnableDependency dependency) features;
             in
-            if (dependency.optional or false) && enabled
-            then [ (dependency.rename or dependency.name) ]
-            else [ ]
+            if (dependency.optional or false) && enabled then [ dependency.name ] else [ ]
         )
         dependencies;
     in
