@@ -6,9 +6,9 @@
 # commands such as:
 #     nix-build -A mypackage
 
-{ sources ? import ./nix/nvfetcher/sources.nix { }
+{ sources ? import ../nix/nvfetcher/sources.nix { }
 , system ? builtins.currentSystem, crossSystem ? null
-, overlays ? builtins.attrValues (import ./overlays)
+, overlays ? builtins.attrValues (import ../overlays)
 
 , pkgs ? import sources.nixpkgs.src { inherit system crossSystem overlays; }
 
@@ -20,9 +20,7 @@
 let packages = pkgs.holochainPackages;
 in {
   # The `lib`, `modules`, and `overlay` names are special
-  lib = import ./lib { inherit pkgs; }; # functions
-  modules = import ./modules; # NixOS modules
-  overlays = import ./overlays; # nixpkgs overlays
+  overlays = import ../overlays; # nixpkgs overlays
 
   # expose the sources
   inherit sources;
@@ -52,8 +50,6 @@ in {
       pkgs.nixUnstable
       # pkgs.nix-build-uncached
 
-      packages.scripts.nvfetcher-build
-      packages.scripts.nvfetcher-clean
     ] ++ pkgs.lib.optionals (builtins.elem "dev" flavors) [
       rustPlatform.rust.rustc
       rustPlatform.rust.cargo
@@ -62,7 +58,6 @@ in {
 
       pkgs.crate2nix
       packages.scripts.nixpkgs-regen-crate-expressions
-      packages.scripts.hnixpkgs-update-nvfetcher-src
       packages.scripts.hnixpkgs-iter
     ] ++ pkgs.lib.optionals (builtins.elem "release" flavors) [
       packages.update-holochain-versions
