@@ -1,6 +1,6 @@
 { pkgs, lib, stdenv, callPackage, symlinkJoin, nixUnstable, makeWrapper, rsync
 
-, nvfetcher, mkRust, makeRustPlatform, defaultCrateOverrides
+, mkRust, makeRustPlatform, defaultCrateOverrides
 
 , perl, pkg-config, openssl, zlib, libgit2, libssh2, libsodium, darwin, xcbuild
 , libiconv, curl }:
@@ -63,7 +63,7 @@ let
     buildInputs = [ makeWrapper ];
     postBuild = ''
       wrapProgram $out/bin/update-holochain-versions \
-            --suffix PATH ":" ${lib.makeBinPath [ nixUnstable nvfetcher ]}
+            --suffix PATH ":" ${lib.makeBinPath [ nixUnstable ]}
     '';
   };
   holochain-nixpkgs-util-raw =
@@ -85,7 +85,5 @@ let
 in {
   inherit scripts holochain update-holochain-versions holochain-nixpkgs-util
     rustInputAttrs;
-
-  inherit nvfetcher;
 
 }
