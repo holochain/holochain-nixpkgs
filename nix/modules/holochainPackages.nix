@@ -9,8 +9,8 @@
     #   discoverable without IFD.
     mkNoIfdPackage = name: pkg: {
       inherit name;
+      inherit (pkg.holochain) drvPath outPath;
       type = "derivation";
-      drvPath = pkg.holochain.drvPath;
     };
     packagesNoIfd =
       lib.mapAttrs

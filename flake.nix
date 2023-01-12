@@ -86,6 +86,7 @@
   outputs = inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
+        ./nix/modules/checks.nix
         ./nix/modules/devShells.nix
         ./nix/modules/holochainPackages.nix
         ./nix/modules/nixpkgsVersion.nix
