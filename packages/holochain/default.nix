@@ -9,7 +9,8 @@
 # for javascriptcoregtk-4.0.pc which is in dev
 , webkitgtk
 # https://github.com/tauri-apps/wry/issues/605
-, glib-networking }:
+, glib-networking
+, inputs ? (import ../../nix/compat.nix).inputs }:
 
 # TODO: investigate the use-case around 'binsFilter' with end-users before further optimizations
 
@@ -26,16 +27,11 @@ let
     cargo = rust;
   };
 
-  binaryPackages = { url, rev, sha256, binsFilter ? null, rustVersion }:
+  binaryPackages = { src, binsFilter ? null, rustVersion }:
 
     let
       cargo = (rustHelper rustVersion).cargo;
-      src = fetchgit {
-        inherit url rev sha256;
-
-        deepClone = false;
-        leaveDotGit = false;
-      };
+      inherit src;
 
       # evaluate all packages and their binaries
       cargoMetadataOutput = runCommand "packages_binaries" { } ''
@@ -73,20 +69,15 @@ let
     };
 
   # this derivation builds all binaries in a rust repository, creating one output per binary
-  mkRustMultiDrv = { rev, url, sha256, cargoLock, cargoBuildFlags ? [ ]
+  mkRustMultiDrv = args@{ src, cargoLock, cargoBuildFlags ? [ ]
     , binsFilter ? null, binaryPackagesResult ?
-      binaryPackages { inherit url rev sha256 binsFilter rustVersion; }
+      binaryPackages { inherit src binsFilter rustVersion; }
     , rustVersion, isLauncher ? false, isScaffolding ? false }:
     let
+      src = "${args.src}";
       binariesCompatFiltered = binaryPackagesResult.binariesCompatFiltered;
       name = builtins.concatStringsSep "_"
         (builtins.attrNames binariesCompatFiltered);
-      src = fetchgit {
-        inherit url rev sha256;
-
-        deepClone = false;
-        leaveDotGit = false;
-      };
 
       inherit (rustHelper rustVersion) rust rustPlatform;
 
@@ -171,45 +162,45 @@ let
     });
 
   mkHolochainAllBinaries =
-    { url, rev, sha256, cargoLock, binsFilter, rustVersion, cargoBuildFlags }:
+    { src, cargoLock, binsFilter, rustVersion, cargoBuildFlags }:
     let
       binaryPackagesResult =
-        binaryPackages { inherit url rev sha256 binsFilter rustVersion; };
+        binaryPackages { inherit src binsFilter rustVersion; };
 
     in lib.attrsets.mapAttrs (_: compat:
       builtins.getAttr compat (mkRustMultiDrv {
-        inherit url rev sha256 cargoLock binaryPackagesResult rustVersion
+        inherit src cargoLock binaryPackagesResult rustVersion
           cargoBuildFlags;
       })) binaryPackagesResult.binariesCompatFiltered;
 
-  mkHolochainAllBinariesWithDeps = { url, rev, sha256, cargoLock
+  mkHolochainAllBinariesWithDeps = { src, cargoLock
     , binsFilter ? null, lair, scaffolding ? null, launcher ? null
     , rustVersion ? defaultRustVersion, cargoBuildFlags ? [ ] }:
     (mkHolochainAllBinaries {
-      inherit url rev sha256 cargoLock binsFilter rustVersion cargoBuildFlags;
+      inherit src cargoLock binsFilter rustVersion cargoBuildFlags;
     }) // (lib.optionalAttrs (lair != null) {
       lair-keystore = (mkRustMultiDrv {
-        inherit (lair) url rev sha256 cargoLock binsFilter;
+        inherit (lair) src cargoLock binsFilter;
         cargoBuildFlags = lair.cargoBuildFlags or [ ];
         rustVersion = lair.rustVersion or rustVersion;
       }).lair_keystore;
     }) // (lib.optionalAttrs (scaffolding != null) {
       scaffolding = (mkRustMultiDrv {
-        inherit (scaffolding) url rev sha256 cargoLock binsFilter;
+        inherit (scaffolding) src cargoLock binsFilter;
         cargoBuildFlags = scaffolding.cargoBuildFlags or [ ];
         rustVersion = scaffolding.rustVersion or rustVersion;
         isScaffolding = true;
       }).hc_scaffold;
     }) // (lib.optionalAttrs (launcher != null) {
       launcher = (mkRustMultiDrv {
-        inherit (launcher) url rev sha256 cargoLock binsFilter;
+        inherit (launcher) src cargoLock binsFilter;
         cargoBuildFlags = launcher.cargoBuildFlags or [ ];
         rustVersion = launcher.rustVersion or rustVersion;
         isLauncher = true;
       }).hc_launch;
     });
 
-  holochainVersions = lib.attrsets.mapAttrs' (name': value': {
+  holochainVersions_old = lib.attrsets.mapAttrs' (name': value': {
     name = lib.strings.replaceStrings [ ".nix" ] [ "" ] name';
     value = import ((builtins.toString ./.) + "/versions/${name'}");
   })
@@ -217,6 +208,36 @@ let
     (lib.attrsets.filterAttrs
       (name: value: (lib.strings.hasSuffix ".nix" name) && (value == "regular"))
       (builtins.readDir ./versions));
+
+  versions = [
+    "main"
+    "develop"
+    "v0_0_171"
+    "v0_0_172"
+    "v0_0_173"
+    "v0_0_174"
+    "v0_0_175"
+    "v0_1_0-beta-rc_0"
+    "v0_1_0-beta-rc_1"
+    "v0_1_0-beta-rc_2"
+  ];
+
+  mkHolochainVersionArgs = holochain: import ./mkHolochainVersionArgs.nix {
+    inherit holochain;
+    inherit (inputs)
+      lair
+      scaffolding
+      launcher
+      ;
+  };
+
+  holochainInputs =
+    lib.filterAttrs
+    (input: src: (lib.hasPrefix "holochain_" input))
+    inputs;
+
+  holochainVersions =
+    lib.mapAttrs (_: mkHolochainVersionArgs) holochainInputs;
 
 in {
   inherit mkHolochainAllBinaries mkHolochainAllBinariesWithDeps

@@ -6,7 +6,7 @@
 # commands such as:
 #     nix-build -A mypackage
 
-{ sources ? import ../nix/nvfetcher/sources.nix { }
+{ sources ? builtins.mapAttrs (_: inp: {src = "${inp}";}) (import ./compat.nix).inputs
 , system ? builtins.currentSystem, crossSystem ? null
 , overlays ? builtins.attrValues (import ../overlays)
 
