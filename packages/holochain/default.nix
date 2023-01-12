@@ -200,28 +200,6 @@ let
       }).hc_launch;
     });
 
-  holochainVersions_old = lib.attrsets.mapAttrs' (name': value': {
-    name = lib.strings.replaceStrings [ ".nix" ] [ "" ] name';
-    value = import ((builtins.toString ./.) + "/versions/${name'}");
-  })
-
-    (lib.attrsets.filterAttrs
-      (name: value: (lib.strings.hasSuffix ".nix" name) && (value == "regular"))
-      (builtins.readDir ./versions));
-
-  versions = [
-    "main"
-    "develop"
-    "v0_0_171"
-    "v0_0_172"
-    "v0_0_173"
-    "v0_0_174"
-    "v0_0_175"
-    "v0_1_0-beta-rc_0"
-    "v0_1_0-beta-rc_1"
-    "v0_1_0-beta-rc_2"
-  ];
-
   mkHolochainVersionArgs = holochain: import ./mkHolochainVersionArgs.nix {
     inherit holochain;
     inherit (inputs)

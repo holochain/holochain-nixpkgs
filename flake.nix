@@ -86,7 +86,10 @@
   outputs = inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
-        ./nix/modules/all.nix
+        ./nix/modules/devShells.nix
+        ./nix/modules/holochainPackages.nix
+        ./nix/modules/nixpkgsVersion.nix
+        ./nix/modules/NIX_PATH.nix
       ];
       systems = [ "x86_64-linux" "x86_64-darwin" "aarch64-darwin" ];
       perSystem = { config, self', inputs', ... }: {
@@ -99,7 +102,6 @@
         # The usual flake attributes can be defined here, including system-
         # agnostic ones like nixosModule and system-enumerating ones, although
         # those are more easily expressed in perSystem.
-
       };
     };
 }

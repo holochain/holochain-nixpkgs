@@ -21,6 +21,9 @@ jobs:
         uses: actions/checkout@v3
       - name: Install nix
         uses: cachix/install-nix-action@v18
+        with:
+          extra_nix_config: |
+            experimental-features = flakes nix-command
       - name: Setup cachix
         uses: cachix/cachix-action@v12
         if: "${{ matrix.cachixName != '<YOUR_CACHIX_NAME>' }}"
@@ -28,9 +31,9 @@ jobs:
           name: "${{ matrix.cachixName }}"
           signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-      - name: Set NIX_PATH (FIXME)
+      - name: Set NIX_PATH
         if: "${{ matrix.platform == 'macos-latest' }}"
-        run: "echo NIX_PATH=nixpkgs=$(nix eval --impure --raw --expr '(import ./nix/nvfetcher/sources.nix {}).nixpkgs.src') >> $GITHUB_ENV"
+        run: "echo NIX_PATH=$(nix eval .#NIX_PATH) >> $GITHUB_ENV"
       - name: Run cargo tests
         run: "nix-shell --pure --run \"cargo test\""
   holochain-binaries:
@@ -64,7 +67,7 @@ jobs:
       - name: Install nix
         uses: cachix/install-nix-action@v18
       - name: Show nixpkgs version
-        run: "nix-instantiate --eval -E '(import (import ./nix/nvfetcher/sources.nix {}).nixpkgs.src {}).lib.version'"
+        run: "nix eval .#nixpkgsVersion"
       - name: Setup cachix
         uses: cachix/cachix-action@v12
         if: "${{ matrix.cachixName != '<YOUR_CACHIX_NAME>' }}"
@@ -76,39 +79,7 @@ jobs:
         continue-on-error: "${{ matrix.platform == 'macos-latest' }}"
         env:
           nix_attribute: "${{ matrix.nixAttribute }}"
-        run: "nix build -f . \"packages.holochain.holochainAllBinariesWithDeps.${nix_attribute}\" --extra-experimental-features nix-command"
-  packages:
-    strategy:
-      fail-fast: false
-      matrix:
-        platform:
-          - ubuntu-latest
-          - macos-latest
-        nixAttribute:
-          - update-holochain-versions
-          - holochain-nixpkgs-util
-        cachixName:
-          - holochain-ci
-    runs-on: "${{ matrix.platform }}"
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Install nix
-        uses: cachix/install-nix-action@v18
-      - name: Show nixpkgs version
-        run: "nix-instantiate --eval -E '(import (import ./nix/nvfetcher/sources.nix {}).nixpkgs.src {}).lib.version'"
-      - name: Setup cachix
-        uses: cachix/cachix-action@v12
-        if: "${{ matrix.cachixName != '<YOUR_CACHIX_NAME>' }}"
-        with:
-          name: "${{ matrix.cachixName }}"
-          signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-      - name: Build derivations
-        continue-on-error: "${{ matrix.platform == 'macos-latest' }}"
-        env:
-          nix_attribute: "${{ matrix.nixAttribute }}"
-        run: "nix build -f . \"packages.${nix_attribute}\" --extra-experimental-features nix-command"
+        run: "nix build .#holochain_${nix_attribute}"
   all-jobs-succeed:
     runs-on: ubuntu-latest
     if: always()

@@ -14,35 +14,6 @@ concurrency:
 
 jobs:
   update:
-    strategy:
-      fail-fast: false
-      matrix:
-        command:
-          - name: holochain-tags
-            run: |
-              nix-shell \
-                --pure --arg flavors '["release"]' \
-                --run "holochain-nixpkgs-util update-holochain-tags"
-          - name: holochain-main
-            run: |
-              nix-shell \
-              --pure --arg flavors '["release"]' \
-              --run "hnixpkgs-update-single main"
-          - name: holochain-develop
-            run: |
-              nix-shell \
-              --pure --arg flavors '["release"]' \
-              --run "hnixpkgs-update-single develop"
-          - name: rust-overlay
-            run: |
-              nix-shell \
-                --pure --arg flavors '["dev"]' \
-                --run "hnixpkgs-update-nvfetcher-src rust-overlay"
-          - name: nixpkgs
-            run: |
-              nix-shell \
-                --pure --arg flavors '["dev"]' \
-                --run "hnixpkgs-update-nvfetcher-src nixpkgs"
     runs-on: "ubuntu-latest"
     steps:
       - name: Checkout repository
@@ -59,8 +30,11 @@ jobs:
         run: |
           git config --global user.email "hrabot@holochain.org"
           git config --global user.name "Holochain Release Automation"
-      - name: ${{ matrix.command.name }}
-        run: ${{ matrix.command.run }}
+      - name: update holochain-nixpkgs flake inputs
+        run: |
+          nix flake update 2> /tmp/update-commit-mgs
+          git add .
+          git commit -m "$(cat /tmp/update-commit-mgs)"
       - name: evaluate the existence of relevant commits
         id: eval-commits
         run: |
