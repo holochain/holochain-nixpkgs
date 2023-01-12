@@ -91,6 +91,7 @@
         ./nix/modules/holochainPackages.nix
         ./nix/modules/nixpkgsVersion.nix
         ./nix/modules/NIX_PATH.nix
+        ./nix/modules/update.nix
       ];
       systems = [ "x86_64-linux" "x86_64-darwin" "aarch64-darwin" ];
       perSystem = { config, self', inputs', ... }: {
