@@ -17,6 +17,10 @@
       mkNoIfdPackage
       defaultNix.packages.holochain.holochainAllBinariesWithDeps;
   in {
-    packages = packagesNoIfd;
+    packages =
+      packagesNoIfd
+      // {
+        holochain = packagesNoIfd.holochain_main;
+      };
   };
 }
