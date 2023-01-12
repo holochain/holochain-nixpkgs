@@ -60,8 +60,6 @@ in {
       packages.scripts.nixpkgs-regen-crate-expressions
       packages.scripts.hnixpkgs-iter
     ] ++ pkgs.lib.optionals (builtins.elem "release" flavors) [
-      packages.update-holochain-versions
-      packages.holochain-nixpkgs-util
 
       packages.scripts.hnixpkgs-update-single
       packages.scripts.hnixpkgs-update-all

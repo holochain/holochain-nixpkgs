@@ -40,36 +40,11 @@ let
       libssh2-sys = rustInputAttrs;
     };
   };
-  update-holochain-versions-raw =
-    crate2nixGenerated.workspaceMembers.update-holochain-versions.build.override {
-      # TODO: tests run nix which currently fails within a nix build.
-      runTests = false;
-      testPreRun = ''
-        mv test test.bkp
-        mkdir test
-        ${rsync}/bin/rsync -rLv test.bkp/ test/
-        find test/
-        chmod -R +w test
-
-        # mkdir nix-store
-        export NIX_PATH=nixpkgs=${pkgs.path}
-      '';
-      testInputs = [ nixUnstable ];
-    };
-  update-holochain-versions = symlinkJoin {
-    inherit (update-holochain-versions-raw) name;
-    paths = [ update-holochain-versions-raw ];
-    buildInputs = [ makeWrapper ];
-    postBuild = ''
-      wrapProgram $out/bin/update-holochain-versions \
-            --suffix PATH ":" ${lib.makeBinPath [ nixUnstable ]}
-    '';
-  };
 
   scripts =
-    callPackage ./scripts.nix { inherit holochain update-holochain-versions; };
+    callPackage ./scripts.nix { inherit holochain; };
 in {
-  inherit scripts holochain update-holochain-versions
+  inherit scripts holochain
     rustInputAttrs;
 
 }
