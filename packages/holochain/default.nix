@@ -152,7 +152,8 @@ let
           webkitgtk.dev
           gdk-pixbuf
           gtk3
-        ] ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
+        ] ++ lib.optionals stdenv.isDarwin
+        (with darwin.apple_sdk_11_0.frameworks; [
           AppKit
           CoreFoundation
           CoreServices
