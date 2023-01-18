@@ -143,19 +143,22 @@ let
           # atk
           # pango
           libsoup
-          gdk-pixbuf
-          gtk3
           # libappindicator
           # clang
-          webkitgtk.dev
           glib-networking
-        ] ++ lib.optionals (isLauncher && !stdenv.isDarwin) [ glibc glib ]
-        ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
+        ] ++ lib.optionals (isLauncher && !stdenv.isDarwin) [
+          glibc
+          glib
+          webkitgtk.dev
+          gdk-pixbuf
+          gtk3
+        ] ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
           AppKit
           CoreFoundation
           CoreServices
           Security
           libiconv
+          WebKit
         ]);
 
       RUST_SODIUM_LIB_DIR = "${libsodium}/lib";
@@ -167,12 +170,8 @@ let
 
       doCheck = false;
 
-      meta.platforms = [
-        "aarch64-linux"
-        "aarch64-darwin"
-        "x86_64-linux"
-        "x86_64-darwin"
-      ];
+      meta.platforms =
+        [ "aarch64-linux" "aarch64-darwin" "x86_64-linux" "x86_64-darwin" ];
     });
 
   mkHolochainAllBinaries =
