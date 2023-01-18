@@ -51,7 +51,7 @@ mod update_holochain_tags {
         #[clap(long)]
         dry_run: bool,
 
-        #[clap(long, default_value_t = 10)]
+        #[clap(long, default_value_t = 3)]
         keep_tags: u8,
 
         #[clap(long, default_value = ".github/workflows/build.yml")]
