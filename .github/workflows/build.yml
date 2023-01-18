@@ -34,7 +34,7 @@ jobs:
         if: "${{ matrix.platform == 'macos-11' }}"
         run: "echo NIX_PATH=nixpkgs=$(nix eval --impure --raw --expr '(import ./nix/nvfetcher/sources.nix {}).nixpkgs.src') >> $GITHUB_ENV"
       - name: Run cargo tests
-        run: "nix-shell --pure --run \"cargo test\""
+        run: 'nix-shell --pure --run "cargo test"'
   holochain-binaries:
     strategy:
       fail-fast: false
