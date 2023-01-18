@@ -104,7 +104,7 @@ in {
       exit 1
     fi
 
-    ${pkgs.nixUnstable}/bin/nix run --extra-experimental-features nix-command --impure --expr "(import ./default.nix {}).packages.scripts._hnixpkgs-update \"''${1:?}\""
+    ${pkgs.nix}/bin/nix run --extra-experimental-features nix-command --impure --expr "(import ./default.nix {}).packages.scripts._hnixpkgs-update \"''${1:?}\""
   '');
 
   hnixpkgs-update-all = writeShellScriptBin "hnixpkgs-update-all"

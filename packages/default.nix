@@ -1,4 +1,4 @@
-{ pkgs, lib, stdenv, callPackage, symlinkJoin, nixUnstable, makeWrapper, rsync
+{ pkgs, lib, stdenv, callPackage, symlinkJoin, nix, makeWrapper, rsync
 
 , nvfetcher, mkRust, makeRustPlatform, defaultCrateOverrides
 
@@ -27,7 +27,7 @@ let
         libiconv
       ]) ++ [ curl.dev ]));
   };
-  opensslStatic = openssl.override (_: { static = true; });
+  opensslStatic = pkgs.pkgsStatic.openssl;
   holochain = callPackage ./holochain {
     inherit mkRust makeRustPlatform;
     defaultRustVersion = pkgs.rust.packages.holochain.rust.rustc.version;
@@ -55,7 +55,7 @@ let
         # mkdir nix-store
         export NIX_PATH=nixpkgs=${pkgs.path}
       '';
-      testInputs = [ nixUnstable ];
+      testInputs = [ nix ];
     };
   update-holochain-versions = symlinkJoin {
     inherit (update-holochain-versions-raw) name;
@@ -63,7 +63,7 @@ let
     buildInputs = [ makeWrapper ];
     postBuild = ''
       wrapProgram $out/bin/update-holochain-versions \
-            --suffix PATH ":" ${lib.makeBinPath [ nixUnstable nvfetcher ]}
+            --suffix PATH ":" ${lib.makeBinPath [ nix nvfetcher ]}
     '';
   };
   holochain-nixpkgs-util-raw =
