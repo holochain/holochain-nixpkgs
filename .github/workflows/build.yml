@@ -12,7 +12,7 @@ jobs:
       matrix:
         platform:
           - ubuntu-latest
-          - macos-latest
+          - macos-11
         cachixName:
           - holochain-ci
     runs-on: "${{ matrix.platform }}"
@@ -31,7 +31,7 @@ jobs:
           signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Set NIX_PATH (FIXME)
-        if: "${{ matrix.platform == 'macos-latest' }}"
+        if: "${{ matrix.platform == 'macos-11' }}"
         run: "echo NIX_PATH=nixpkgs=$(nix eval --impure --raw --expr '(import ./nix/nvfetcher/sources.nix {}).nixpkgs.src') >> $GITHUB_ENV"
       - name: Run cargo tests
         run: "nix-shell --pure --run \"cargo test\""
@@ -41,7 +41,7 @@ jobs:
       matrix:
         platform:
           - ubuntu-latest
-          - macos-latest
+          - macos-11
         nixAttribute:
           - develop
           - v0_1_0-beta-rc_2
@@ -70,17 +70,17 @@ jobs:
           signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Build derivations
-        continue-on-error: "${{ matrix.platform == 'macos-latest' }}"
+        continue-on-error: "${{ matrix.platform == 'macos-11' }}"
         env:
           nix_attribute: "${{ matrix.nixAttribute }}"
-        run: "nix build -f . \"packages.holochain.holochainAllBinariesWithDeps.${nix_attribute}\" --extra-experimental-features nix-command"
+        run: 'nix build -f . "packages.holochain.holochainAllBinariesWithDeps.${nix_attribute}" --extra-experimental-features nix-command'
   packages:
     strategy:
       fail-fast: false
       matrix:
         platform:
           - ubuntu-latest
-          - macos-latest
+          - macos-11
         nixAttribute:
           - update-holochain-versions
           - holochain-nixpkgs-util
@@ -104,7 +104,7 @@ jobs:
           signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Build derivations
-        continue-on-error: "${{ matrix.platform == 'macos-latest' }}"
+        continue-on-error: "${{ matrix.platform == 'macos-11' }}"
         env:
           nix_attribute: "${{ matrix.nixAttribute }}"
         run: "nix build -f . \"packages.${nix_attribute}\" --extra-experimental-features nix-command"
