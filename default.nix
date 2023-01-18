@@ -49,7 +49,7 @@ in {
       pkgs.git-lfs
       pkgs.gh
       pkgs.cacert
-      pkgs.nixUnstable
+      pkgs.nix
       # pkgs.nix-build-uncached
 
       packages.scripts.nvfetcher-build
