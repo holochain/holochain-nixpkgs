@@ -5,8 +5,6 @@
 
   overrides = self: super: {
     toplevel = builtins.toString ./..;
-    nvfetcher =
-      (import self.localSources.nvfetcher.src).defaultPackage."${self.system}";
 
     pkgsPure = import self.localSources.nixpkgs.src { inherit (self) system; };
 
