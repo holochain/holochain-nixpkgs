@@ -23,6 +23,12 @@
       leaveDotGit = false;
       sha256 = "sha256-2PCaKrE39fwdMNUTqbZMUCLjjkoq+u1bYCOrcdEMZ84=";
     };
+    cargoLock = {
+      lockFile = ./holochain_branch_develop-ca75e980f926c72d1d082239c8a7252a71254421/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_branch_main = {
     pname = "holochain_branch_main";
@@ -34,6 +40,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-H6kJeYP2DcMQcb5tBQpt/XtCqfr+P9XLgNMWzG1Nwaw=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_branch_main-eb1e637c353190bfdba8b742c6b8bbb1b3f4a669/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_cli_launch_revision_holochain_cli_launch-0_0_2-alpha_1 = {
@@ -47,6 +59,13 @@
       leaveDotGit = false;
       sha256 = "sha256-nsWb2amPTgn++0huNq/IEMDTWV8w/v9HJyRpWCeNmYs=";
     };
+    cargoLock = {
+      lockFile = ./holochain_cli_launch_revision_holochain_cli_launch-0_0_2-alpha_1-holochain_cli_launch-0.0.2-alpha.1/Cargo.lock;
+      outputHashes = {
+        "fixt-0.0.14" = "sha256-ncUBmWCozBhuTAWDRggLgqXrsJNjy7E2eETxqgYqGw8=";
+        "holochain_client-0.2.0" = "sha256-a1w4HgGnBKMkaa4xY62ZTA4OqWlBaFVLyzkEi0vxmWU=";
+      };
+    };
   };
   holochain_cli_launch_revision_holochain_cli_launch-0_0_3-alpha_1 = {
     pname = "holochain_cli_launch_revision_holochain_cli_launch-0_0_3-alpha_1";
@@ -58,6 +77,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-LHINn5TJJ2ttHGUp2PjSA/qqR0rV8cBf5zYiK8RcIdA=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_cli_launch_revision_holochain_cli_launch-0_0_3-alpha_1-holochain_cli_launch-0.0.3-alpha.1/Cargo.lock;
+      outputHashes = {
+        "holochain_client-0.2.0" = "sha256-zJGc2H+dGFz5/yd9ryG6q94qBhsLdrJBjuBahcRWtGE=";
+      };
     };
   };
   holochain_cli_launch_revision_holochain_cli_launch-0_0_3-alpha_2 = {
@@ -71,6 +96,12 @@
       leaveDotGit = false;
       sha256 = "sha256-LGgWfxhXg6lDcEjhNOqW5jpz4F1QumQf8ZHz727Xn2A=";
     };
+    cargoLock = {
+      lockFile = ./holochain_cli_launch_revision_holochain_cli_launch-0_0_3-alpha_2-holochain_cli_launch-0.0.3-alpha.2/Cargo.lock;
+      outputHashes = {
+        "holochain_client-0.2.0" = "sha256-zJGc2H+dGFz5/yd9ryG6q94qBhsLdrJBjuBahcRWtGE=";
+      };
+    };
   };
   holochain_cli_launch_revision_holochain_cli_launch-0_0_4-alpha_0 = {
     pname = "holochain_cli_launch_revision_holochain_cli_launch-0_0_4-alpha_0";
@@ -82,6 +113,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-UxMnwNFJTFyJvDP39OZZ3T1ZSkOc9fidHuXyAKu7mhA=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_cli_launch_revision_holochain_cli_launch-0_0_4-alpha_0-holochain_cli_launch-0.0.4-alpha.0/Cargo.lock;
+      outputHashes = {
+        "holochain_client-0.2.0" = "sha256-zJGc2H+dGFz5/yd9ryG6q94qBhsLdrJBjuBahcRWtGE=";
+      };
     };
   };
   holochain_cli_launch_revision_holochain_cli_launch-0_0_4-alpha_1 = {
@@ -95,6 +132,12 @@
       leaveDotGit = false;
       sha256 = "sha256-JoNQagflNiHBnA2g9iVWNjCtlC2x2sYMlNO7jhETprI=";
     };
+    cargoLock = {
+      lockFile = ./holochain_cli_launch_revision_holochain_cli_launch-0_0_4-alpha_1-holochain_cli_launch-0.0.4-alpha.1/Cargo.lock;
+      outputHashes = {
+        "holochain_client-0.2.0" = "sha256-zJGc2H+dGFz5/yd9ryG6q94qBhsLdrJBjuBahcRWtGE=";
+      };
+    };
   };
   holochain_cli_launch_revision_holochain_cli_launch-0_0_5 = {
     pname = "holochain_cli_launch_revision_holochain_cli_launch-0_0_5";
@@ -106,6 +149,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-H53sxXHXifdrE0h0shQY/3DPI3eXAS74FdK7W/nj6pE=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_cli_launch_revision_holochain_cli_launch-0_0_5-holochain_cli_launch-0.0.5/Cargo.lock;
+      outputHashes = {
+        "holochain_client-0.2.0" = "sha256-zJGc2H+dGFz5/yd9ryG6q94qBhsLdrJBjuBahcRWtGE=";
+      };
     };
   };
   holochain_revision_holochain-0_0_103 = {
@@ -119,6 +168,12 @@
       leaveDotGit = false;
       sha256 = "sha256-p9E1It1iZIsb8gntDljZcU3bL/BnkvwY2Y4JGegKHvw=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_103-holochain-0.0.103/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
+    };
   };
   holochain_revision_holochain-0_0_104 = {
     pname = "holochain_revision_holochain-0_0_104";
@@ -130,6 +185,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-wlm18JEFn+1tFM2z7jMOI1PT2ZHLzUT4AegoUb9uqmM=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_104-holochain-0.0.104/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
     };
   };
   holochain_revision_holochain-0_0_105 = {
@@ -143,6 +204,12 @@
       leaveDotGit = false;
       sha256 = "sha256-v75v5XsKpOFEQ+scTRTsWzqpgrdXBb2Id3Wg25QG6j8=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_105-holochain-0.0.105/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
+    };
   };
   holochain_revision_holochain-0_0_106 = {
     pname = "holochain_revision_holochain-0_0_106";
@@ -154,6 +221,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-+uMVxzbBUE7wrw295NYyqEHLWg5UUXcoF/fXBvJtkhw=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_106-holochain-0.0.106/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
     };
   };
   holochain_revision_holochain-0_0_107 = {
@@ -167,6 +240,12 @@
       leaveDotGit = false;
       sha256 = "sha256-ccZyr82y//UJUzospykYbdK1C8OyL7+aVCTfDiCkrNQ=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_107-holochain-0.0.107/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
+    };
   };
   holochain_revision_holochain-0_0_108 = {
     pname = "holochain_revision_holochain-0_0_108";
@@ -178,6 +257,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-Wv4Xu1Er/QwJHgapX6/Gz6HgwhpJRRIE+55y0UTDOd0=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_108-holochain-0.0.108/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
     };
   };
   holochain_revision_holochain-0_0_109 = {
@@ -191,6 +276,12 @@
       leaveDotGit = false;
       sha256 = "sha256-C4vQxRM9GSVpYBIOn9lGoWzD13W3HAQaY6I0hnzQmuc=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_109-holochain-0.0.109/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
+    };
   };
   holochain_revision_holochain-0_0_110 = {
     pname = "holochain_revision_holochain-0_0_110";
@@ -202,6 +293,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-XBtsT24tvZiss3tPCitP/Pl6y2eHLh7CXZCeTDV207s=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_110-holochain-0.0.110/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
     };
   };
   holochain_revision_holochain-0_0_111 = {
@@ -215,6 +312,12 @@
       leaveDotGit = false;
       sha256 = "sha256-EkLYJJHdOKbJDrMQk4YwAyaXN1eivFW06eLnocYNBZw=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_111-holochain-0.0.111/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
+    };
   };
   holochain_revision_holochain-0_0_112 = {
     pname = "holochain_revision_holochain-0_0_112";
@@ -226,6 +329,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-NiDjI01JuCbEC4qzda+s9zyyQVuGhwa1yZAW60yylw0=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_112-holochain-0.0.112/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
     };
   };
   holochain_revision_holochain-0_0_113 = {
@@ -239,6 +348,12 @@
       leaveDotGit = false;
       sha256 = "sha256-OI/iKa+LptI8AJn58riVWfw+o/BZBaLJVR1dxIMEk2U=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_113-holochain-0.0.113/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
+    };
   };
   holochain_revision_holochain-0_0_114 = {
     pname = "holochain_revision_holochain-0_0_114";
@@ -250,6 +365,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-ocPRN1+HyPrp/TtqV0k5xsn2pP9+i4AXM6cYZlntbuQ=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_114-holochain-0.0.114/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
     };
   };
   holochain_revision_holochain-0_0_115 = {
@@ -263,6 +384,12 @@
       leaveDotGit = false;
       sha256 = "sha256-O35wWoqpN8VkaPaKxbx+TcoduwUVuOJOtBfzI2Lcbpg=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_115-holochain-0.0.115/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
+    };
   };
   holochain_revision_holochain-0_0_116 = {
     pname = "holochain_revision_holochain-0_0_116";
@@ -274,6 +401,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-VNhVCoRnJfARM64cD7EpdCBtbZFe1k50k+ZakHV5dR8=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_116-holochain-0.0.116/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
     };
   };
   holochain_revision_holochain-0_0_117 = {
@@ -287,6 +420,12 @@
       leaveDotGit = false;
       sha256 = "sha256-O9VHSbnCFoC5FcL9uHWAUUgr23AEbNnerm1N/9vBuPc=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_117-holochain-0.0.117/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
+    };
   };
   holochain_revision_holochain-0_0_118 = {
     pname = "holochain_revision_holochain-0_0_118";
@@ -298,6 +437,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-g3zO9XTWHaP9q7D6AsEohdvLVHtZF6GzuzQg0Ez2So8=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_118-holochain-0.0.118/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
     };
   };
   holochain_revision_holochain-0_0_119 = {
@@ -311,6 +456,12 @@
       leaveDotGit = false;
       sha256 = "sha256-3S4zUCh1MXVaf6qCI0NlgOpiq1msobgUUTmlSPv6KzU=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_119-holochain-0.0.119/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
+    };
   };
   holochain_revision_holochain-0_0_120 = {
     pname = "holochain_revision_holochain-0_0_120";
@@ -322,6 +473,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-X16Nsjxzj38JX13jysifVOrEzB9/fZZIbe5+fEHX16k=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_120-holochain-0.0.120/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
     };
   };
   holochain_revision_holochain-0_0_121 = {
@@ -335,6 +492,12 @@
       leaveDotGit = false;
       sha256 = "sha256-nZEySolvpXnTz9XlR+34rn6GJM/sj3y3snqhNGvmMkM=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_121-holochain-0.0.121/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
+    };
   };
   holochain_revision_holochain-0_0_122 = {
     pname = "holochain_revision_holochain-0_0_122";
@@ -346,6 +509,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-ptTOz1CVWBPMawoYdJJKlOQqweuSrCmjcgCw7sA9VyA=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_122-holochain-0.0.122/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
     };
   };
   holochain_revision_holochain-0_0_123 = {
@@ -359,6 +528,12 @@
       leaveDotGit = false;
       sha256 = "sha256-xhAzh+/bUgqxXuy8aVA0uvkb+28wJ7LiyoswguP4JIQ=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_123-holochain-0.0.123/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
+    };
   };
   holochain_revision_holochain-0_0_124 = {
     pname = "holochain_revision_holochain-0_0_124";
@@ -370,6 +545,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-TIBlBVSH/oWVWEFiBbM0rklyR7Ru5aKR0A9oaVGvalU=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_124-holochain-0.0.124/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
     };
   };
   holochain_revision_holochain-0_0_125 = {
@@ -383,6 +564,12 @@
       leaveDotGit = false;
       sha256 = "sha256-Kj2ryH2Uwk8Ni5WNcsZMU3XRs0s21alrdWak5ZKMSYg=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_125-holochain-0.0.125/Cargo.lock;
+      outputHashes = {
+        "cargo-test-macro-0.1.0" = "sha256-hIGpT0n41CA24vss4itXS3O2XrznsBce/60PUVrwwfs=";
+      };
+    };
   };
   holochain_revision_holochain-0_0_126 = {
     pname = "holochain_revision_holochain-0_0_126";
@@ -394,6 +581,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-YG9OxMqP77K8VtFpM6pEsDApX/S9fivx+j9bSnvHni0=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_126-holochain-0.0.126/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_127 = {
@@ -407,6 +600,12 @@
       leaveDotGit = false;
       sha256 = "sha256-NfrasLnSblIh4Rhfhh95qeEtG+9Tihfcn+CIgRpnwus=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_127-holochain-0.0.127/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_128 = {
     pname = "holochain_revision_holochain-0_0_128";
@@ -418,6 +617,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-Tzo5ExJJ/NpY+WOu63WT1J/7weprEU8Y4ECFnSgRilA=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_128-holochain-0.0.128/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_129 = {
@@ -431,6 +636,12 @@
       leaveDotGit = false;
       sha256 = "sha256-Mtp9fI71JqM/Qa3wsUvwkGlQdVQH3vOdD7jtYaqVdbg=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_129-holochain-0.0.129/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_130 = {
     pname = "holochain_revision_holochain-0_0_130";
@@ -442,6 +653,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-VgiyhNwauv2a8arR3N45o7wXTsJ5Ip/Nv96r/bW3d1I=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_130-holochain-0.0.130/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_131 = {
@@ -455,6 +672,12 @@
       leaveDotGit = false;
       sha256 = "sha256-zEsVDzbhMBBp6hJ4d79PcVIjFTl+Lmpwkl5TAmqZOyM=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_131-holochain-0.0.131/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_132 = {
     pname = "holochain_revision_holochain-0_0_132";
@@ -466,6 +689,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-nJ/SrPUhUEX9bHGbP4tGo9ZPocR8GZxUfpJgy2Lo74s=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_132-holochain-0.0.132/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_135 = {
@@ -479,6 +708,12 @@
       leaveDotGit = false;
       sha256 = "sha256-9jUxpwjKtQc9nnaFKwGC8SUlJ9hMRkdi1B40cwRc/rQ=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_135-holochain-0.0.135/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_136 = {
     pname = "holochain_revision_holochain-0_0_136";
@@ -490,6 +725,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-SXYSj0sBJSjTOr8LGoYwgF4FW8qgmdXaZ6fVDK5GJCo=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_136-holochain-0.0.136/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_137 = {
@@ -503,6 +744,12 @@
       leaveDotGit = false;
       sha256 = "sha256-qDHa15r+Id4IH6rsiggJHhYa1qelt5fLrrrwUtsq3yI=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_137-holochain-0.0.137/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_138 = {
     pname = "holochain_revision_holochain-0_0_138";
@@ -514,6 +761,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-6kmi2rs/Vmas2CkV4xmMsQk9kdz0N/nnglm94J1+Swo=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_138-holochain-0.0.138/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_139 = {
@@ -527,6 +780,12 @@
       leaveDotGit = false;
       sha256 = "sha256-zTEqWs4U7MNf/obqb4oTZr6LcbKYDgQu0pVHqnyHx3c=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_139-holochain-0.0.139/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_140 = {
     pname = "holochain_revision_holochain-0_0_140";
@@ -538,6 +797,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-dfRs02sFp3U2yK+FmyVMRQQqbbtBuAqgQ7FdTmN1K9I=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_140-holochain-0.0.140/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_141 = {
@@ -551,6 +816,12 @@
       leaveDotGit = false;
       sha256 = "sha256-rYRYKSxJMaIBjT5+FjkZTrXIP+exkkUkMroVhz0tTwI=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_141-holochain-0.0.141/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_142 = {
     pname = "holochain_revision_holochain-0_0_142";
@@ -562,6 +833,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-YFccih5b+JQ9u1TeMKKnYPjx9VLp4gDJFma56gImMkQ=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_142-holochain-0.0.142/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_143 = {
@@ -575,6 +852,12 @@
       leaveDotGit = false;
       sha256 = "sha256-XX+6hBq/6R/8rDCArHq12OYnOCjZ21C3ouFFFM2RmuE=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_143-holochain-0.0.143/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_144 = {
     pname = "holochain_revision_holochain-0_0_144";
@@ -586,6 +869,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-OfWKY0wBWuS2FuAS04kG2Mea+g7EbmMJT4CRTQiRlBs=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_144-holochain-0.0.144/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_145 = {
@@ -599,6 +888,12 @@
       leaveDotGit = false;
       sha256 = "sha256-NyhR+Sa7B/pi7Wou9A0EoRndoChTJudjhmaBm5zN86I=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_145-holochain-0.0.145/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_146 = {
     pname = "holochain_revision_holochain-0_0_146";
@@ -610,6 +905,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-RuEzu4U9dOei8L5MOoLvIM50czh8mzg+tCo8QCg815I=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_146-holochain-0.0.146/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_147 = {
@@ -623,6 +924,12 @@
       leaveDotGit = false;
       sha256 = "sha256-AjN0pDD9OAHlqgINFpMT2tZZEnF935CvKRtFEifPfv0=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_147-holochain-0.0.147/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_148 = {
     pname = "holochain_revision_holochain-0_0_148";
@@ -634,6 +941,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-WpyNH1ok4OpfxFYZQ0p1QcpuJhWnJKueFa0KOZELlUU=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_148-holochain-0.0.148/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_149 = {
@@ -647,6 +960,12 @@
       leaveDotGit = false;
       sha256 = "sha256-kcX71XvSdxXIMm644DGFCZ06fnlQu73Tcp1MHF5GDqk=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_149-holochain-0.0.149/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_150 = {
     pname = "holochain_revision_holochain-0_0_150";
@@ -658,6 +977,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-++AK1DGQbS1s/C9SRkV1iZ8kiAdwn8ow+Fn/FWYEfNQ=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_150-holochain-0.0.150/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_151 = {
@@ -671,6 +996,12 @@
       leaveDotGit = false;
       sha256 = "sha256-llnVcv9zVnFI1CgzhYEoGQKWLG2uGHJIAJtMwfHPN4Y=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_151-holochain-0.0.151/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_152 = {
     pname = "holochain_revision_holochain-0_0_152";
@@ -682,6 +1013,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-mvHyZpchHqB+MoDUGtf0PfCf+CD+GA7OxvE/0QAWEk4=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_152-holochain-0.0.152/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_153 = {
@@ -695,6 +1032,12 @@
       leaveDotGit = false;
       sha256 = "sha256-0bdfFjPvnFLpdtvjgIFmNFcjht2xKg8CmzomGy56oqU=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_153-holochain-0.0.153/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_154 = {
     pname = "holochain_revision_holochain-0_0_154";
@@ -706,6 +1049,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-ohVK98M3XuVu5R2y1ZyakAa+Wacru0LNC7PlPhMi5sQ=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_154-holochain-0.0.154/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_155 = {
@@ -719,6 +1068,12 @@
       leaveDotGit = false;
       sha256 = "sha256-SmX+JNJl2NuORzaF31l4m3fcq0CHrIDIdQjFbbf5Ado=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_155-holochain-0.0.155/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_156 = {
     pname = "holochain_revision_holochain-0_0_156";
@@ -730,6 +1085,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-cJ59TQWCCDiyaFzjVtAehAYTkWFyDTvHtSKsIZryGQs=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_156-holochain-0.0.156/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_157 = {
@@ -743,6 +1104,12 @@
       leaveDotGit = false;
       sha256 = "sha256-a9iz6JcJpX+whQmy/QfaKPUnzBen8hUXXGcz9FsE7r0=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_157-holochain-0.0.157/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_158 = {
     pname = "holochain_revision_holochain-0_0_158";
@@ -754,6 +1121,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-ImX88YnubUUzXRLJy7skR7gfNI5VKBGM4fkzK6v57BM=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_158-holochain-0.0.158/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_159 = {
@@ -767,6 +1140,12 @@
       leaveDotGit = false;
       sha256 = "sha256-mpL1NbLquzwttOFY6xPfg1PPEOcMZcSbamwIXx8iIrY=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_159-holochain-0.0.159/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_160 = {
     pname = "holochain_revision_holochain-0_0_160";
@@ -778,6 +1157,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-B0xYbik2e08fr8OhxpIaQ0vlPROi+FdwRm+rldpSadk=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_160-holochain-0.0.160/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_161 = {
@@ -791,6 +1176,12 @@
       leaveDotGit = false;
       sha256 = "sha256-xp1DTVrhGEc1CZr6LvBZEYhoOUbUPpg3/mWOj4DDXjI=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_161-holochain-0.0.161/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_162 = {
     pname = "holochain_revision_holochain-0_0_162";
@@ -802,6 +1193,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-AMOIolR2SaKcSyanBSUuNNGCSSQsL2llSMOoiXE/3ns=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_162-holochain-0.0.162/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_163 = {
@@ -815,6 +1212,12 @@
       leaveDotGit = false;
       sha256 = "sha256-DyZgvIB4tt2y73eApwlUXsFMZeSq5ppQ2y95TEQJaIw=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_163-holochain-0.0.163/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_164 = {
     pname = "holochain_revision_holochain-0_0_164";
@@ -826,6 +1229,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-36ZUiW4S2SDZ5psL+Vu9wCd/6CmcByUK7MyaQuHDHK8=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_164-holochain-0.0.164/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_165 = {
@@ -839,6 +1248,12 @@
       leaveDotGit = false;
       sha256 = "sha256-rjRdYLYhO8nrigCIK76eGcXOqxNZDkhrslXeiYSCZNk=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_165-holochain-0.0.165/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_166 = {
     pname = "holochain_revision_holochain-0_0_166";
@@ -850,6 +1265,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-HTkqc19xtEEtH0ndSF+52DqNFsAbQ/DgZJDI+zOYspM=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_166-holochain-0.0.166/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_167 = {
@@ -863,6 +1284,12 @@
       leaveDotGit = false;
       sha256 = "sha256-DhyEcxbAY0OoTNbp4ITuKKjQLEieHW+ZzyJFT2tonxk=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_167-holochain-0.0.167/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_168 = {
     pname = "holochain_revision_holochain-0_0_168";
@@ -874,6 +1301,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-1Uk3l6IVAl2P5afdCzVY7wh/ITQIRDl7amTF5z1TE9Y=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_168-holochain-0.0.168/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_169 = {
@@ -887,6 +1320,12 @@
       leaveDotGit = false;
       sha256 = "sha256-O5ieU54YH3M3Rl/0XT9YKomn1NRDTmypB3Nq2WuIjAA=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_169-holochain-0.0.169/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_170 = {
     pname = "holochain_revision_holochain-0_0_170";
@@ -898,6 +1337,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-FCJEHO2ktlwFyknhTWV2B0oZzplorgrk3/c2M9As4nQ=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_170-holochain-0.0.170/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_171 = {
@@ -911,6 +1356,12 @@
       leaveDotGit = false;
       sha256 = "sha256-Bn0G7DdKHYzyn8g7lRswMWkNG9rgrpFNTl7D8zg7sJQ=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_171-holochain-0.0.171/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_172 = {
     pname = "holochain_revision_holochain-0_0_172";
@@ -922,6 +1373,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-FRLZ8PhMCTe5iKNcDBPgOatTB6S5dF5/FjzAp87UE44=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_172-holochain-0.0.172/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_173 = {
@@ -935,6 +1392,12 @@
       leaveDotGit = false;
       sha256 = "sha256-Nh4wI6XJ8gqMDTzjcwAUFaVqHXdPdSb2raFTtnSyJmU=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_173-holochain-0.0.173/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_0_174 = {
     pname = "holochain_revision_holochain-0_0_174";
@@ -946,6 +1409,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-CPF4wJBm9G5R5NH/+c75w3mPFzBlXFFAl/dJxKlfRJM=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_174-holochain-0.0.174/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_0_175 = {
@@ -959,6 +1428,12 @@
       leaveDotGit = false;
       sha256 = "sha256-CSQUKjZKKwFhWtwZcB9bKZCTBVxlD5Bfikw8cTHzTDY=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_0_175-holochain-0.0.175/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_1_0-beta-rc_0 = {
     pname = "holochain_revision_holochain-0_1_0-beta-rc_0";
@@ -970,6 +1445,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-Hn2Ldyak2+OA+OlaHmQ5Nj+e9XTtYwuBk2G7p1CVTsg=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_1_0-beta-rc_0-holochain-0.1.0-beta-rc.0/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_1_0-beta-rc_1 = {
@@ -983,6 +1464,12 @@
       leaveDotGit = false;
       sha256 = "sha256-H6kJeYP2DcMQcb5tBQpt/XtCqfr+P9XLgNMWzG1Nwaw=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_1_0-beta-rc_1-holochain-0.1.0-beta-rc.1/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_revision_holochain-0_1_0-beta-rc_2 = {
     pname = "holochain_revision_holochain-0_1_0-beta-rc_2";
@@ -994,6 +1481,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-GbjO3YANNDnWR2g2LBkSAgzwfc6Lrji5T/8xg+lTTCw=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_1_0-beta-rc_2-holochain-0.1.0-beta-rc.2/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_revision_holochain-0_1_0-beta-rc_3 = {
@@ -1007,6 +1500,12 @@
       leaveDotGit = false;
       sha256 = "sha256-FNw8fgrgryyXZvSP2RiLi4jEUu1pQOoz19UvRUzVykg=";
     };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_1_0-beta-rc_3-holochain-0.1.0-beta-rc.3/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_5 = {
     pname = "holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_5";
@@ -1018,6 +1517,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-l/P+Cn0mTp+vg5fn3Cc8yTm87eaMyqCvFXGfwX3BB8o=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_5-holochain_scaffolding_cli-v0.0.5/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_5-alpha_0 = {
@@ -1031,6 +1536,12 @@
       leaveDotGit = false;
       sha256 = "sha256-A0hdrgP2xeL8yr2BGYouHKPuhEvBNNgOQGR3oLK2mn4=";
     };
+    cargoLock = {
+      lockFile = ./holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_5-alpha_0-holochain_scaffolding_cli-v0.0.5-alpha.0/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_5-alpha_1 = {
     pname = "holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_5-alpha_1";
@@ -1042,6 +1553,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-eJPOxBU9FMEKWogD0mgGeAyY/5X0L/g5Ilh2sPe0Xs0=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_5-alpha_1-holochain_scaffolding_cli-v0.0.5-alpha.1/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_6 = {
@@ -1055,6 +1572,12 @@
       leaveDotGit = false;
       sha256 = "sha256-IlQ1OnsJP7T4Tc3JxoRuKKDQLlg11U9DzSAezO0pZ7c=";
     };
+    cargoLock = {
+      lockFile = ./holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_6-holochain_scaffolding_cli-v0.0.6/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   lair_revision_lair_keystore_api-v0_2_0 = {
     pname = "lair_revision_lair_keystore_api-v0_2_0";
@@ -1066,6 +1589,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-n7nZyZR0Q68Uff7bTSVFtSDLi21CNcyKibOBx55Gasg=";
+    };
+    cargoLock = {
+      lockFile = ./lair_revision_lair_keystore_api-v0_2_0-lair_keystore_api-v0.2.0/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   lair_revision_lair_keystore_api-v0_2_1 = {
@@ -1079,6 +1608,12 @@
       leaveDotGit = false;
       sha256 = "sha256-ty5gGI9XIZJwV/kZ9DUpjbR2oneJpJVsmYgHLEnV+18=";
     };
+    cargoLock = {
+      lockFile = ./lair_revision_lair_keystore_api-v0_2_1-lair_keystore_api-v0.2.1/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   lair_revision_lair_keystore_api-v0_2_2 = {
     pname = "lair_revision_lair_keystore_api-v0_2_2";
@@ -1090,6 +1625,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-flRc+bm4jMKa5oLOTC+v1hleAgLeRIagStEP7qm5As4=";
+    };
+    cargoLock = {
+      lockFile = ./lair_revision_lair_keystore_api-v0_2_2-lair_keystore_api-v0.2.2/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   lair_revision_lair_keystore_api-v0_2_3 = {
@@ -1103,6 +1644,12 @@
       leaveDotGit = false;
       sha256 = "sha256-cqOr7iWzsNeomYQiiFggzG5Dr4X0ysnTkjtA8iwDLAQ=";
     };
+    cargoLock = {
+      lockFile = ./lair_revision_lair_keystore_api-v0_2_3-lair_keystore_api-v0.2.3/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   lair_revision_v0_0_10 = {
     pname = "lair_revision_v0_0_10";
@@ -1114,6 +1661,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-yBCsdtC6vYnGQL1JkLkOzECk1TD4RoFzNARdsc+J0cg=";
+    };
+    cargoLock = {
+      lockFile = ./lair_revision_v0_0_10-v0.0.10/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   lair_revision_v0_0_11 = {
@@ -1127,6 +1680,12 @@
       leaveDotGit = false;
       sha256 = "sha256-ZmRBVu2dlgLT/Kr/4PoVf4rD1jzexXyWU+dggrv7IrQ=";
     };
+    cargoLock = {
+      lockFile = ./lair_revision_v0_0_11-v0.0.11/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   lair_revision_v0_0_3 = {
     pname = "lair_revision_v0_0_3";
@@ -1138,6 +1697,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-EKuxixeCPhvkwv8Fq5+S2GNt59FEeBrgGHB50oJPP8o=";
+    };
+    cargoLock = {
+      lockFile = ./lair_revision_v0_0_3-v0.0.3/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   lair_revision_v0_0_4 = {
@@ -1151,6 +1716,12 @@
       leaveDotGit = false;
       sha256 = "sha256-2zPhOSHH8mX6F3kfymNf9p+YxdLf4y3E0+G25wovD04=";
     };
+    cargoLock = {
+      lockFile = ./lair_revision_v0_0_4-v0.0.4/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   lair_revision_v0_0_7 = {
     pname = "lair_revision_v0_0_7";
@@ -1162,6 +1733,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-g9oaWJsUJT/HhxYXbpl2Ko+uZZGKk9cWBYHksEiCwYo=";
+    };
+    cargoLock = {
+      lockFile = ./lair_revision_v0_0_7-v0.0.7/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   lair_revision_v0_0_8 = {
@@ -1175,6 +1752,12 @@
       leaveDotGit = false;
       sha256 = "sha256-AeyEQWLP2xw8WezDHqfq0oEFxYWY0E7kmuciz/qtCP8=";
     };
+    cargoLock = {
+      lockFile = ./lair_revision_v0_0_8-v0.0.8/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   lair_revision_v0_0_9 = {
     pname = "lair_revision_v0_0_9";
@@ -1186,6 +1769,12 @@
       deepClone = false;
       leaveDotGit = false;
       sha256 = "sha256-glSixh2GtWtJ1wswAA0Q2hnLIFPQY+Tsh36IcUgIbRs=";
+    };
+    cargoLock = {
+      lockFile = ./lair_revision_v0_0_9-v0.0.9/Cargo.lock;
+      outputHashes = {
+        
+      };
     };
   };
   lair_revision_v0_1_0 = {
@@ -1199,13 +1788,19 @@
       leaveDotGit = false;
       sha256 = "sha256-EWtc9+KcN/RHOg5N4wCLBXRppXheda5uubwrQVojc0s=";
     };
+    cargoLock = {
+      lockFile = ./lair_revision_v0_1_0-v0.1.0/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
   };
   nixpkgs = {
     pname = "nixpkgs";
-    version = "7c3fc1838288763664291ef847816ddd03fde26b";
+    version = "62ffdb32823e8d8caca00d0d75ac8e02212de76b";
     src = fetchTarball {
-      url = "https://github.com/nixos/nixpkgs/archive/7c3fc1838288763664291ef847816ddd03fde26b.tar.gz";
-      sha256 = "1md0ninfcqj1pjdm4ci3ah86xk4xy7psfp8cwmh2p909aphn1ns6";
+      url = "https://github.com/nixos/nixpkgs/archive/62ffdb32823e8d8caca00d0d75ac8e02212de76b.tar.gz";
+      sha256 = "0nfz26f2lc75av8ijvavq3ajq6cqwmlkn62fcy76222v9hyhqdcy";
     };
   };
   nvfetcher = {
