@@ -1807,11 +1807,11 @@
         "passthru": null,
         "pinned": false,
         "src": {
-            "sha256": "1wp331yq6gy3rkxi372ms022ka2sjvisqdm7chghrn23sj5qrx65",
+            "sha256": "1md0ninfcqj1pjdm4ci3ah86xk4xy7psfp8cwmh2p909aphn1ns6",
             "type": "tarball",
-            "url": "https://github.com/nixos/nixpkgs/archive/66e030a284c641b516681efe9af3cbea91bcd8fd.tar.gz"
+            "url": "https://github.com/nixos/nixpkgs/archive/7c3fc1838288763664291ef847816ddd03fde26b.tar.gz"
         },
-        "version": "66e030a284c641b516681efe9af3cbea91bcd8fd"
+        "version": "7c3fc1838288763664291ef847816ddd03fde26b"
     },
     "nvfetcher": {
         "cargoLocks": null,
