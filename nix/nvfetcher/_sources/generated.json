@@ -465,6 +465,27 @@
         "extract": null,
         "rustGitDeps": {}
     },
+    "holochain_cli_launch_revision_holochain_cli_launch-0_0_6": {
+        "pinned": true,
+        "cargoLock": "./holochain_cli_launch_revision_holochain_cli_launch-0_0_6-holochain_cli_launch-0.0.6/Cargo.lock",
+        "name": "holochain_cli_launch_revision_holochain_cli_launch-0_0_6",
+        "version": "holochain_cli_launch-0.0.6",
+        "passthru": null,
+        "src": {
+            "deepClone": false,
+            "url": "https://github.com/holochain/launcher",
+            "leaveDotGit": false,
+            "fetchSubmodules": false,
+            "name": null,
+            "type": "git",
+            "sha256": "sha256-KQwVxqzP4/Edwhs8rmotN+jYcRZqQuVsEBVG68jgVjI=",
+            "rev": "holochain_cli_launch-0.0.6"
+        },
+        "extract": null,
+        "rustGitDeps": {
+            "holochain_client-0.2.0": "sha256-cRhj8LVE9e1tOpUeDIRwpVyov6yMlnkSDA44DqVY5U4="
+        }
+    },
     "holochain_revision_holochain-0_0_125": {
         "pinned": true,
         "cargoLock": "./holochain_revision_holochain-0_0_125-holochain-0.0.125/Cargo.lock",
@@ -832,6 +853,27 @@
         "extract": null,
         "rustGitDeps": {
             "holochain_client-0.2.0": "sha256-zJGc2H+dGFz5/yd9ryG6q94qBhsLdrJBjuBahcRWtGE="
+        }
+    },
+    "holochain_cli_launch_revision_holochain_cli_launch-0_0_7": {
+        "pinned": false,
+        "cargoLock": "./holochain_cli_launch_revision_holochain_cli_launch-0_0_7-holochain_cli_launch-0.0.7/Cargo.lock",
+        "name": "holochain_cli_launch_revision_holochain_cli_launch-0_0_7",
+        "version": "holochain_cli_launch-0.0.7",
+        "passthru": null,
+        "src": {
+            "deepClone": false,
+            "url": "https://github.com/holochain/launcher",
+            "leaveDotGit": false,
+            "fetchSubmodules": false,
+            "name": null,
+            "type": "git",
+            "sha256": "sha256-1OajNhnld8P0NfNqYY7oRQV5+GUGLgUVuJ/QfwNLzH8=",
+            "rev": "holochain_cli_launch-0.0.7"
+        },
+        "extract": null,
+        "rustGitDeps": {
+            "holochain_client-0.2.0": "sha256-NwvDNJ36h5k/6TsuFuOuejCIIyRHAMD/NrTwPsC0k4M="
         }
     },
     "holochain_revision_holochain-0_0_124": {
