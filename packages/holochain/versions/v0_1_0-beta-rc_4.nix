@@ -53,6 +53,7 @@
 
     launcher = {
         url = "https://github.com/holochain/launcher";
+
         rev = "holochain_cli_launch-0.0.6";
         sha256 = "sha256-KQwVxqzP4/Edwhs8rmotN+jYcRZqQuVsEBVG68jgVjI=";
 
