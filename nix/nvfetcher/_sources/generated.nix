@@ -175,6 +175,24 @@
       };
     };
   };
+  holochain_cli_launch_revision_holochain_cli_launch-0_0_7 = {
+    pname = "holochain_cli_launch_revision_holochain_cli_launch-0_0_7";
+    version = "holochain_cli_launch-0.0.7";
+    src = fetchgit {
+      url = "https://github.com/holochain/launcher";
+      rev = "holochain_cli_launch-0.0.7";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "sha256-1OajNhnld8P0NfNqYY7oRQV5+GUGLgUVuJ/QfwNLzH8=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_cli_launch_revision_holochain_cli_launch-0_0_7-holochain_cli_launch-0.0.7/Cargo.lock;
+      outputHashes = {
+        "holochain_client-0.2.0" = "sha256-NwvDNJ36h5k/6TsuFuOuejCIIyRHAMD/NrTwPsC0k4M=";
+      };
+    };
+  };
   holochain_revision_holochain-0_0_103 = {
     pname = "holochain_revision_holochain-0_0_103";
     version = "holochain-0.0.103";
