@@ -478,12 +478,12 @@
             "fetchSubmodules": false,
             "name": null,
             "type": "git",
-            "sha256": "sha256-KQwVxqzP4/Edwhs8rmotN+jYcRZqQuVsEBVG68jgVjI=",
+            "sha256": "sha256-zLp8pEl3nLKh6SidAQprDmmbFvHUKpxUCZoJU4HJrBo=",
             "rev": "holochain_cli_launch-0.0.6"
         },
         "extract": null,
         "rustGitDeps": {
-            "holochain_client-0.2.0": "sha256-cRhj8LVE9e1tOpUeDIRwpVyov6yMlnkSDA44DqVY5U4="
+            "holochain_client-0.2.0": "sha256-NwvDNJ36h5k/6TsuFuOuejCIIyRHAMD/NrTwPsC0k4M="
         }
     },
     "holochain_revision_holochain-0_0_125": {
@@ -586,15 +586,15 @@
         "rustGitDeps": {}
     },
     "nixpkgs": {
-        "pinned": true,
+        "pinned": false,
         "cargoLock": null,
         "name": "nixpkgs",
-        "version": "a31a13c33f5eb06a567238845a19186e27bd129e",
+        "version": "d7c1b2e0a106b92f013a951a8d6556cd65608359",
         "passthru": null,
         "src": {
-            "url": "https://github.com/nixos/nixpkgs/archive/a31a13c33f5eb06a567238845a19186e27bd129e.tar.gz",
+            "url": "https://github.com/nixos/nixpkgs/archive/d7c1b2e0a106b92f013a951a8d6556cd65608359.tar.gz",
             "type": "tarball",
-            "sha256": "0zxxkd6g2i3h8v30a4jhksdbikmf5zb9fgzdvc993ky3ki8k9arq"
+            "sha256": "1wrb8l7b54yv3m1lfqny7y4pzbpamih8iynx58amy97nf6ik56iz"
         },
         "extract": null,
         "rustGitDeps": null
@@ -856,7 +856,7 @@
         }
     },
     "holochain_cli_launch_revision_holochain_cli_launch-0_0_7": {
-        "pinned": false,
+        "pinned": true,
         "cargoLock": "./holochain_cli_launch_revision_holochain_cli_launch-0_0_7-holochain_cli_launch-0.0.7/Cargo.lock",
         "name": "holochain_cli_launch_revision_holochain_cli_launch-0_0_7",
         "version": "holochain_cli_launch-0.0.7",
