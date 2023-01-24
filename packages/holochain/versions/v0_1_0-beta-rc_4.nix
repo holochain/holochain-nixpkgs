@@ -53,8 +53,8 @@
 
     launcher = {
         url = "https://github.com/holochain/launcher";
-        rev = "holochain_cli_launch-0.0.7";
-        sha256 = "sha256-1OajNhnld8P0NfNqYY7oRQV5+GUGLgUVuJ/QfwNLzH8=";
+        rev = "holochain_cli_launch-0.0.8";
+        sha256 = "sha256-sn5C7pobUcBE+knt1wk6KTW/mWE7Pem6RVTdm6+F8uw=";
 
         binsFilter = [
             "hc-launch"
@@ -63,7 +63,6 @@
 
         cargoLock = {
             outputHashes = {
-                "holochain_client-0.2.0" = "sha256-NwvDNJ36h5k/6TsuFuOuejCIIyRHAMD/NrTwPsC0k4M=";
             };
         };
     };

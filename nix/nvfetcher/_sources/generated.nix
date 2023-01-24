@@ -166,12 +166,12 @@
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "sha256-zLp8pEl3nLKh6SidAQprDmmbFvHUKpxUCZoJU4HJrBo=";
+      sha256 = "sha256-KQwVxqzP4/Edwhs8rmotN+jYcRZqQuVsEBVG68jgVjI=";
     };
     cargoLock = {
       lockFile = ./holochain_cli_launch_revision_holochain_cli_launch-0_0_6-holochain_cli_launch-0.0.6/Cargo.lock;
       outputHashes = {
-        "holochain_client-0.2.0" = "sha256-NwvDNJ36h5k/6TsuFuOuejCIIyRHAMD/NrTwPsC0k4M=";
+        "holochain_client-0.2.0" = "sha256-cRhj8LVE9e1tOpUeDIRwpVyov6yMlnkSDA44DqVY5U4=";
       };
     };
   };
@@ -190,6 +190,24 @@
       lockFile = ./holochain_cli_launch_revision_holochain_cli_launch-0_0_7-holochain_cli_launch-0.0.7/Cargo.lock;
       outputHashes = {
         "holochain_client-0.2.0" = "sha256-NwvDNJ36h5k/6TsuFuOuejCIIyRHAMD/NrTwPsC0k4M=";
+      };
+    };
+  };
+  holochain_cli_launch_revision_holochain_cli_launch-0_0_8 = {
+    pname = "holochain_cli_launch_revision_holochain_cli_launch-0_0_8";
+    version = "holochain_cli_launch-0.0.8";
+    src = fetchgit {
+      url = "https://github.com/holochain/launcher";
+      rev = "holochain_cli_launch-0.0.8";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "sha256-sn5C7pobUcBE+knt1wk6KTW/mWE7Pem6RVTdm6+F8uw=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_cli_launch_revision_holochain_cli_launch-0_0_8-holochain_cli_launch-0.0.8/Cargo.lock;
+      outputHashes = {
+        
       };
     };
   };
