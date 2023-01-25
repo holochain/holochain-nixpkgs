@@ -24,11 +24,11 @@ self: super:
     };
     rustStable = self.rust.mkRust {
       track = "stable";
-      version = "1.64.0";
+      version = "1.66.1";
     };
     rustHolochain = self.rust.mkRust {
       track = "stable";
-      version = "1.64.0";
+      version = "1.66.1";
     };
 
     packages = super.rust.packages // {
