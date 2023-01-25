@@ -3,67 +3,40 @@
 # For usage instructions please visit https://github.com/holochain/holochain-nixpkgs/#readme
 
 {
-    url = "https://github.com/holochain/holochain";
-    rev = "holochain-0.1.0-beta-rc.4";
-    sha256 = "sha256-Rr66+kZf5GTnXlhyBfM3U0uXJU2k3l4xSMcH23x0Wz4=";
-    cargoLock = {
-        outputHashes = {
-        };
-    };
+  url = "https://github.com/holochain/holochain";
+  rev = "holochain-0.1.0-beta-rc.4";
+  sha256 = "sha256-Rr66+kZf5GTnXlhyBfM3U0uXJU2k3l4xSMcH23x0Wz4=";
+  cargoLock = { outputHashes = { }; };
 
-    binsFilter = [
-        "holochain"
-        "hc"
-        "kitsune-p2p-proxy"
-        "kitsune-p2p-tx2-proxy"
-    ];
+  binsFilter = [ "holochain" "hc" "kitsune-p2p-proxy" "kitsune-p2p-tx2-proxy" ];
 
+  lair = {
+    url = "https://github.com/holochain/lair";
+    rev = "lair_keystore_api-v0.2.3";
+    sha256 = "sha256-cqOr7iWzsNeomYQiiFggzG5Dr4X0ysnTkjtA8iwDLAQ=";
 
-    lair = {
-        url = "https://github.com/holochain/lair";
-        rev = "lair_keystore_api-v0.2.3";
-        sha256 = "sha256-cqOr7iWzsNeomYQiiFggzG5Dr4X0ysnTkjtA8iwDLAQ=";
+    binsFilter = [ "lair-keystore" ];
 
-        binsFilter = [
-            "lair-keystore"
-        ];
+    cargoLock = { outputHashes = { }; };
+  };
 
+  scaffolding = {
+    url = "https://github.com/holochain/scaffolding";
+    rev = "holochain_scaffolding_cli-v0.0.10";
+    sha256 = "sha256-fecZzSv84Z8LgynXqxIc3f4Kx8Y9wo5zwmHVz+Nw3fI=";
 
-        cargoLock = {
-            outputHashes = {
-            };
-        };
-    };
+    binsFilter = [ "hc-scaffold" ];
 
-    scaffolding = {
-        url = "https://github.com/holochain/scaffolding";
-        rev = "holochain_scaffolding_cli-v0.0.6";
-        sha256 = "sha256-IlQ1OnsJP7T4Tc3JxoRuKKDQLlg11U9DzSAezO0pZ7c=";
+    cargoLock = { outputHashes = { }; };
+  };
 
-        binsFilter = [
-            "hc-scaffold"
-        ];
+  launcher = {
+    url = "https://github.com/holochain/launcher";
+    rev = "holochain_cli_launch-0.0.8";
+    sha256 = "sha256-sn5C7pobUcBE+knt1wk6KTW/mWE7Pem6RVTdm6+F8uw=";
 
+    binsFilter = [ "hc-launch" ];
 
-        cargoLock = {
-            outputHashes = {
-            };
-        };
-    };
-
-    launcher = {
-        url = "https://github.com/holochain/launcher";
-        rev = "holochain_cli_launch-0.0.8";
-        sha256 = "sha256-sn5C7pobUcBE+knt1wk6KTW/mWE7Pem6RVTdm6+F8uw=";
-
-        binsFilter = [
-            "hc-launch"
-        ];
-
-
-        cargoLock = {
-            outputHashes = {
-            };
-        };
-    };
+    cargoLock = { outputHashes = { }; };
+  };
 }
