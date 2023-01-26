@@ -1489,6 +1489,24 @@
       };
     };
   };
+  holochain_revision_holochain-0_1_0 = {
+    pname = "holochain_revision_holochain-0_1_0";
+    version = "holochain-0.1.0";
+    src = fetchgit {
+      url = "https://github.com/holochain/holochain";
+      rev = "holochain-0.1.0";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "sha256-jSEWpZut7OgdBVPOpLoLPGAZT0+pnSngvc5oEsNy67M=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_1_0-holochain-0.1.0/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
+  };
   holochain_revision_holochain-0_1_0-beta-rc_0 = {
     pname = "holochain_revision_holochain-0_1_0-beta-rc_0";
     version = "holochain-0.1.0-beta-rc.0";
@@ -1579,6 +1597,24 @@
       };
     };
   };
+  holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_10 = {
+    pname = "holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_10";
+    version = "holochain_scaffolding_cli-v0.0.10";
+    src = fetchgit {
+      url = "https://github.com/holochain/scaffolding";
+      rev = "holochain_scaffolding_cli-v0.0.10";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "sha256-fecZzSv84Z8LgynXqxIc3f4Kx8Y9wo5zwmHVz+Nw3fI=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_10-holochain_scaffolding_cli-v0.0.10/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
+  };
   holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_5 = {
     pname = "holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_5";
     version = "holochain_scaffolding_cli-v0.0.5";
@@ -1646,6 +1682,42 @@
     };
     cargoLock = {
       lockFile = ./holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_6-holochain_scaffolding_cli-v0.0.6/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
+  };
+  holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_7 = {
+    pname = "holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_7";
+    version = "holochain_scaffolding_cli-v0.0.7";
+    src = fetchgit {
+      url = "https://github.com/holochain/scaffolding";
+      rev = "holochain_scaffolding_cli-v0.0.7";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "sha256-+/yUm5uSHMG+Fo4zNIxPXuBiXFR5TZAzkL8TOGxQ+/E=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_7-holochain_scaffolding_cli-v0.0.7/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
+  };
+  holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_8 = {
+    pname = "holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_8";
+    version = "holochain_scaffolding_cli-v0.0.8";
+    src = fetchgit {
+      url = "https://github.com/holochain/scaffolding";
+      rev = "holochain_scaffolding_cli-v0.0.8";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "sha256-C9UOSo6KQZ4qVyBftJ26jsR7ivzp1OcSc3TSWZKq+vc=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_8-holochain_scaffolding_cli-v0.0.8/Cargo.lock;
       outputHashes = {
         
       };
