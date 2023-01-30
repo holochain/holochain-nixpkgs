@@ -516,12 +516,12 @@
             "fetchSubmodules": false,
             "name": null,
             "type": "git",
-            "sha256": "sha256-zLp8pEl3nLKh6SidAQprDmmbFvHUKpxUCZoJU4HJrBo=",
+            "sha256": "sha256-KQwVxqzP4/Edwhs8rmotN+jYcRZqQuVsEBVG68jgVjI=",
             "rev": "holochain_cli_launch-0.0.6"
         },
         "extract": null,
         "rustGitDeps": {
-            "holochain_client-0.2.0": "sha256-NwvDNJ36h5k/6TsuFuOuejCIIyRHAMD/NrTwPsC0k4M="
+            "holochain_client-0.2.0": "sha256-cRhj8LVE9e1tOpUeDIRwpVyov6yMlnkSDA44DqVY5U4="
         }
     },
     "holochain_revision_holochain-0_0_125": {
@@ -933,6 +933,25 @@
             "holochain_client-0.2.0": "sha256-NwvDNJ36h5k/6TsuFuOuejCIIyRHAMD/NrTwPsC0k4M="
         }
     },
+    "holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_1_0": {
+        "pinned": true,
+        "cargoLock": "./holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_1_0-holochain_scaffolding_cli-v0.1.0/Cargo.lock",
+        "name": "holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_1_0",
+        "version": "holochain_scaffolding_cli-v0.1.0",
+        "passthru": null,
+        "src": {
+            "deepClone": false,
+            "url": "https://github.com/holochain/scaffolding",
+            "leaveDotGit": false,
+            "fetchSubmodules": false,
+            "name": null,
+            "type": "git",
+            "sha256": "sha256-DJCCbQG9EazfHox6I8aZtGqr7n+4seFXXO7HLMSDlpE=",
+            "rev": "holochain_scaffolding_cli-v0.1.0"
+        },
+        "extract": null,
+        "rustGitDeps": {}
+    },
     "holochain_revision_holochain-0_0_124": {
         "pinned": true,
         "cargoLock": "./holochain_revision_holochain-0_0_124-holochain-0.0.124/Cargo.lock",
@@ -1291,7 +1310,7 @@
         "rustGitDeps": {}
     },
     "holochain_cli_launch_revision_holochain_cli_launch-0_0_9": {
-        "pinned": true,
+        "pinned": false,
         "cargoLock": "./holochain_cli_launch_revision_holochain_cli_launch-0_0_9-holochain_cli_launch-0.0.9/Cargo.lock",
         "name": "holochain_cli_launch_revision_holochain_cli_launch-0_0_9",
         "version": "holochain_cli_launch-0.0.9",
