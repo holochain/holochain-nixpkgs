@@ -166,12 +166,12 @@
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
-      sha256 = "sha256-KQwVxqzP4/Edwhs8rmotN+jYcRZqQuVsEBVG68jgVjI=";
+      sha256 = "sha256-zLp8pEl3nLKh6SidAQprDmmbFvHUKpxUCZoJU4HJrBo=";
     };
     cargoLock = {
       lockFile = ./holochain_cli_launch_revision_holochain_cli_launch-0_0_6-holochain_cli_launch-0.0.6/Cargo.lock;
       outputHashes = {
-        "holochain_client-0.2.0" = "sha256-cRhj8LVE9e1tOpUeDIRwpVyov6yMlnkSDA44DqVY5U4=";
+        "holochain_client-0.2.0" = "sha256-NwvDNJ36h5k/6TsuFuOuejCIIyRHAMD/NrTwPsC0k4M=";
       };
     };
   };
@@ -1977,10 +1977,10 @@
   };
   nixpkgs = {
     pname = "nixpkgs";
-    version = "097ee5734f2a7e3d63de457594af87b3de1c91cd";
+    version = "071b284375ddb0de83b5597bf1f6169ea6e663f2";
     src = fetchTarball {
-      url = "https://github.com/nixos/nixpkgs/archive/097ee5734f2a7e3d63de457594af87b3de1c91cd.tar.gz";
-      sha256 = "18zz57rm4vqp1svq1xx0dwadc0jk7p96p3l1c4hn9226gv3kkk2b";
+      url = "https://github.com/nixos/nixpkgs/archive/071b284375ddb0de83b5597bf1f6169ea6e663f2.tar.gz";
+      sha256 = "1vv818im0v4sp9gilarlm3fncnc8psf93md2s1x3p0px773yq38h";
     };
   };
   nvfetcher = {
