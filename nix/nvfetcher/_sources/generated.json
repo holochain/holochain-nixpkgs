@@ -1560,6 +1560,25 @@
         "extract": null,
         "rustGitDeps": {}
     },
+    "holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_1_4": {
+        "pinned": true,
+        "cargoLock": "./holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_1_4-holochain_scaffolding_cli-v0.1.4/Cargo.lock",
+        "name": "holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_1_4",
+        "version": "holochain_scaffolding_cli-v0.1.4",
+        "passthru": null,
+        "src": {
+            "deepClone": false,
+            "url": "https://github.com/holochain/scaffolding",
+            "leaveDotGit": false,
+            "fetchSubmodules": false,
+            "name": null,
+            "type": "git",
+            "sha256": "sha256-cbBWccROW6pUglbuutZX0b8toammbvb3mG8d48wIkr8=",
+            "rev": "holochain_scaffolding_cli-v0.1.4"
+        },
+        "extract": null,
+        "rustGitDeps": {}
+    },
     "holochain_revision_holochain-0_0_120": {
         "pinned": true,
         "cargoLock": "./holochain_revision_holochain-0_0_120-holochain-0.0.120/Cargo.lock",
