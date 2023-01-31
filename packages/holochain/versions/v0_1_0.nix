@@ -37,8 +37,8 @@
 
     scaffolding = {
         url = "https://github.com/holochain/scaffolding";
-        rev = "holochain_scaffolding_cli-v0.1.1";
-        sha256 = "sha256-ysixHqLd9gbXh35gkk90/0191roKGRBLdQP6bNlTR10=";
+        rev = "holochain_scaffolding_cli-v0.1.2";
+        sha256 = "sha256-ffsRs8XybniFW8iiCAK1eGHZMWms5K1crZp3qATwn44=";
 
         binsFilter = [
             "hc-scaffold"
