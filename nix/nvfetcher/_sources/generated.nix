@@ -1759,6 +1759,78 @@
       };
     };
   };
+  holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_1_1 = {
+    pname = "holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_1_1";
+    version = "holochain_scaffolding_cli-v0.1.1";
+    src = fetchgit {
+      url = "https://github.com/holochain/scaffolding";
+      rev = "holochain_scaffolding_cli-v0.1.1";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "sha256-ysixHqLd9gbXh35gkk90/0191roKGRBLdQP6bNlTR10=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_1_1-holochain_scaffolding_cli-v0.1.1/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
+  };
+  holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_1_2 = {
+    pname = "holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_1_2";
+    version = "holochain_scaffolding_cli-v0.1.2";
+    src = fetchgit {
+      url = "https://github.com/holochain/scaffolding";
+      rev = "holochain_scaffolding_cli-v0.1.2";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "sha256-ffsRs8XybniFW8iiCAK1eGHZMWms5K1crZp3qATwn44=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_1_2-holochain_scaffolding_cli-v0.1.2/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
+  };
+  holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_1_3 = {
+    pname = "holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_1_3";
+    version = "holochain_scaffolding_cli-v0.1.3";
+    src = fetchgit {
+      url = "https://github.com/holochain/scaffolding";
+      rev = "holochain_scaffolding_cli-v0.1.3";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "sha256-PigMf7WKYYUaDVisKqxxhw19btZwcJPHlIkuLJP1toI=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_1_3-holochain_scaffolding_cli-v0.1.3/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
+  };
+  holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_1_4 = {
+    pname = "holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_1_4";
+    version = "holochain_scaffolding_cli-v0.1.4";
+    src = fetchgit {
+      url = "https://github.com/holochain/scaffolding";
+      rev = "holochain_scaffolding_cli-v0.1.4";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "sha256-cbBWccROW6pUglbuutZX0b8toammbvb3mG8d48wIkr8=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_1_4-holochain_scaffolding_cli-v0.1.4/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
+  };
   lair_revision_lair_keystore_api-v0_2_0 = {
     pname = "lair_revision_lair_keystore_api-v0_2_0";
     version = "lair_keystore_api-v0.2.0";
