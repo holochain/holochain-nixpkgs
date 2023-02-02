@@ -45,7 +45,6 @@ jobs:
         nixAttribute:
           - develop
           - v0_1_0
-          - v0_1_2
         nurRepo:
           - holochain-nixpkgs
         cachixName:
