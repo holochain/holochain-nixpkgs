@@ -44,8 +44,8 @@ jobs:
           - macos-11
         nixAttribute:
           - develop
-          - v0_1_0-beta-rc_4
           - v0_1_0
+          - v0_1_3
         nurRepo:
           - holochain-nixpkgs
         cachixName:
