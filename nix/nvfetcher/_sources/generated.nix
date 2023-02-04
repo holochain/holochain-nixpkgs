@@ -1651,6 +1651,24 @@
       };
     };
   };
+  holochain_revision_holochain-0_1_3 = {
+    pname = "holochain_revision_holochain-0_1_3";
+    version = "holochain-0.1.3";
+    src = fetchgit {
+      url = "https://github.com/holochain/holochain";
+      rev = "holochain-0.1.3";
+      fetchSubmodules = false;
+      deepClone = false;
+      leaveDotGit = false;
+      sha256 = "sha256-619bpPtO0IUSzPzLNzHERuvqGblpjO65rsw3jdxoEkQ=";
+    };
+    cargoLock = {
+      lockFile = ./holochain_revision_holochain-0_1_3-holochain-0.1.3/Cargo.lock;
+      outputHashes = {
+        
+      };
+    };
+  };
   holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_10 = {
     pname = "holochain_scaffolding_cli_revision_holochain_scaffolding_cli-v0_0_10";
     version = "holochain_scaffolding_cli-v0.0.10";
