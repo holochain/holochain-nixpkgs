@@ -1310,10 +1310,10 @@
         "rustGitDeps": {}
     },
     "rust-overlay": {
-        "pinned": true,
+        "pinned": false,
         "cargoLock": null,
         "name": "rust-overlay",
-        "version": "1f1d13846ae88826391e5d65d85247a30982671b",
+        "version": "3bf0a253c07b4ddea8a5f0fb805e2a412cc7c7d4",
         "passthru": null,
         "src": {
             "deepClone": false,
@@ -1322,8 +1322,8 @@
             "fetchSubmodules": false,
             "name": null,
             "type": "git",
-            "sha256": "sha256-mcmGElt04ZaW2Xx7flDQ812X0O2oUlS4rCw1Al4x0qw=",
-            "rev": "1f1d13846ae88826391e5d65d85247a30982671b"
+            "sha256": "sha256-mJ9ISIElFGCPYRDBYVv2AWPwYSsbTCEJg2E9n4ALxwc=",
+            "rev": "3bf0a253c07b4ddea8a5f0fb805e2a412cc7c7d4"
         },
         "extract": null,
         "rustGitDeps": null
