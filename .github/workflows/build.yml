@@ -20,7 +20,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Install nix
-        uses: cachix/install-nix-action@v18
+        uses: cachix/install-nix-action@v19
         with:
           install_url: "https://releases.nixos.org/nix/nix-2.12.0/install"
       - name: Setup cachix
@@ -57,7 +57,7 @@ jobs:
         with:
           lfs: false
       - name: Install nix
-        uses: cachix/install-nix-action@v18
+        uses: cachix/install-nix-action@v19
         with:
           install_url: "https://releases.nixos.org/nix/nix-2.12.0/install"
       - name: Show nixpkgs version
@@ -91,7 +91,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Install nix
-        uses: cachix/install-nix-action@v18
+        uses: cachix/install-nix-action@v19
         with:
           install_url: "https://releases.nixos.org/nix/nix-2.12.0/install"
       - name: Show nixpkgs version
