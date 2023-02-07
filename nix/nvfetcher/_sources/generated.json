@@ -643,15 +643,15 @@
         "rustGitDeps": {}
     },
     "nixpkgs": {
-        "pinned": true,
+        "pinned": false,
         "cargoLock": null,
         "name": "nixpkgs",
-        "version": "3c630c503125779d5cda6551bb1d0cefbb9f89db",
+        "version": "b7ce17b1ebf600a72178f6302c77b6382d09323f",
         "passthru": null,
         "src": {
-            "url": "https://github.com/nixos/nixpkgs/archive/3c630c503125779d5cda6551bb1d0cefbb9f89db.tar.gz",
+            "url": "https://github.com/nixos/nixpkgs/archive/b7ce17b1ebf600a72178f6302c77b6382d09323f.tar.gz",
             "type": "tarball",
-            "sha256": "1nmmkdqxcdfvjkjs854d6zqx00cdbrsj2nl2qhwa459xli40rbwb"
+            "sha256": "0kk5hrzqjkpljzhlc6mrs6608mry840m0l6kjrji7rnfzknw7nxq"
         },
         "extract": null,
         "rustGitDeps": null
