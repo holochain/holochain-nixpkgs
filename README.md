@@ -1,5 +1,14 @@
 # Holochain nixpkgs
 
+> :warning: :warning: :warning:
+>
+> This repository is no longer maintained and its code has been deprecated. Please consider everything below obsolete.
+> All of Holochain's Nix code is now maintained in the [Holochain main repository](https://github.com/holochain/holochain).
+>
+> :warning: :warning: :warning:
+
+---
+
 ![build status](https://github.com/holochain/holochain-nixpkgs/actions/workflows/build.yml/badge.svg)
 
 [![Cachix Cache](https://img.shields.io/badge/cachix/holochain-ci-blue.svg)](https://holochain-ci.cachix.org)
