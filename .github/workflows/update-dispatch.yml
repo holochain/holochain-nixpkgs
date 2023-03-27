@@ -94,7 +94,7 @@ jobs:
           reviewers: steveej
       - name: Enable Pull Request Automerge
         if: steps.cpr1.outputs.pull-request-operation == 'created' || steps.cpr1.outputs.pull-request-operation == 'updated'
-        uses: peter-evans/enable-pull-request-automerge@v2
+        uses: peter-evans/enable-pull-request-automerge@v3
         with:
           token: ${{ secrets.HRA_GITHUB_TOKEN}}
           pull-request-number: ${{ steps.cpr1.outputs.pull-request-number }}
