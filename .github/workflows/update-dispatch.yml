@@ -79,7 +79,7 @@ jobs:
           fi
 
       - name: create pull request
-        uses: peter-evans/create-pull-request@v4.2.3
+        uses: peter-evans/create-pull-request@v5.0.1
         if: steps.eval-commits.outputs.pr-justified == 'true'
         id: cpr1
         with:
