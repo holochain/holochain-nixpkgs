@@ -4,17 +4,17 @@ use itertools::Itertools;
 use log::trace;
 use once_cell::sync::OnceCell;
 
-static CRATES_IO_INDEX: OnceCell<Mutex<crates_index::Index>> = OnceCell::new();
+static CRATES_IO_INDEX: OnceCell<Mutex<crates_index::GitIndex>> = OnceCell::new();
 
 /// Convenience wrapper around Result
 pub type Fallible<T> = anyhow::Result<T>;
 
 /// retrieves the statically saved index with the option to force an update.
-pub fn index(update: bool) -> Fallible<MutexGuard<'static, crates_index::Index>> {
+pub fn index(update: bool) -> Fallible<MutexGuard<'static, crates_index::GitIndex>> {
     let first_run = CRATES_IO_INDEX.get().is_none();
 
     let crates_io_index = CRATES_IO_INDEX.get_or_try_init(|| -> Fallible<_> {
-        let mut index = crates_index::Index::new_cargo_default()?;
+        let mut index = crates_index::GitIndex::new_cargo_default()?;
         trace!("Using crates index at {:?}", index.path());
 
         index.update()?;
